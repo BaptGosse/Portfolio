@@ -1,0 +1,40 @@
+.top{
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 6px 6px #D3D3D3;
+}
+.left{
+    float: left;
+    width: 44%;
+    text-align: right;
+}
+.right{
+    float: right;
+    width: 56%;
+    text-align: left;
+}
+.icon{
+    width: 128px;
+    height: 128px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.name{
+    margin: 25px 0 0 0;
+}
+.link{
+    margin-top: 7px;
+    text-decoration: none;
+}
+.links{
+    color: black;
+    text-decoration: none;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.name,.link{
+    margin-left: 10px;
+}
