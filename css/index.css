@@ -58,7 +58,7 @@
     font-weight: 300;
     color: #2F2F2F;
  }
-.skills-link,.studies-link,.projects-link{
+.skills-link,.studies-link,.projects-link,.summumnetwork-link,.hertzheberg-link,.bic-community-link{
     text-decoration: none;
     border:0;
     border-radius:10px;
@@ -75,7 +75,30 @@
     color:#fff;
     background-color:#B8412D
 }
-.skills-link:hover,.studies-link:hover,.projects-link:hover,.skills-link:focus,.studies-link:focus,.projects-link:focus{
+.skills-link:hover,.studies-link:hover,.projects-link:hover,.summumnetwork-link:hover,.hertzheberg-link:hover,.bic-community-link:hover,.skills-link:focus,.studies-link:focus,.projects-link:focus,.summumnetwork-link:focus,.hertzheberg-link:focus,.bic-community-link:focus{
     text-decoration:none;
     transform:scale(.95)
+}
+.projects{
+    margin-top: 60px;
+}
+.summumnetwork,.bic-community{
+    display: inline-block;
+    float: left;
+    width: 33%;
+    height: 200px;
+}
+.hertzheberg{
+    display: inline-block;
+    float: left;
+    width: 34%;
+    height: 200px;
+}
+.summumnetwork-contain,.hertzheberg-contain,.bic-community-contain{
+    display: inline-block;
+    width: 95%;
+    height: 100%;
+    text-align: center;
+    box-shadow: 0 0 12px #D3D3D3;
+    border-radius:10px;
 }
