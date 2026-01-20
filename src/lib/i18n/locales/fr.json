@@ -1,0 +1,79 @@
+{
+	"nav": {
+		"home": "Accueil",
+		"projects": "Projets",
+		"blog": "Blog"
+	},
+	"hero": {
+		"badge": "À la recherche d'un stage (2e année) et d'une alternance (3e année)",
+		"title": "Construire l'infrastructure",
+		"titleGradient": "de demain",
+		"description": "Étudiant en BUT Informatique passionné par l'infrastructure cloud-native. Je construis des systèmes fiables et performants, de la virtualisation bare-metal aux applications distribuées sur Kubernetes.",
+		"cta": "Découvrir mes projets",
+		"contact": "Me contacter",
+		"stats": {
+			"projects": "Projets Infrastructure",
+			"cloudNative": "Cloud-Native Expert",
+			"programming": "Systems Programming"
+		}
+	},
+	"stack": {
+		"title": "Stack Technique",
+		"subtitle": "Expertise concrète acquise à travers mes projets"
+	},
+	"projects": {
+		"title": "Projets Phares",
+		"subtitle": "Infrastructure moderne, systèmes distribués et automatisation",
+		"featured": "Featured",
+		"viewOnGithub": "Voir sur GitHub",
+		"allProjects": "Tous les projets"
+	},
+	"opportunities": {
+		"title": "Opportunités recherchées",
+		"subtitle": "Je suis actuellement à la recherche de nouvelles expériences professionnelles",
+		"internship": {
+			"badge": "2e année",
+			"title": "Stage de fin d'année",
+			"duration": "8 à 10 semaines • Avril à Juin 2026",
+			"description": "Je recherche un stage de 2e année pour approfondir mes compétences en infrastructure cloud-native, DevOps ou développement système. L'occasion idéale de contribuer à des projets concrets tout en continuant à apprendre.",
+			"skills": [
+				"Infrastructure & Cloud",
+				"Kubernetes / Docker",
+				"DevOps & CI/CD",
+				"Administration système"
+			]
+		},
+		"apprenticeship": {
+			"badge": "3e année",
+			"title": "Alternance",
+			"duration": "1 an • Septembre 2026 - Août 2027",
+			"description": "Je suis à la recherche d'une alternance pour ma 3e année de BUT Informatique. Une opportunité de m'investir pleinement dans une équipe et de participer à des projets stratégiques sur le long terme.",
+			"skills": [
+				"Infrastructure cloud-native",
+				"Développement Go / Rust",
+				"Architecture système",
+				"Automatisation"
+			]
+		},
+		"downloadCV": "Télécharger mon CV",
+		"contactMe": "Me contacter"
+	},
+	"experience": {
+		"title": "Parcours",
+		"subtitle": "Expériences professionnelles et projets réalisés"
+	},
+	"contact": {
+		"title": "Travaillons ensemble",
+		"subtitle": "À la recherche d'un <strong>stage de 8 à 10 semaines (2e année)</strong> et d'une <strong>alternance (3e année)</strong>.<br />Un projet d'infrastructure ? Besoin d'expertise cloud-native ?<br />Discutons-en autour d'un café (virtuel ou réel) ☕",
+		"email": "Email",
+		"github": "GitHub",
+		"linkedin": "LinkedIn"
+	},
+	"footer": {
+		"navigation": "Navigation",
+		"contactTitle": "Contactez-moi",
+		"backToTop": "Retour en haut",
+		"copyright": "© {year} Baptiste Gosselin. Tous droits réservés.",
+		"description": "Étudiant en informatique passionné par l'infrastructure cloud-native et le développement système."
+	}
+}

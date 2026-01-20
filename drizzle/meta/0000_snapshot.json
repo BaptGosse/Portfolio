@@ -1,0 +1,585 @@
+{
+  "id": "125f3825-d5a5-48a3-8975-c3a850813bb1",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.POR_POSTS": {
+      "name": "POR_POSTS",
+      "schema": "",
+      "columns": {
+        "POS_ID": {
+          "name": "POS_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "POS_SLUG": {
+          "name": "POS_SLUG",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POS_TITLE": {
+          "name": "POS_TITLE",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POS_DESCRIPTION": {
+          "name": "POS_DESCRIPTION",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POS_CONTENT": {
+          "name": "POS_CONTENT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POS_PUBLISHED": {
+          "name": "POS_PUBLISHED",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "USR_ID": {
+          "name": "USR_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POS_CREATED_AT": {
+          "name": "POS_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "POS_UPDATED_AT": {
+          "name": "POS_UPDATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "POS_PUBLISHED_AT": {
+          "name": "POS_PUBLISHED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "POR_POSTS_USR_ID_POR_USERS_USR_ID_fk": {
+          "name": "POR_POSTS_USR_ID_POR_USERS_USR_ID_fk",
+          "tableFrom": "POR_POSTS",
+          "tableTo": "POR_USERS",
+          "columnsFrom": [
+            "USR_ID"
+          ],
+          "columnsTo": [
+            "USR_ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_POSTS_POS_SLUG_unique": {
+          "name": "POR_POSTS_POS_SLUG_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "POS_SLUG"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_POSTS_TAGS": {
+      "name": "POR_POSTS_TAGS",
+      "schema": "",
+      "columns": {
+        "POS_ID": {
+          "name": "POS_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TAG_ID": {
+          "name": "TAG_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "POR_POSTS_TAGS_POS_ID_POR_POSTS_POS_ID_fk": {
+          "name": "POR_POSTS_TAGS_POS_ID_POR_POSTS_POS_ID_fk",
+          "tableFrom": "POR_POSTS_TAGS",
+          "tableTo": "POR_POSTS",
+          "columnsFrom": [
+            "POS_ID"
+          ],
+          "columnsTo": [
+            "POS_ID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "POR_POSTS_TAGS_TAG_ID_POR_TAGS_TAG_ID_fk": {
+          "name": "POR_POSTS_TAGS_TAG_ID_POR_TAGS_TAG_ID_fk",
+          "tableFrom": "POR_POSTS_TAGS",
+          "tableTo": "POR_TAGS",
+          "columnsFrom": [
+            "TAG_ID"
+          ],
+          "columnsTo": [
+            "TAG_ID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "POR_POSTS_TAGS_POS_ID_TAG_ID_pk": {
+          "name": "POR_POSTS_TAGS_POS_ID_TAG_ID_pk",
+          "columns": [
+            "POS_ID",
+            "TAG_ID"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_PROJECTS": {
+      "name": "POR_PROJECTS",
+      "schema": "",
+      "columns": {
+        "PRJ_ID": {
+          "name": "PRJ_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "PRJ_SLUG": {
+          "name": "PRJ_SLUG",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PRJ_TITLE": {
+          "name": "PRJ_TITLE",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PRJ_DESCRIPTION": {
+          "name": "PRJ_DESCRIPTION",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PRJ_LINK": {
+          "name": "PRJ_LINK",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PRJ_GITHUB": {
+          "name": "PRJ_GITHUB",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PRJ_IMAGE": {
+          "name": "PRJ_IMAGE",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PRJ_FEATURED": {
+          "name": "PRJ_FEATURED",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "PRJ_ORDER": {
+          "name": "PRJ_ORDER",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "USR_ID": {
+          "name": "USR_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PRJ_CREATED_AT": {
+          "name": "PRJ_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "PRJ_UPDATED_AT": {
+          "name": "PRJ_UPDATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "POR_PROJECTS_USR_ID_POR_USERS_USR_ID_fk": {
+          "name": "POR_PROJECTS_USR_ID_POR_USERS_USR_ID_fk",
+          "tableFrom": "POR_PROJECTS",
+          "tableTo": "POR_USERS",
+          "columnsFrom": [
+            "USR_ID"
+          ],
+          "columnsTo": [
+            "USR_ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_PROJECTS_PRJ_SLUG_unique": {
+          "name": "POR_PROJECTS_PRJ_SLUG_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "PRJ_SLUG"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_PROJECTS_TECHNOLOGIES": {
+      "name": "POR_PROJECTS_TECHNOLOGIES",
+      "schema": "",
+      "columns": {
+        "PRJ_ID": {
+          "name": "PRJ_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEC_ID": {
+          "name": "TEC_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "POR_PROJECTS_TECHNOLOGIES_PRJ_ID_POR_PROJECTS_PRJ_ID_fk": {
+          "name": "POR_PROJECTS_TECHNOLOGIES_PRJ_ID_POR_PROJECTS_PRJ_ID_fk",
+          "tableFrom": "POR_PROJECTS_TECHNOLOGIES",
+          "tableTo": "POR_PROJECTS",
+          "columnsFrom": [
+            "PRJ_ID"
+          ],
+          "columnsTo": [
+            "PRJ_ID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "POR_PROJECTS_TECHNOLOGIES_TEC_ID_POR_TECHNOLOGIES_TEC_ID_fk": {
+          "name": "POR_PROJECTS_TECHNOLOGIES_TEC_ID_POR_TECHNOLOGIES_TEC_ID_fk",
+          "tableFrom": "POR_PROJECTS_TECHNOLOGIES",
+          "tableTo": "POR_TECHNOLOGIES",
+          "columnsFrom": [
+            "TEC_ID"
+          ],
+          "columnsTo": [
+            "TEC_ID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "POR_PROJECTS_TECHNOLOGIES_PRJ_ID_TEC_ID_pk": {
+          "name": "POR_PROJECTS_TECHNOLOGIES_PRJ_ID_TEC_ID_pk",
+          "columns": [
+            "PRJ_ID",
+            "TEC_ID"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_SESSIONS": {
+      "name": "POR_SESSIONS",
+      "schema": "",
+      "columns": {
+        "SES_ID": {
+          "name": "SES_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "USR_ID": {
+          "name": "USR_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SES_TOKEN": {
+          "name": "SES_TOKEN",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SES_EXPIRES_AT": {
+          "name": "SES_EXPIRES_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SES_CREATED_AT": {
+          "name": "SES_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "POR_SESSIONS_USR_ID_POR_USERS_USR_ID_fk": {
+          "name": "POR_SESSIONS_USR_ID_POR_USERS_USR_ID_fk",
+          "tableFrom": "POR_SESSIONS",
+          "tableTo": "POR_USERS",
+          "columnsFrom": [
+            "USR_ID"
+          ],
+          "columnsTo": [
+            "USR_ID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_SESSIONS_SES_TOKEN_unique": {
+          "name": "POR_SESSIONS_SES_TOKEN_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "SES_TOKEN"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_TAGS": {
+      "name": "POR_TAGS",
+      "schema": "",
+      "columns": {
+        "TAG_ID": {
+          "name": "TAG_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "TAG_NAME": {
+          "name": "TAG_NAME",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TAG_SLUG": {
+          "name": "TAG_SLUG",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TAG_CREATED_AT": {
+          "name": "TAG_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_TAGS_TAG_NAME_unique": {
+          "name": "POR_TAGS_TAG_NAME_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "TAG_NAME"
+          ]
+        },
+        "POR_TAGS_TAG_SLUG_unique": {
+          "name": "POR_TAGS_TAG_SLUG_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "TAG_SLUG"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_TECHNOLOGIES": {
+      "name": "POR_TECHNOLOGIES",
+      "schema": "",
+      "columns": {
+        "TEC_ID": {
+          "name": "TEC_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "TEC_NAME": {
+          "name": "TEC_NAME",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEC_SLUG": {
+          "name": "TEC_SLUG",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEC_CREATED_AT": {
+          "name": "TEC_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_TECHNOLOGIES_TEC_NAME_unique": {
+          "name": "POR_TECHNOLOGIES_TEC_NAME_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "TEC_NAME"
+          ]
+        },
+        "POR_TECHNOLOGIES_TEC_SLUG_unique": {
+          "name": "POR_TECHNOLOGIES_TEC_SLUG_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "TEC_SLUG"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.POR_USERS": {
+      "name": "POR_USERS",
+      "schema": "",
+      "columns": {
+        "USR_ID": {
+          "name": "USR_ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "USR_EMAIL": {
+          "name": "USR_EMAIL",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "USR_PASSWORD_HASH": {
+          "name": "USR_PASSWORD_HASH",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "USR_NAME": {
+          "name": "USR_NAME",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "USR_CREATED_AT": {
+          "name": "USR_CREATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "USR_UPDATED_AT": {
+          "name": "USR_UPDATED_AT",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "POR_USERS_USR_EMAIL_unique": {
+          "name": "POR_USERS_USR_EMAIL_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "USR_EMAIL"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,0 +1,79 @@
+{
+	"nav": {
+		"home": "Home",
+		"projects": "Projects",
+		"blog": "Blog"
+	},
+	"hero": {
+		"badge": "Looking for an internship (2nd year) and an apprenticeship (3rd year)",
+		"title": "Building tomorrow's",
+		"titleGradient": "infrastructure",
+		"description": "Computer Science student passionate about cloud-native infrastructure. I build reliable and performant systems, from bare-metal virtualization to distributed applications on Kubernetes.",
+		"cta": "Discover my projects",
+		"contact": "Contact me",
+		"stats": {
+			"projects": "Infrastructure Projects",
+			"cloudNative": "Cloud-Native Expert",
+			"programming": "Systems Programming"
+		}
+	},
+	"stack": {
+		"title": "Technical Stack",
+		"subtitle": "Hands-on expertise gained through my projects"
+	},
+	"projects": {
+		"title": "Featured Projects",
+		"subtitle": "Modern infrastructure, distributed systems and automation",
+		"featured": "Featured",
+		"viewOnGithub": "View on GitHub",
+		"allProjects": "All projects"
+	},
+	"opportunities": {
+		"title": "Opportunities Sought",
+		"subtitle": "I am currently looking for new professional experiences",
+		"internship": {
+			"badge": "2nd year",
+			"title": "End-of-year Internship",
+			"duration": "8 to 10 weeks • April to June 2026",
+			"description": "I'm looking for a 2nd year internship to deepen my skills in cloud-native infrastructure, DevOps or system development. The ideal opportunity to contribute to real projects while continuing to learn.",
+			"skills": [
+				"Infrastructure & Cloud",
+				"Kubernetes / Docker",
+				"DevOps & CI/CD",
+				"System Administration"
+			]
+		},
+		"apprenticeship": {
+			"badge": "3rd year",
+			"title": "Apprenticeship",
+			"duration": "1 year • September 2026 - August 2027",
+			"description": "I'm looking for an apprenticeship for my 3rd year of Computer Science degree. An opportunity to fully invest myself in a team and participate in strategic long-term projects.",
+			"skills": [
+				"Cloud-native infrastructure",
+				"Go / Rust Development",
+				"System Architecture",
+				"Automation"
+			]
+		},
+		"downloadCV": "Download my CV",
+		"contactMe": "Contact me"
+	},
+	"experience": {
+		"title": "Background",
+		"subtitle": "Professional experiences and completed projects"
+	},
+	"contact": {
+		"title": "Let's work together",
+		"subtitle": "Looking for an <strong>8 to 10 week internship (2nd year)</strong> and an <strong>apprenticeship (3rd year)</strong>.<br />An infrastructure project? Need cloud-native expertise?<br />Let's discuss it over a coffee (virtual or real) ☕",
+		"email": "Email",
+		"github": "GitHub",
+		"linkedin": "LinkedIn"
+	},
+	"footer": {
+		"navigation": "Navigation",
+		"contactTitle": "Contact me",
+		"backToTop": "Back to top",
+		"copyright": "© {year} Baptiste Gosselin. All rights reserved.",
+		"description": "Computer Science student passionate about cloud-native infrastructure and system development."
+	}
+}

@@ -1,0 +1,64 @@
+// Portfolio Blog Database Schema
+// Compatible with DrawDB.io
+
+Table POR_USERS [headercolor: #8b5cf6] {
+	USR_ID uuid [ pk, not null, unique ]
+	USR_EMAIL varchar(255) [ not null, unique ]
+	USR_PASSWORD_HASH varchar(255) [ not null ]
+	USR_NAME varchar(64) [ not null ]
+	USR_CREATED_AT timestamp [ not null ]
+	USR_UPDATED_AT timestamp
+}
+
+Table POR_POSTS [headercolor: #3b82f6] {
+	POS_ID uuid [ pk, not null, unique ]
+	POS_SLUG varchar(128) [ not null, unique ]
+	POS_TITLE varchar(255) [ not null ]
+	POS_DESCRIPTION varchar(500) [ not null ]
+	POS_CONTENT text [ not null ]
+	POS_PUBLISHED boolean [ not null, default: false ]
+	USR_ID uuid [ not null ]
+	POS_CREATED_AT timestamp [ not null ]
+	POS_UPDATED_AT timestamp
+	POS_PUBLISHED_AT timestamp
+}
+
+Table POR_TAGS [headercolor: #10b981] {
+	TAG_ID uuid [ pk, not null, unique ]
+	TAG_NAME varchar(64) [ not null, unique ]
+	TAG_SLUG varchar(64) [ not null, unique ]
+	TAG_CREATED_AT timestamp [ not null ]
+}
+
+Table POR_POSTS_TAGS [headercolor: #f59e0b] {
+	POS_ID uuid [ pk, not null ]
+	TAG_ID uuid [ pk, not null ]
+
+	indexes {
+		(POS_ID, TAG_ID) [ name: 'POR_POSTS_TAGS_index_0', unique ]
+	}
+}
+
+Table POR_SESSIONS [headercolor: #ec4899] {
+	SES_ID uuid [ pk, not null, unique ]
+	USR_ID uuid [ not null ]
+	SES_TOKEN varchar(255) [ not null, unique ]
+	SES_EXPIRES_AT timestamp [ not null ]
+	SES_CREATED_AT timestamp [ not null ]
+}
+
+Ref fk_POR_POSTS_USR_ID_POR_USERS {
+	POR_POSTS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+Ref fk_POR_POSTS_TAGS_POS_ID_POR_POSTS {
+	POR_POSTS_TAGS.POS_ID > POR_POSTS.POS_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_POSTS_TAGS_TAG_ID_POR_TAGS {
+	POR_POSTS_TAGS.TAG_ID > POR_TAGS.TAG_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_SESSIONS_USR_ID_POR_USERS {
+	POR_SESSIONS.USR_ID > POR_USERS.USR_ID [ delete: cascade, update: no action ]
+}
