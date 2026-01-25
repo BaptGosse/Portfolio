@@ -8,6 +8,27 @@
       "when": 1765671373387,
       "tag": "0000_handy_mulholland_black",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1768939396007,
+      "tag": "0001_good_norrin_radd",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1769004767434,
+      "tag": "0002_silent_captain_flint",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1769009175136,
+      "tag": "0003_optimal_wilson_fisk",
+      "breakpoints": true
     }
   ]
 }

@@ -1,9 +1,28 @@
 <script lang="ts">
 	import { Rocket, Cloud, Server, Terminal, Sparkles, ArrowRight, Github } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-	import { projects } from '$lib/data/projects';
+	import { _, locale } from 'svelte-i18n';
 
-	const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
+	type ProjectData = {
+		id: string;
+		title: { fr: string; en: string };
+		description: { fr: string; en: string };
+		technologies: Array<{ fr: string; en: string }>;
+		github: string | null;
+		link: string | null;
+		featured: boolean;
+	};
+
+	let { projects = [] }: { projects: ProjectData[] } = $props();
+
+	const featuredProjects = $derived(projects.filter(p => p.featured).map(p => ({
+		id: p.id,
+		title: p.title[$locale as 'fr' | 'en'] || p.title.fr,
+		description: p.description[$locale as 'fr' | 'en'] || p.description.fr,
+		technologies: p.technologies.map(t => t[$locale as 'fr' | 'en'] || t.fr),
+		github: p.github,
+		link: p.link,
+		featured: p.featured
+	})));
 </script>
 
 <section class="section projects-section-enhanced" id="projects">
@@ -20,7 +39,7 @@
 
 		<div class="bento-grid">
 			{#each featuredProjects as project, index}
-				<article class="bento-item" class:featured={index === 0} style="animation-delay: {index * 150}ms">
+				<article class="bento-item" style="animation-delay: {index * 150}ms">
 					<div class="bento-glow"></div>
 					<div class="bento-content">
 						<div class="bento-header">
@@ -134,7 +153,7 @@
 
 	.bento-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		grid-template-columns: repeat(3, 1fr);
 		gap: var(--spacing-xl);
 		margin-bottom: var(--spacing-4xl);
 		position: relative;
@@ -163,8 +182,21 @@
 		}
 	}
 
-	.bento-item.featured {
-		grid-column: span 1;
+	/* Pattern alterné : Grand-Normal / Normal-Grand / Grand-Normal / etc. */
+	.bento-item:nth-child(4n+1) {
+		grid-column: span 2; /* Projets 1, 5, 9... - Grand à gauche */
+	}
+
+	.bento-item:nth-child(4n+2) {
+		grid-column: span 1; /* Projets 2, 6, 10... - Normal à droite */
+	}
+
+	.bento-item:nth-child(4n+3) {
+		grid-column: span 1; /* Projets 3, 7, 11... - Normal à gauche */
+	}
+
+	.bento-item:nth-child(4n+4) {
+		grid-column: span 2; /* Projets 4, 8, 12... - Grand à droite */
 	}
 
 	.bento-glow {
@@ -324,8 +356,17 @@
 		background: linear-gradient(135deg, var(--color-secondary-accent), var(--color-accent));
 	}
 
-	@media (min-width: 768px) {
-		.bento-item.featured {
+	@media (max-width: 1024px) {
+		.bento-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		/* Sur tablette : alternance simple */
+		.bento-item:nth-child(odd) {
+			grid-column: span 2;
+		}
+
+		.bento-item:nth-child(even) {
 			grid-column: span 2;
 		}
 	}
@@ -333,6 +374,11 @@
 	@media (max-width: 768px) {
 		.bento-grid {
 			grid-template-columns: 1fr;
+		}
+
+		/* Sur mobile : tous en pleine largeur */
+		.bento-item {
+			grid-column: span 1 !important;
 		}
 	}
 </style>

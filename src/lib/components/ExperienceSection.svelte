@@ -1,7 +1,39 @@
 <script lang="ts">
 	import { Zap } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-	import { experiences } from '$lib/data/projects';
+	import { _, locale } from 'svelte-i18n';
+
+	type ExperienceData = {
+		company: { fr: string; en: string };
+		role: { fr: string; en: string };
+		startDate: Date;
+		endDate: Date | null;
+		description: { fr: string; en: string };
+		technologies: Array<{ fr: string; en: string }>;
+		type: string;
+	};
+
+	let { experiences = [] }: { experiences: ExperienceData[] } = $props();
+
+	function formatPeriod(start: Date, end: Date | null, currentLocale: string): string {
+		const formatter = new Intl.DateTimeFormat(currentLocale, {
+			year: 'numeric',
+			month: 'long'
+		});
+		const startStr = formatter.format(new Date(start));
+		const endStr = end
+			? formatter.format(new Date(end))
+			: currentLocale === 'fr' ? 'Présent' : 'Present';
+		return `${startStr} - ${endStr}`;
+	}
+
+	const formattedExperiences = $derived(experiences.map(exp => ({
+		company: exp.company[$locale as 'fr' | 'en'] || exp.company.fr,
+		role: exp.role[$locale as 'fr' | 'en'] || exp.role.fr,
+		period: formatPeriod(exp.startDate, exp.endDate, $locale || 'fr'),
+		description: exp.description[$locale as 'fr' | 'en'] || exp.description.fr,
+		technologies: exp.technologies.map(t => t[$locale as 'fr' | 'en'] || t.fr),
+		type: exp.type
+	})));
 </script>
 
 <section class="section experience-section-enhanced">
@@ -17,7 +49,7 @@
 		</div>
 
 		<div class="timeline-enhanced">
-			{#each experiences as exp, index}
+			{#each formattedExperiences as exp, index}
 				<div class="timeline-item-enhanced" style="animation-delay: {index * 200}ms">
 					<div class="timeline-marker-enhanced"></div>
 					<div class="timeline-card-enhanced">

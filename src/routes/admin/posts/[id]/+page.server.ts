@@ -45,19 +45,22 @@ export const actions: Actions = {
 		}
 
 		const data = await request.formData();
-		const title = data.get('title')?.toString();
-		const description = data.get('description')?.toString();
-		const content = data.get('content')?.toString();
+		const title_fr = data.get('title_fr')?.toString();
+		const title_en = data.get('title_en')?.toString();
+		const description_fr = data.get('description_fr')?.toString();
+		const description_en = data.get('description_en')?.toString();
+		const content_fr = data.get('content_fr')?.toString();
+		const content_en = data.get('content_en')?.toString();
 		const published = data.get('published') === 'on';
 		const tagIds = data.getAll('tags').map(t => t.toString());
 
-		if (!title || !description || !content) {
+		if (!title_fr || !title_en || !description_fr || !description_en || !content_fr || !content_en) {
 			return fail(400, {
-				error: 'Titre, description et contenu requis'
+				error: 'Tous les champs FR et EN sont requis'
 			});
 		}
 
-		const slug = slugify(title);
+		const slug = slugify(title_fr);
 
 		try {
 			// Récupérer l'état actuel de l'article
@@ -70,9 +73,9 @@ export const actions: Actions = {
 			await db.update(POR_POSTS)
 				.set({
 					POS_SLUG: slug,
-					POS_TITLE: title,
-					POS_DESCRIPTION: description,
-					POS_CONTENT: content,
+					POS_TITLE: { fr: title_fr, en: title_en },
+					POS_DESCRIPTION: { fr: description_fr, en: description_en },
+					POS_CONTENT: { fr: content_fr, en: content_en },
 					POS_PUBLISHED: published,
 					POS_UPDATED_AT: new Date(),
 					POS_PUBLISHED_AT: published && !currentPost?.POS_PUBLISHED ? new Date() : currentPost?.POS_PUBLISHED_AT

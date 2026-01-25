@@ -45,7 +45,7 @@
 						<tr>
 							<td class="title-cell">
 								<a href="/admin/posts/{post.id}" class="post-title">
-									{post.title}
+									{post.title.fr}
 								</a>
 								<span class="post-slug">/{post.slug}</span>
 							</td>

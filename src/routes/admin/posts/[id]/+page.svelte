@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { ArrowLeft, Save, Eye, EyeOff, AlertCircle, Trash2 } from 'lucide-svelte';
+	import { ArrowLeft, Save, AlertCircle, Trash2 } from 'lucide-svelte';
 
 	let { data, form } = $props();
 	let loading = $state(false);
-	let preview = $state(false);
-	let content = $state(data.post.POS_CONTENT);
 	let showDeleteConfirm = $state(false);
 </script>
 
 <svelte:head>
-	<title>Modifier - {data.post.POS_TITLE} - Admin</title>
+	<title>Modifier - {data.post.POS_TITLE.fr} - Admin</title>
 </svelte:head>
 
 <div class="editor-page">
@@ -53,55 +51,71 @@
 	>
 		<div class="form-main">
 			<div class="form-group">
-				<label for="title">Titre</label>
+				<label for="title_fr">Titre (FR)</label>
 				<input
 					type="text"
-					id="title"
-					name="title"
+					id="title_fr"
+					name="title_fr"
 					placeholder="Titre de l'article"
 					required
-					value={data.post.POS_TITLE}
+					value={data.post.POS_TITLE.fr}
 				/>
 			</div>
 
 			<div class="form-group">
-				<label for="description">Description</label>
-				<textarea
-					id="description"
-					name="description"
-					placeholder="Description courte pour les aperçus"
-					rows="2"
+				<label for="title_en">Title (EN)</label>
+				<input
+					type="text"
+					id="title_en"
+					name="title_en"
+					placeholder="Article title"
 					required
-				>{data.post.POS_DESCRIPTION}</textarea>
+					value={data.post.POS_TITLE.en}
+				/>
 			</div>
 
 			<div class="form-group">
-				<div class="label-row">
-					<label for="content">Contenu (Markdown)</label>
-					<button type="button" class="preview-toggle" onclick={() => preview = !preview}>
-						{#if preview}
-							<EyeOff size={16} />
-							Éditer
-						{:else}
-							<Eye size={16} />
-							Prévisualiser
-						{/if}
-					</button>
-				</div>
-				{#if preview}
-					<div class="preview-content prose">
-						{@html content}
-					</div>
-				{:else}
-					<textarea
-						id="content"
-						name="content"
-						placeholder="Écrivez votre article en Markdown..."
-						rows="20"
-						required
-						bind:value={content}
-					></textarea>
-				{/if}
+				<label for="description_fr">Description (FR)</label>
+				<textarea
+					id="description_fr"
+					name="description_fr"
+					placeholder="Description courte pour les aperçus"
+					rows="2"
+					required
+				>{data.post.POS_DESCRIPTION.fr}</textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="description_en">Description (EN)</label>
+				<textarea
+					id="description_en"
+					name="description_en"
+					placeholder="Short description for previews"
+					rows="2"
+					required
+				>{data.post.POS_DESCRIPTION.en}</textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="content_fr">Contenu (FR) (Markdown)</label>
+				<textarea
+					id="content_fr"
+					name="content_fr"
+					placeholder="Écrivez votre article en Markdown..."
+					rows="15"
+					required
+				>{data.post.POS_CONTENT.fr}</textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="content_en">Content (EN) (Markdown)</label>
+				<textarea
+					id="content_en"
+					name="content_en"
+					placeholder="Write your article in Markdown..."
+					rows="15"
+					required
+				>{data.post.POS_CONTENT.en}</textarea>
 			</div>
 		</div>
 
@@ -162,7 +176,7 @@
 	<div class="modal-overlay" onclick={() => showDeleteConfirm = false}>
 		<div class="modal" onclick={(e) => e.stopPropagation()}>
 			<h2>Supprimer l'article ?</h2>
-			<p>Cette action est irréversible. L'article "{data.post.POS_TITLE}" sera définitivement supprimé.</p>
+			<p>Cette action est irréversible. L'article "{data.post.POS_TITLE.fr}" sera définitivement supprimé.</p>
 			<div class="modal-actions">
 				<button type="button" class="btn-secondary" onclick={() => showDeleteConfirm = false}>
 					Annuler

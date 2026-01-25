@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { locale, locales } from 'svelte-i18n';
+	import { locale } from 'svelte-i18n';
+	import { invalidateAll } from '$app/navigation';
 	import { Languages } from 'lucide-svelte';
 
 	const availableLocales = [
@@ -7,10 +8,29 @@
 		{ code: 'en', label: 'EN', flag: '🇬🇧' }
 	];
 
-	function switchLocale(newLocale: string) {
+	async function switchLocale(newLocale: string) {
+		// Update client-side locale immediately
 		locale.set(newLocale);
+
+		// Save to localStorage for client-side persistence
 		if (typeof window !== 'undefined') {
 			localStorage.setItem('locale', newLocale);
+		}
+
+		// Save to cookie via API for server-side rendering
+		try {
+			await fetch('/api/locale', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ locale: newLocale })
+			});
+
+			// Invalidate all data to reload with new locale (keeps scroll position)
+			await invalidateAll();
+		} catch (error) {
+			console.error('Failed to save locale:', error);
 		}
 	}
 </script>

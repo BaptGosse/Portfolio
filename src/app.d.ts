@@ -1,5 +1,7 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
+import type { Locale } from '$lib/utils/locale';
+
 declare global {
 	namespace App {
 		// interface Error {}
@@ -9,6 +11,7 @@ declare global {
 				email: string;
 				name: string;
 			};
+			locale?: Locale;
 		}
 		// interface PageData {}
 		// interface PageState {}

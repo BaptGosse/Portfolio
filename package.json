@@ -14,7 +14,12 @@
 		"db:migrate": "dotenv drizzle-kit migrate",
 		"db:push": "dotenv drizzle-kit push",
 		"db:studio": "dotenv drizzle-kit studio",
-		"db:create-admin": "dotenv tsx scripts/create-admin.ts"
+		"db:create-admin": "dotenv tsx scripts/create-admin.ts",
+		"migrate:data": "dotenv tsx scripts/migrate-data.ts",
+		"migrate:skills": "dotenv tsx scripts/migrate-skills.ts",
+		"migrate:passions": "dotenv tsx scripts/migrate-passions.ts",
+		"translate": "dotenv tsx scripts/translate-content.ts",
+		"check:translations": "dotenv tsx scripts/check-translations.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
@@ -36,6 +41,7 @@
 		"@node-rs/argon2": "^2.0.2",
 		"dotenv": "^17.2.3",
 		"drizzle-orm": "^0.45.1",
+		"gray-matter": "^4.0.3",
 		"lucide-svelte": "^0.561.0",
 		"marked": "^17.0.1",
 		"postgres": "^3.4.7",

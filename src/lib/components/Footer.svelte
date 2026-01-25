@@ -13,7 +13,8 @@
 	const navLinks = $derived([
 		{ label: $_('nav.home'), href: '/' },
 		{ label: $_('nav.projects'), href: '/projects' },
-		{ label: $_('nav.blog'), href: '/blog' }
+		{ label: $_('nav.blog'), href: '/blog' },
+		{ label: $_('footer.credits'), href: '/credits' }
 	]);
 
 	function scrollToTop() {

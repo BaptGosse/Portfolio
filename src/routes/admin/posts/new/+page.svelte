@@ -1,36 +1,37 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { ArrowLeft, Save, Eye, EyeOff, AlertCircle } from 'lucide-svelte';
+	import { ArrowLeft } from 'lucide-svelte';
+	import type { PageData, ActionData } from './$types';
 
-	let { data, form } = $props();
+	let { data, form }: { data: PageData; form: ActionData } = $props();
+
 	let loading = $state(false);
-	let preview = $state(false);
-	let content = $state(form?.content ?? '');
+	let activeTab = $state<'fr' | 'en'>('fr');
 </script>
 
 <svelte:head>
 	<title>Nouvel article - Admin</title>
 </svelte:head>
 
-<div class="editor-page">
-	<header class="editor-header">
-		<a href="/admin/posts" class="back-link">
-			<ArrowLeft size={18} />
-			Retour aux articles
-		</a>
-		<h1>Nouvel article</h1>
+<div class="page">
+	<header class="page-header">
+		<div>
+			<a href="/admin/posts" class="back-link">
+				<ArrowLeft size={16} />
+				Retour aux articles
+			</a>
+			<h1>Nouvel article</h1>
+		</div>
 	</header>
 
 	{#if form?.error}
 		<div class="error-message">
-			<AlertCircle size={18} />
-			<span>{form.error}</span>
+			{form.error}
 		</div>
 	{/if}
 
 	<form
 		method="POST"
-		class="editor-form"
 		use:enhance={() => {
 			loading = true;
 			return async ({ update }) => {
@@ -39,102 +40,98 @@
 			};
 		}}
 	>
-		<div class="form-main">
-			<div class="form-group">
-				<label for="title">Titre</label>
-				<input
-					type="text"
-					id="title"
-					name="title"
-					placeholder="Titre de l'article"
-					required
-					value={form?.title ?? ''}
-				/>
+		<div class="form-section">
+			<div class="tabs">
+				<button
+					type="button"
+					class="tab"
+					class:active={activeTab === 'fr'}
+					onclick={() => (activeTab = 'fr')}
+				>
+					🇫🇷 Français
+				</button>
+				<button
+					type="button"
+					class="tab"
+					class:active={activeTab === 'en'}
+					onclick={() => (activeTab = 'en')}
+				>
+					🇬🇧 English
+				</button>
 			</div>
 
-			<div class="form-group">
-				<label for="description">Description</label>
-				<textarea
-					id="description"
-					name="description"
-					placeholder="Description courte pour les aperçus"
-					rows="2"
-					required
-				>{form?.description ?? ''}</textarea>
-			</div>
-
-			<div class="form-group">
-				<div class="label-row">
-					<label for="content">Contenu (Markdown)</label>
-					<button type="button" class="preview-toggle" onclick={() => preview = !preview}>
-						{#if preview}
-							<EyeOff size={16} />
-							Éditer
-						{:else}
-							<Eye size={16} />
-							Prévisualiser
-						{/if}
-					</button>
+			{#if activeTab === 'fr'}
+				<div class="form-group">
+					<label for="title_fr">Titre (FR)</label>
+					<input type="text" id="title_fr" name="title_fr" required placeholder="Titre de l'article" />
 				</div>
-				{#if preview}
-					<div class="preview-content prose">
-						{@html content}
-					</div>
-				{:else}
-					<textarea
-						id="content"
-						name="content"
-						placeholder="Écrivez votre article en Markdown..."
-						rows="20"
-						required
-						bind:value={content}
-					></textarea>
-				{/if}
-			</div>
+
+				<div class="form-group">
+					<label for="description_fr">Description (FR)</label>
+					<input type="text" id="description_fr" name="description_fr" required placeholder="Description courte" />
+				</div>
+
+				<div class="form-group">
+					<label for="content_fr">Contenu (FR)</label>
+					<textarea id="content_fr" name="content_fr" rows="20" required placeholder="Contenu en Markdown..."></textarea>
+				</div>
+			{:else}
+				<div class="form-group">
+					<label for="title_en">Title (EN)</label>
+					<input type="text" id="title_en" name="title_en" required placeholder="Article title" />
+				</div>
+
+				<div class="form-group">
+					<label for="description_en">Description (EN)</label>
+					<input type="text" id="description_en" name="description_en" required placeholder="Short description" />
+				</div>
+
+				<div class="form-group">
+					<label for="content_en">Content (EN)</label>
+					<textarea id="content_en" name="content_en" rows="20" required placeholder="Markdown content..."></textarea>
+				</div>
+			{/if}
 		</div>
 
-		<aside class="form-sidebar">
-			<div class="sidebar-section">
-				<h3>Publication</h3>
+		<div class="form-section">
+			<h2>Options</h2>
+
+			<div class="form-group">
 				<label class="checkbox-label">
 					<input type="checkbox" name="published" />
 					<span>Publier immédiatement</span>
 				</label>
 			</div>
+		</div>
 
-			{#if data.tags.length > 0}
-				<div class="sidebar-section">
-					<h3>Tags</h3>
-					<div class="tags-list">
-						{#each data.tags as tag}
-							<label class="checkbox-label">
-								<input type="checkbox" name="tags" value={tag.TAG_ID} />
-								<span>{tag.TAG_NAME}</span>
-							</label>
-						{/each}
-					</div>
-				</div>
-			{/if}
+		<div class="form-section">
+			<h2>Tags</h2>
+			<div class="tags-grid">
+				{#each data.tags as tag}
+					<label class="tag-checkbox">
+						<input type="checkbox" name="tags" value={tag.TAG_ID} />
+						<span>{tag.TAG_NAME}</span>
+					</label>
+				{/each}
+			</div>
+		</div>
 
+		<div class="form-actions">
+			<a href="/admin/posts" class="btn-secondary">Annuler</a>
 			<button type="submit" class="btn-primary" disabled={loading}>
-				<Save size={18} />
-				{#if loading}
-					Enregistrement...
-				{:else}
-					Enregistrer
-				{/if}
+				{loading ? 'Création...' : 'Créer l\'article'}
 			</button>
-		</aside>
+		</div>
 	</form>
 </div>
 
 <style>
-	.editor-page {
-		max-width: 1400px;
+	.page {
+		max-width: 900px;
 		margin: 0 auto;
 	}
 
-	.editor-header {
+	.page-header {
 		margin-bottom: var(--spacing-xl);
 	}
 
@@ -143,137 +140,116 @@
 		align-items: center;
 		gap: var(--spacing-xs);
 		color: var(--text-tertiary);
-		text-decoration: none;
 		font-size: 0.875rem;
+		text-decoration: none;
 		margin-bottom: var(--spacing-sm);
 		transition: color var(--transition-fast);
 	}
 
 	.back-link:hover {
-		color: var(--color-primary-400);
+		color: var(--text-primary);
 	}
 
-	.editor-header h1 {
+	.page-header h1 {
 		font-size: 1.5rem;
 		color: var(--text-primary);
 	}
 
 	.error-message {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-sm);
-		padding: var(--spacing-sm) var(--spacing-md);
+		padding: var(--spacing-md);
 		background-color: rgba(239, 68, 68, 0.1);
 		border: 1px solid rgba(239, 68, 68, 0.3);
 		border-radius: var(--radius-md);
 		color: #ef4444;
-		font-size: 0.875rem;
 		margin-bottom: var(--spacing-lg);
 	}
 
-	.editor-form {
-		display: grid;
-		grid-template-columns: 1fr 280px;
+	form {
+		display: flex;
+		flex-direction: column;
 		gap: var(--spacing-xl);
 	}
 
-	@media (max-width: 900px) {
-		.editor-form {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.form-main {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-lg);
-	}
-
-	.form-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-xs);
-	}
-
-	.form-group label {
-		color: var(--text-secondary);
-		font-size: 0.875rem;
-		font-weight: 500;
-	}
-
-	.label-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.preview-toggle {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-xs);
-		padding: var(--spacing-xs) var(--spacing-sm);
-		background: transparent;
+	.form-section {
+		background-color: var(--bg-secondary);
 		border: 1px solid var(--border-color);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-lg);
+		padding: var(--spacing-lg);
+	}
+
+	.form-section h2 {
+		font-size: 1rem;
+		color: var(--text-primary);
+		margin-bottom: var(--spacing-md);
+	}
+
+	.tabs {
+		display: flex;
+		gap: var(--spacing-xs);
+		margin-bottom: var(--spacing-lg);
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.tab {
+		padding: var(--spacing-sm) var(--spacing-md);
+		background: none;
+		border: none;
+		border-bottom: 2px solid transparent;
 		color: var(--text-tertiary);
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		cursor: pointer;
 		transition: all var(--transition-fast);
 	}
 
-	.preview-toggle:hover {
-		border-color: var(--color-primary-400);
-		color: var(--color-primary-400);
+	.tab:hover {
+		color: var(--text-secondary);
 	}
 
-	.form-group input,
+	.tab.active {
+		color: var(--color-primary-400);
+		border-bottom-color: var(--color-primary-400);
+	}
+
+	.form-group {
+		margin-bottom: var(--spacing-md);
+	}
+
+	.form-group:last-child {
+		margin-bottom: 0;
+	}
+
+	.form-group label {
+		display: block;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--text-secondary);
+		margin-bottom: var(--spacing-xs);
+	}
+
+	.form-group input[type='text'],
 	.form-group textarea {
+		width: 100%;
 		padding: var(--spacing-sm) var(--spacing-md);
-		background-color: var(--bg-secondary);
+		background-color: var(--bg-elevated);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
 		color: var(--text-primary);
 		font-size: 0.875rem;
-		transition: border-color var(--transition-fast);
+		transition: all var(--transition-fast);
 	}
 
 	.form-group input:focus,
 	.form-group textarea:focus {
 		outline: none;
 		border-color: var(--color-primary-400);
+		box-shadow: 0 0 0 3px rgba(192, 158, 253, 0.1);
 	}
 
 	.form-group textarea {
 		resize: vertical;
-		min-height: 200px;
 		font-family: 'Consolas', 'Monaco', monospace;
-	}
-
-	.preview-content {
-		min-height: 200px;
-		padding: var(--spacing-md);
-		background-color: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
-	}
-
-	.form-sidebar {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-lg);
-	}
-
-	.sidebar-section {
-		background-color: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-		padding: var(--spacing-md);
-	}
-
-	.sidebar-section h3 {
-		font-size: 0.875rem;
-		color: var(--text-primary);
-		margin-bottom: var(--spacing-sm);
+		font-size: 0.813rem;
+		line-height: 1.6;
 	}
 
 	.checkbox-label {
@@ -281,36 +257,63 @@
 		align-items: center;
 		gap: var(--spacing-sm);
 		cursor: pointer;
-		font-size: 0.875rem;
-		color: var(--text-secondary);
 	}
 
-	.checkbox-label input[type="checkbox"] {
-		width: 16px;
-		height: 16px;
-		accent-color: var(--color-primary-400);
+	.checkbox-label input[type='checkbox'] {
+		width: 18px;
+		height: 18px;
+		cursor: pointer;
 	}
 
-	.tags-list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-xs);
-	}
-
-	.btn-primary {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
+	.tags-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 		gap: var(--spacing-sm);
+	}
+
+	.tag-checkbox {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-xs);
+		padding: var(--spacing-sm);
+		background-color: var(--bg-elevated);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.tag-checkbox:hover {
+		background-color: var(--bg-primary);
+	}
+
+	.tag-checkbox input[type='checkbox'] {
+		cursor: pointer;
+	}
+
+	.form-actions {
+		display: flex;
+		gap: var(--spacing-md);
+		justify-content: flex-end;
+		padding-top: var(--spacing-lg);
+		border-top: 1px solid var(--border-color);
+	}
+
+	.btn-primary,
+	.btn-secondary {
 		padding: var(--spacing-sm) var(--spacing-lg);
-		background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
-		color: white;
-		border: none;
 		border-radius: var(--radius-md);
 		font-size: 0.875rem;
 		font-weight: 600;
+		text-decoration: none;
 		cursor: pointer;
 		transition: all var(--transition-fast);
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+		color: white;
+		border: none;
 	}
 
 	.btn-primary:hover:not(:disabled) {
@@ -319,7 +322,19 @@
 	}
 
 	.btn-primary:disabled {
-		opacity: 0.7;
+		opacity: 0.6;
 		cursor: not-allowed;
+	}
+
+	.btn-secondary {
+		background-color: var(--bg-elevated);
+		border: 1px solid var(--border-color);
+		color: var(--text-secondary);
+		display: inline-block;
+	}
+
+	.btn-secondary:hover {
+		background-color: var(--bg-primary);
+		color: var(--text-primary);
 	}
 </style>

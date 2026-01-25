@@ -3,11 +3,27 @@
 	import '$lib/styles/utils.css';
 	import '$lib/styles/pages.css';
 	import '$lib/i18n';
-	import { isLoading } from 'svelte-i18n';
+	import { locale, isLoading } from 'svelte-i18n';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import type { LayoutData } from './$types';
 
-	let { children } = $props();
+	let { children, data }: { children: any; data: LayoutData } = $props();
+
+	// Synchronize server locale with client i18n if they differ
+	onMount(() => {
+		if (data.locale && $locale !== data.locale) {
+			locale.set(data.locale);
+			if (typeof window !== 'undefined') {
+				localStorage.setItem('locale', data.locale);
+			}
+		}
+	});
+
+	// Check if we're on an admin page
+	const isAdminPage = $derived($page.url.pathname.startsWith('/admin'));
 </script>
 
 <svelte:head>
@@ -20,6 +36,8 @@
 	<div class="loading-container">
 		<div class="loading-spinner"></div>
 	</div>
+{:else if isAdminPage}
+	{@render children()}
 {:else}
 	<div class="layout-wrapper">
 		<Header />

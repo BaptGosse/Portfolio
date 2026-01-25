@@ -1,7 +1,21 @@
 <script lang="ts">
 	import { Sparkles } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
-	import { skills } from '$lib/data/projects';
+	import { _, locale } from 'svelte-i18n';
+
+	type SkillGroup = {
+		category: { fr: string; en: string };
+		items: { name: { fr: string; en: string }; context: { fr: string; en: string } }[];
+	};
+
+	let { skills = [] }: { skills: SkillGroup[] } = $props();
+
+	const formattedSkills = $derived(skills.map(group => ({
+		category: group.category[$locale as 'fr' | 'en'] || group.category.fr,
+		items: group.items.map(item => ({
+			name: item.name[$locale as 'fr' | 'en'] || item.name.fr,
+			context: item.context[$locale as 'fr' | 'en'] || item.context.fr
+		}))
+	})));
 </script>
 
 <section class="section stack-section">
@@ -17,7 +31,7 @@
 		</div>
 
 		<div class="stack-grid-enhanced">
-			{#each skills as skillGroup, index}
+			{#each formattedSkills as skillGroup, index}
 				<div class="stack-card-enhanced" style="animation-delay: {index * 100}ms">
 					<div class="stack-card-glow"></div>
 					<div class="stack-card-header">

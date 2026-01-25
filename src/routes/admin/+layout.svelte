@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { LayoutGrid, FileText, LogOut, Home, Tag } from 'lucide-svelte';
+	import { LayoutGrid, FileText, LogOut, Home, Tag, Briefcase, Sparkles, Wrench, Heart } from 'lucide-svelte';
 
 	let { children, data } = $props();
 
 	const navItems = [
 		{ href: '/admin', label: 'Dashboard', icon: LayoutGrid },
 		{ href: '/admin/posts', label: 'Articles', icon: FileText },
-		{ href: '/admin/projects', label: 'Projets', icon: LayoutGrid },
+		{ href: '/admin/projects', label: 'Projets', icon: Briefcase },
+		{ href: '/admin/experiences', label: 'Expériences', icon: Briefcase },
+		{ href: '/admin/skills', label: 'Compétences', icon: Sparkles },
+		{ href: '/admin/passions', label: 'Passions', icon: Heart },
+		{ href: '/admin/technologies', label: 'Technologies', icon: Wrench },
 		{ href: '/admin/tags', label: 'Tags', icon: Tag }
 	];
 </script>

@@ -28,6 +28,25 @@
 		"viewOnGithub": "Voir sur GitHub",
 		"allProjects": "Tous les projets"
 	},
+	"projectsPage": {
+		"title": "Mes Projets",
+		"titleGradient": "Projets",
+		"description": "Une sélection de mes projets en infrastructure, cloud-native et développement système. De la virtualisation bare-metal aux applications distribuées sur Kubernetes.",
+		"metaDescription": "Découvrez mes projets en infrastructure cloud-native, Kubernetes, DevOps et développement système.",
+		"filters": {
+			"all": "Tous les projets",
+			"infrastructure": "Infrastructure",
+			"cloudNative": "Cloud-Native",
+			"development": "Développement"
+		},
+		"featured": "Phare",
+		"github": "GitHub",
+		"demo": "Demo",
+		"empty": {
+			"title": "Aucun projet trouvé",
+			"description": "Essayez de changer les filtres pour voir d'autres projets."
+		}
+	},
 	"opportunities": {
 		"title": "Opportunités recherchées",
 		"subtitle": "Je suis actuellement à la recherche de nouvelles expériences professionnelles",
@@ -62,6 +81,11 @@
 		"title": "Parcours",
 		"subtitle": "Expériences professionnelles et projets réalisés"
 	},
+	"passions": {
+		"title": "Passions Culturelles",
+		"subtitle": "Au-delà du code, mes activités artistiques qui enrichissent mes compétences professionnelles",
+		"skills_developed": "Compétences développées"
+	},
 	"contact": {
 		"title": "Travaillons ensemble",
 		"subtitle": "À la recherche d'un <strong>stage de 8 à 10 semaines (2e année)</strong> et d'une <strong>alternance (3e année)</strong>.<br />Un projet d'infrastructure ? Besoin d'expertise cloud-native ?<br />Discutons-en autour d'un café (virtuel ou réel) ☕",
@@ -74,6 +98,146 @@
 		"contactTitle": "Contactez-moi",
 		"backToTop": "Retour en haut",
 		"copyright": "© {year} Baptiste Gosselin. Tous droits réservés.",
-		"description": "Étudiant en informatique passionné par l'infrastructure cloud-native et le développement système."
+		"description": "Étudiant en informatique passionné par l'infrastructure cloud-native et le développement système.",
+		"credits": "Crédits"
+	},
+	"credits": {
+		"title": "Crédits",
+		"titleGradient": "Technologies",
+		"subtitle": "Ce site a été construit avec ces incroyables technologies open source",
+		"metaTitle": "Crédits & Technologies - Baptiste Gosselin",
+		"metaDescription": "Technologies et outils open source utilisés pour construire ce portfolio.",
+		"categories": {
+			"framework": "Framework & Build",
+			"language": "Langages",
+			"database": "Base de données",
+			"ui": "Interface & Icônes",
+			"devops": "DevOps & Déploiement",
+			"tools": "Outils de développement"
+		},
+		"madeWith": "Fait avec",
+		"viewSource": "Voir le code source",
+		"openSource": "Ce projet est open source"
+	},
+	"terminal": {
+		"welcome": "Bienvenue ! Tapez \"help\" pour voir les commandes disponibles 👋",
+		"placeholder": "Tapez 'help' pour les commandes...",
+		"commandNotFound": "bash: {command}: commande introuvable",
+		"typeHelp": "Tapez \"help\" pour les commandes disponibles",
+		"help": {
+			"title": "Commandes disponibles :",
+			"commands": {
+				"help": "Afficher ce message d'aide",
+				"about": "En savoir plus sur moi",
+				"skills": "Lister mes compétences techniques",
+				"projects": "Voir mes projets",
+				"contact": "Obtenir mes informations de contact",
+				"whoami": "Afficher l'utilisateur actuel",
+				"date": "Afficher la date actuelle",
+				"echo": "Afficher un message",
+				"clear": "Effacer le terminal",
+				"neofetch": "Afficher les informations système",
+				"fortune": "Obtenir une citation aléatoire",
+				"matrix": "Entrer dans la Matrix... (je plaisante)",
+				"sudo": "Avec de grands pouvoirs...",
+				"kubectl": "Vérifier l'état du cluster Kubernetes",
+				"docker": "Lister les conteneurs en cours d'exécution",
+				"weather": "Vérifier la météo",
+				"joke": "Raconter une blague",
+				"cat": "Afficher le contenu d'un fichier",
+				"history": "Afficher l'historique des commandes"
+			}
+		},
+		"about": {
+			"line1": "Baptiste Gosselin",
+			"line2": "Étudiant en informatique passionné par l'infrastructure cloud-native.",
+			"line3": "Spécialisé en Kubernetes, DevOps et développement système.",
+			"location": "📍 France",
+			"education": "🎓 Étudiant en Informatique",
+			"role": "💼 Dirigeant d'UnxWares"
+		},
+		"skills": {
+			"title": "Stack Technique :",
+			"cloudNative": "☸️  Cloud-Native: Kubernetes, k3s, ArgoCD, Helm",
+			"containers": "🐳 Containers: Docker, Containerd",
+			"infrastructure": "🔧 Infrastructure: Proxmox, Debian, NGINX",
+			"devops": "⚙️  DevOps: Jenkins, GitOps, CI/CD",
+			"languages": "💻 Langages: Go, Rust, TypeScript, PHP",
+			"monitoring": "📊 Monitoring: Prometheus, Grafana"
+		},
+		"projects": {
+			"title": "Projets Phares :",
+			"k8s": "Cluster Kubernetes Homelab",
+			"k8sDesc": "→ Infrastructure cloud-native complète sur k3s",
+			"orchestrator": "Orchestrateur de Services en Go",
+			"orchestratorDesc": "→ Système d'orchestration personnalisé en Go",
+			"infra": "Infrastructure Self-Hosted",
+			"infraDesc": "→ Stack complète self-hosted avec GitOps",
+			"visitMore": "Visitez /projects pour plus de détails !"
+		},
+		"contact": {
+			"title": "Informations de contact :",
+			"email": "📧 Email: contact@baptiste-gosselin.fr",
+			"github": "🐙 GitHub: github.com/baptgosse",
+			"linkedin": "💼 LinkedIn: Baptiste Gosselin",
+			"reachOut": "N'hésitez pas à me contacter !"
+		},
+		"neofetch": {
+			"user": "baptiste@portfolio",
+			"os": "OS: Arch Linux btw",
+			"host": "Host: Cloud-Native Infrastructure",
+			"kernel": "Kernel: k3s-5.15.0",
+			"uptime": "Uptime: 420 jours",
+			"packages": "Packages: ∞",
+			"shell": "Shell: zsh",
+			"resolution": "Resolution: 1920x1080",
+			"de": "DE: SvelteKit",
+			"theme": "Theme: Technical Elegance",
+			"icons": "Icons: Lucide"
+		},
+		"matrix": {
+			"line1": "Réveille-toi, Baptiste...",
+			"line2": "Matrix t'a...",
+			"line3": "Suis le lapin blanc.",
+			"joke": "(Je plaisante, c'est un site portfolio 😄)"
+		},
+		"sudo": "Bien essayé ! 😏",
+		"exit": "Vous ne pouvez pas échapper au terminal ! Essayez \"clear\" à la place.",
+		"kubectl": {
+			"healthyCluster": "Le cluster est en bonne santé ! ✅"
+		},
+		"docker": {
+			"running": "{count} conteneurs en cours d'exécution"
+		},
+		"weather": {
+			"sunny": "☀️ Ensoleillé",
+			"partlyCloudy": "🌤️ Partiellement nuageux",
+			"cloudy": "☁️ Nuageux",
+			"rainy": "🌧️ Pluvieux",
+			"stormy": "⛈️ Orageux",
+			"temperature": "Température: {temp}°C",
+			"perfect": "Météo parfaite pour coder ! 💻"
+		},
+		"cat": {
+			"usage": "Usage: cat [filename]",
+			"available": "Fichiers disponibles :",
+			"aboutFile": "  cat about.md",
+			"resumeFile": "  cat resume.pdf",
+			"try": "Essayez: cat about.md",
+			"noFile": "cat: {file}: Aucun fichier ou dossier de ce type",
+			"aboutTitle": "# Baptiste Gosselin",
+			"aboutDesc": "Étudiant en informatique passionné par l'infrastructure.",
+			"aboutExpertise": "## Expertise",
+			"aboutSkill1": "- Cloud-Native & Kubernetes",
+			"aboutSkill2": "- DevOps & GitOps",
+			"aboutSkill3": "- Infrastructure as Code",
+			"aboutSkill4": "- Développement système (Go, Rust)",
+			"resumeTitle": "📄 CV - Baptiste Gosselin",
+			"resumeError": "Malheureusement, vous ne pouvez pas lire un PDF dans le terminal ! 😄",
+			"resumeTip": "Essayez: contact  (pour obtenir mes informations de contact)"
+		},
+		"history": {
+			"title": "Historique des commandes :"
+		}
 	}
 }

@@ -38,7 +38,7 @@
 						<tr>
 							<td>
 								<div class="project-title">
-									{project.PRJ_TITLE}
+									{project.PRJ_TITLE.fr}
 								</div>
 							</td>
 							<td>

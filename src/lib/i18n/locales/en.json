@@ -28,6 +28,25 @@
 		"viewOnGithub": "View on GitHub",
 		"allProjects": "All projects"
 	},
+	"projectsPage": {
+		"title": "My Projects",
+		"titleGradient": "Projects",
+		"description": "A selection of my projects in infrastructure, cloud-native and system development. From bare-metal virtualization to distributed applications on Kubernetes.",
+		"metaDescription": "Discover my projects in cloud-native infrastructure, Kubernetes, DevOps and system development.",
+		"filters": {
+			"all": "All projects",
+			"infrastructure": "Infrastructure",
+			"cloudNative": "Cloud-Native",
+			"development": "Development"
+		},
+		"featured": "Featured",
+		"github": "GitHub",
+		"demo": "Demo",
+		"empty": {
+			"title": "No projects found",
+			"description": "Try changing the filters to see other projects."
+		}
+	},
 	"opportunities": {
 		"title": "Opportunities Sought",
 		"subtitle": "I am currently looking for new professional experiences",
@@ -62,6 +81,11 @@
 		"title": "Background",
 		"subtitle": "Professional experiences and completed projects"
 	},
+	"passions": {
+		"title": "Cultural Passions",
+		"subtitle": "Beyond code, my artistic activities that enrich my professional skills",
+		"skills_developed": "Skills Developed"
+	},
 	"contact": {
 		"title": "Let's work together",
 		"subtitle": "Looking for an <strong>8 to 10 week internship (2nd year)</strong> and an <strong>apprenticeship (3rd year)</strong>.<br />An infrastructure project? Need cloud-native expertise?<br />Let's discuss it over a coffee (virtual or real) ☕",
@@ -74,6 +98,146 @@
 		"contactTitle": "Contact me",
 		"backToTop": "Back to top",
 		"copyright": "© {year} Baptiste Gosselin. All rights reserved.",
-		"description": "Computer Science student passionate about cloud-native infrastructure and system development."
+		"description": "Computer Science student passionate about cloud-native infrastructure and system development.",
+		"credits": "Credits"
+	},
+	"credits": {
+		"title": "Credits",
+		"titleGradient": "Technologies",
+		"subtitle": "This site was built with these amazing open source technologies",
+		"metaTitle": "Credits & Technologies - Baptiste Gosselin",
+		"metaDescription": "Technologies and open source tools used to build this portfolio.",
+		"categories": {
+			"framework": "Framework & Build",
+			"language": "Languages",
+			"database": "Database",
+			"ui": "UI & Icons",
+			"devops": "DevOps & Deployment",
+			"tools": "Development Tools"
+		},
+		"madeWith": "Made with",
+		"viewSource": "View source code",
+		"openSource": "This project is open source"
+	},
+	"terminal": {
+		"welcome": "Welcome! Type \"help\" to see available commands 👋",
+		"placeholder": "Type 'help' for commands...",
+		"commandNotFound": "bash: {command}: command not found",
+		"typeHelp": "Type \"help\" for available commands",
+		"help": {
+			"title": "Available commands:",
+			"commands": {
+				"help": "Show this help message",
+				"about": "Learn more about me",
+				"skills": "List my technical skills",
+				"projects": "View my projects",
+				"contact": "Get my contact information",
+				"whoami": "Display current user",
+				"date": "Show current date",
+				"echo": "Print a message",
+				"clear": "Clear the terminal",
+				"neofetch": "Display system information",
+				"fortune": "Get a random quote",
+				"matrix": "Enter the Matrix... (just kidding)",
+				"sudo": "With great power...",
+				"kubectl": "Check Kubernetes cluster status",
+				"docker": "List running containers",
+				"weather": "Check the weather",
+				"joke": "Tell me a joke",
+				"cat": "Display file contents",
+				"history": "Show command history"
+			}
+		},
+		"about": {
+			"line1": "Baptiste Gosselin",
+			"line2": "Computer Science student passionate about cloud-native infrastructure.",
+			"line3": "Specialized in Kubernetes, DevOps and system development.",
+			"location": "📍 France",
+			"education": "🎓 Computer Science Student",
+			"role": "💼 CEO at UnxWares"
+		},
+		"skills": {
+			"title": "Technical Stack:",
+			"cloudNative": "☸️  Cloud-Native: Kubernetes, k3s, ArgoCD, Helm",
+			"containers": "🐳 Containers: Docker, Containerd",
+			"infrastructure": "🔧 Infrastructure: Proxmox, Debian, NGINX",
+			"devops": "⚙️  DevOps: Jenkins, GitOps, CI/CD",
+			"languages": "💻 Languages: Go, Rust, TypeScript, PHP",
+			"monitoring": "📊 Monitoring: Prometheus, Grafana"
+		},
+		"projects": {
+			"title": "Featured Projects:",
+			"k8s": "Kubernetes Homelab Cluster",
+			"k8sDesc": "→ Complete cloud-native infrastructure on k3s",
+			"orchestrator": "Go Service Orchestrator",
+			"orchestratorDesc": "→ Custom orchestration system in Go",
+			"infra": "Self-Hosted Infrastructure",
+			"infraDesc": "→ Full self-hosted stack with GitOps",
+			"visitMore": "Visit /projects for more details!"
+		},
+		"contact": {
+			"title": "Contact Information:",
+			"email": "📧 Email: contact@baptiste-gosselin.fr",
+			"github": "🐙 GitHub: github.com/baptgosse",
+			"linkedin": "💼 LinkedIn: Baptiste Gosselin",
+			"reachOut": "Feel free to reach out!"
+		},
+		"neofetch": {
+			"user": "baptiste@portfolio",
+			"os": "OS: Arch Linux btw",
+			"host": "Host: Cloud-Native Infrastructure",
+			"kernel": "Kernel: k3s-5.15.0",
+			"uptime": "Uptime: 420 days",
+			"packages": "Packages: ∞",
+			"shell": "Shell: zsh",
+			"resolution": "Resolution: 1920x1080",
+			"de": "DE: SvelteKit",
+			"theme": "Theme: Technical Elegance",
+			"icons": "Icons: Lucide"
+		},
+		"matrix": {
+			"line1": "Wake up, Baptiste...",
+			"line2": "The Matrix has you...",
+			"line3": "Follow the white rabbit.",
+			"joke": "(Just kidding, this is a portfolio website 😄)"
+		},
+		"sudo": "Nice try! 😏",
+		"exit": "You cannot escape the terminal! Try \"clear\" instead.",
+		"kubectl": {
+			"healthyCluster": "Cluster is healthy! ✅"
+		},
+		"docker": {
+			"running": "{count} containers running"
+		},
+		"weather": {
+			"sunny": "☀️ Sunny",
+			"partlyCloudy": "🌤️ Partly Cloudy",
+			"cloudy": "☁️ Cloudy",
+			"rainy": "🌧️ Rainy",
+			"stormy": "⛈️ Stormy",
+			"temperature": "Temperature: {temp}°C",
+			"perfect": "Perfect weather for coding! 💻"
+		},
+		"cat": {
+			"usage": "Usage: cat [filename]",
+			"available": "Available files:",
+			"aboutFile": "  cat about.md",
+			"resumeFile": "  cat resume.pdf",
+			"try": "Try: cat about.md",
+			"noFile": "cat: {file}: No such file or directory",
+			"aboutTitle": "# Baptiste Gosselin",
+			"aboutDesc": "Computer Science student passionate about infrastructure.",
+			"aboutExpertise": "## Expertise",
+			"aboutSkill1": "- Cloud-Native & Kubernetes",
+			"aboutSkill2": "- DevOps & GitOps",
+			"aboutSkill3": "- Infrastructure as Code",
+			"aboutSkill4": "- System development (Go, Rust)",
+			"resumeTitle": "📄 Resume - Baptiste Gosselin",
+			"resumeError": "Unfortunately, you cannot read a PDF in the terminal! 😄",
+			"resumeTip": "Try: contact  (to get my contact information)"
+		},
+		"history": {
+			"title": "Command history:"
+		}
 	}
 }

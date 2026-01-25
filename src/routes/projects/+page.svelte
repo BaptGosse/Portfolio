@@ -1,17 +1,20 @@
 <script lang="ts">
-	import { projects } from '$lib/data/projects';
 	import { Github, ExternalLink, Cloud, Server, Terminal, Code2 } from 'lucide-svelte';
+	import { t } from 'svelte-i18n';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	let selectedFilter = $state('all');
 
-	const categories = [
-		{ id: 'all', label: 'Tous les projets' },
-		{ id: 'infrastructure', label: 'Infrastructure' },
-		{ id: 'cloud-native', label: 'Cloud-Native' },
-		{ id: 'development', label: 'Développement' }
-	];
+	const categories = $derived([
+		{ id: 'all', label: $t('projectsPage.filters.all') },
+		{ id: 'infrastructure', label: $t('projectsPage.filters.infrastructure') },
+		{ id: 'cloud-native', label: $t('projectsPage.filters.cloudNative') },
+		{ id: 'development', label: $t('projectsPage.filters.development') }
+	]);
 
-	function getProjectCategory(project: typeof projects[0]) {
+	function getProjectCategory(project: typeof data.projects[0]) {
 		if (project.technologies.some(t => ['Kubernetes', 'k3s', 'Helm'].includes(t))) {
 			return 'cloud-native';
 		} else if (project.technologies.some(t => ['Proxmox', 'Debian', 'NGINX'].includes(t))) {
@@ -22,11 +25,11 @@
 
 	const filteredProjects = $derived(
 		selectedFilter === 'all'
-			? projects
-			: projects.filter(p => getProjectCategory(p) === selectedFilter)
+			? data.projects
+			: data.projects.filter(p => getProjectCategory(p) === selectedFilter)
 	);
 
-	function getProjectIcon(project: typeof projects[0]) {
+	function getProjectIcon(project: typeof data.projects[0]) {
 		if (project.id.includes('k8s') || project.technologies.includes('Kubernetes')) {
 			return Cloud;
 		} else if (project.id.includes('orchestrator') || project.technologies.includes('Go')) {
@@ -39,8 +42,8 @@
 </script>
 
 <svelte:head>
-	<title>Projets - Baptiste Gosselin</title>
-	<meta name="description" content="Découvrez mes projets en infrastructure cloud-native, Kubernetes, DevOps et développement système." />
+	<title>{$t('projectsPage.titleGradient')} - Baptiste Gosselin</title>
+	<meta name="description" content={$t('projectsPage.metaDescription')} />
 </svelte:head>
 
 <!-- Hero Section -->
@@ -48,11 +51,10 @@
 	<div class="container">
 		<div class="hero-content">
 			<h1 class="page-title">
-				Mes <span class="gradient-text">Projets</span>
+				{$t('projectsPage.title')} <span class="gradient-text">{$t('projectsPage.titleGradient')}</span>
 			</h1>
 			<p class="page-description">
-				Une sélection de mes projets en infrastructure, cloud-native et développement système.
-				De la virtualisation bare-metal aux applications distribuées sur Kubernetes.
+				{$t('projectsPage.description')}
 			</p>
 		</div>
 	</div>
@@ -70,7 +72,7 @@
 				>
 					{category.label}
 					<span class="project-count">
-						{category.id === 'all' ? projects.length : projects.filter(p => getProjectCategory(p) === category.id).length}
+						{category.id === 'all' ? data.projects.length : data.projects.filter(p => getProjectCategory(p) === category.id).length}
 					</span>
 				</button>
 			{/each}
@@ -93,7 +95,7 @@
 							<Icon size={24} />
 						</div>
 						{#if project.featured}
-							<span class="featured-badge">Phare</span>
+							<span class="featured-badge">{$t('projectsPage.featured')}</span>
 						{/if}
 					</div>
 
@@ -115,7 +117,7 @@
 								class="project-link"
 							>
 								<Github size={16} />
-								GitHub
+								{$t('projectsPage.github')}
 							</a>
 						{/if}
 						{#if project.demo}
@@ -126,7 +128,7 @@
 								class="project-link"
 							>
 								<ExternalLink size={16} />
-								Demo
+								{$t('projectsPage.demo')}
 							</a>
 						{/if}
 					</div>
@@ -139,9 +141,9 @@
 				<div class="empty-icon">
 					<Terminal size={48} />
 				</div>
-				<h3 class="empty-title">Aucun projet trouvé</h3>
+				<h3 class="empty-title">{$t('projectsPage.empty.title')}</h3>
 				<p class="empty-description">
-					Essayez de changer les filtres pour voir d'autres projets.
+					{$t('projectsPage.empty.description')}
 				</p>
 			</div>
 		{/if}
@@ -349,8 +351,8 @@
 		font-size: 0.75rem;
 		font-weight: 600;
 		text-transform: uppercase;
-		background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
-		color: var(--bg-primary);
+		background: linear-gradient(135deg, var(--color-accent), var(--color-secondary-accent));
+		color: #ffffff;
 		border-radius: var(--radius-full);
 		letter-spacing: 0.05em;
 	}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Sparkles, Terminal, Rocket, ArrowRight } from 'lucide-svelte';
-	import { _ } from 'svelte-i18n';
+	import { _, json } from 'svelte-i18n';
 </script>
 
 <section class="section opportunities-section">
@@ -29,7 +29,7 @@
 					{$_('opportunities.internship.description')}
 				</p>
 				<ul class="opportunity-skills">
-					{#each $_('opportunities.internship.skills') as skill}
+					{#each $json('opportunities.internship.skills') as skill}
 						<li>{skill}</li>
 					{/each}
 				</ul>
@@ -48,7 +48,7 @@
 					{$_('opportunities.apprenticeship.description')}
 				</p>
 				<ul class="opportunity-skills">
-					{#each $_('opportunities.apprenticeship.skills') as skill}
+					{#each $json('opportunities.apprenticeship.skills') as skill}
 						<li>{skill}</li>
 					{/each}
 				</ul>

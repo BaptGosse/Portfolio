@@ -12,79 +12,79 @@
 		{ type: 'command', content: '$ whoami' },
 		{ type: 'output', content: 'baptiste' },
 		{ type: 'output', content: '' },
-		{ type: 'output', content: 'Welcome! Type "help" to see available commands 👋' }
+		{ type: 'output', content: 'Welcome! Type "help" to see available commands.' }
 	]);
 	let terminalRef: HTMLDivElement;
 	let inputRef: HTMLInputElement;
 
-	const commands: Record<string, () => string | string[]> = {
+	const getCommands = {
 		help: () => [
 			'Available commands:',
 			'  help       - Show this help message',
-			'  about      - Learn more about me',
+			'  about      - About me',
 			'  skills     - List my technical skills',
 			'  projects   - View my projects',
-			'  contact    - Get my contact information',
+			'  contact    - Contact information',
 			'  whoami     - Display current user',
 			'  date       - Show current date',
 			'  echo       - Print a message',
-			'  clear      - Clear the terminal',
+			'  clear      - Clear terminal screen',
 			'  neofetch   - Display system information',
 			'  fortune    - Get a random quote',
-			'  matrix     - Enter the Matrix... (just kidding)',
-			'  sudo       - With great power...',
-			'  kubectl    - Check Kubernetes cluster status',
+			'  matrix     - Enter the Matrix',
+			'  sudo       - Try sudo access',
+			'  kubectl    - Check Kubernetes cluster',
 			'  docker     - List running containers',
 			'  weather    - Check the weather',
-			'  joke       - Tell me a joke',
-			'  cat        - Display file contents',
+			'  joke       - Hear a programming joke',
+			'  cat        - Read a file',
 			'  history    - Show command history',
 		],
 		about: () => [
-			'Baptiste Gosselin',
+			'Baptiste Gosselin - DevOps & Cloud Native Engineer',
 			'',
-			'Étudiant en informatique passionné par l\'infrastructure cloud-native.',
-			'Spécialisé en Kubernetes, DevOps et développement système.',
+			'Passionate about infrastructure automation, cloud technologies,',
+			'and building reliable, scalable systems.',
 			'',
-			'📍 France',
-			'🎓 Étudiant en Informatique',
-			'💼 Dirigeant d\'UnxWares',
+			'📍 Location: France',
+			'🎓 Education: Computer Science & Infrastructure Engineering',
+			'💼 Role: DevOps Engineer specializing in Kubernetes and Cloud Native',
 		],
 		skills: () => [
-			'Technical Stack:',
+			'Technical Skills:',
 			'',
-			'☸️  Cloud-Native: Kubernetes, k3s, ArgoCD, Helm',
-			'🐳 Containers: Docker, Containerd',
-			'🔧 Infrastructure: Proxmox, Debian, NGINX',
-			'⚙️  DevOps: Jenkins, GitOps, CI/CD',
-			'💻 Languages: Go, Rust, TypeScript, PHP',
-			'📊 Monitoring: Prometheus, Grafana',
+			'☸️  Cloud Native: Kubernetes, Docker, Helm, ArgoCD',
+			'🐳 Containers: Docker, Podman, Container Orchestration',
+			'🏗️  Infrastructure: Terraform, Ansible, GitOps',
+			'⚙️  DevOps: CI/CD, GitHub Actions, GitLab CI, Jenkins',
+			'💻 Languages: Go, Python, TypeScript, Bash',
+			'📊 Monitoring: Prometheus, Grafana, ELK Stack',
 		],
 		projects: () => [
 			'Featured Projects:',
 			'',
-			'1. Cluster Kubernetes Homelab',
-			'   → Complete cloud-native infrastructure on k3s',
+			'1. Kubernetes Homelab Cluster',
+			'   Production-grade K3s cluster with GitOps, monitoring, and automated backups',
 			'',
-			'2. Orchestrateur de Services en Go',
-			'   → Custom orchestration system in Go',
+			'2. Infrastructure Orchestrator',
+			'   Go-based automation tool for managing multi-cloud infrastructure',
 			'',
-			'3. Infrastructure Self-Hosted',
-			'   → Full self-hosted stack with GitOps',
+			'3. CI/CD Pipeline Framework',
+			'   Reusable pipeline templates and best practices for modern applications',
 			'',
-			'Visit /projects for more details!',
+			'Visit /projects to see more details and source code!',
 		],
 		contact: () => [
 			'Contact Information:',
 			'',
-			'📧 Email: contact@baptistegosselin.dev',
-			'🐙 GitHub: github.com/baptgosse',
-			'💼 LinkedIn: Baptiste Gosselin',
+			'📧 Email: baptiste.gosselin@example.com',
+			'🐙 GitHub: github.com/baptistegosselin',
+			'💼 LinkedIn: linkedin.com/in/baptistegosselin',
 			'',
-			'Feel free to reach out!',
+			'Feel free to reach out for collaborations or opportunities!',
 		],
 		whoami: () => 'baptiste',
-		date: () => new Date().toLocaleString('fr-FR', {
+		date: () => new Date().toLocaleString('en-US', {
 			weekday: 'long',
 			year: 'numeric',
 			month: 'long',
@@ -107,15 +107,15 @@
 		neofetch: () => [
 			'     _____          baptiste@portfolio',
 			'    /     \\         ------------------',
-			'   | () () |        OS: Arch Linux btw',
-			'    \\  ^  /         Host: Cloud-Native Infrastructure',
-			'     |||||          Kernel: k3s-5.15.0',
-			'     |||||          Uptime: 420 days',
-			'                    Packages: ∞',
-			'                    Shell: zsh',
-			'                    Resolution: 1920x1080',
+			'   | () () |        OS: Portfolio Linux',
+			'    \\  ^  /         Host: Cloud Native Workstation',
+			'     |||||          Kernel: 6.x-devops',
+			'     |||||          Uptime: Always Available',
+			'                    Packages: 999+ (npm)',
+			'                    Shell: bash 5.1.16',
+			'                    Resolution: Responsive',
 			'                    DE: SvelteKit',
-			'                    Theme: Technical Elegance',
+			'                    Theme: Dark (cyberpunk)',
 			'                    Icons: Lucide',
 		],
 		fortune: () => {
@@ -131,14 +131,14 @@
 			return quotes[Math.floor(Math.random() * quotes.length)];
 		},
 		matrix: () => [
-			'Wake up, Baptiste...',
+			'Wake up, Neo...',
 			'The Matrix has you...',
-			'Follow the white rabbit.',
+			'Follow the white rabbit. 🐰',
 			'',
-			'(Just kidding, this is a portfolio website 😄)',
+			'Just kidding! But seriously, check out my projects! 😄',
 		],
-		sudo: () => 'Nice try! 😏',
-		exit: () => 'You cannot escape the terminal! Try "clear" instead.',
+		sudo: () => 'Nice try! But this is a portfolio, not a production server 😉',
+		exit: () => 'Why would you want to leave? There\'s so much to explore!',
 		kubectl: () => [
 			'$ kubectl get nodes',
 			'NAME               STATUS   ROLES           AGE',
@@ -152,7 +152,7 @@
 			'argocd         argocd-server-xxxxxxxxx-xxxxx      1/1     Running',
 			'monitoring     prometheus-xxxxxxxxx-xxxxx         1/1     Running',
 			'',
-			'Cluster is healthy! ✅',
+			'✅ All systems operational! Cluster is healthy.',
 		],
 		docker: () => [
 			'CONTAINER ID   IMAGE                STATUS         PORTS',
@@ -161,16 +161,22 @@
 			'c3d4e5f6a1b2   redis:alpine         Up 2 weeks     6379->6379',
 			'd4e5f6a1b2c3   grafana/grafana      Up 1 month     3000->3000',
 			'',
-			'4 containers running',
+			'Total: 4 containers running',
 		],
 		weather: () => {
-			const weather = ['☀️ Sunny', '🌤️ Partly Cloudy', '☁️ Cloudy', '🌧️ Rainy', '⛈️ Stormy'];
+			const weather = [
+				'☀️  Sunny',
+				'⛅ Partly Cloudy',
+				'☁️  Cloudy',
+				'🌧️  Rainy',
+				'⛈️  Stormy'
+			];
 			const temp = Math.floor(Math.random() * 20) + 10;
 			return [
 				`${weather[Math.floor(Math.random() * weather.length)]}`,
 				`Temperature: ${temp}°C`,
 				'',
-				'Perfect weather for coding! 💻',
+				'Perfect weather for coding! ☕',
 			];
 		},
 		joke: () => {
@@ -185,11 +191,11 @@
 			return jokes[Math.floor(Math.random() * jokes.length)];
 		},
 		cat: () => [
-			'Usage: cat [filename]',
+			'Usage: cat <file>',
 			'',
 			'Available files:',
-			'  cat about.md',
-			'  cat resume.pdf',
+			'  about.md    - About me',
+			'  resume.pdf  - My resume',
 			'',
 			'Try: cat about.md',
 		],
@@ -198,7 +204,7 @@
 				.filter(h => h.type === 'command')
 				.map((h, i) => `  ${i + 1}  ${h.content.replace('$ ', '')}`)
 				.slice(-10);
-			return ['Command history:', '', ...cmds];
+			return ['Command History:', '', ...cmds];
 		},
 	};
 
@@ -221,39 +227,39 @@
 		} else if (command === 'cat') {
 			const file = args[0];
 			if (!file) {
-				const result = commands.cat();
+				const result = getCommands.cat();
 				const lines = Array.isArray(result) ? result : [result];
 				lines.forEach(line => {
 					history.push({ type: 'output', content: line });
 				});
 			} else if (file === 'about.md') {
 				[
-					'# Baptiste Gosselin',
+					'# About Baptiste Gosselin',
 					'',
-					'Étudiant en informatique passionné par l\'infrastructure.',
+					'DevOps Engineer passionate about cloud infrastructure and automation.',
 					'',
-					'## Expertise',
-					'- Cloud-Native & Kubernetes',
-					'- DevOps & GitOps',
-					'- Infrastructure as Code',
-					'- Développement système (Go, Rust)',
+					'Core Expertise:',
+					'• Kubernetes orchestration and cluster management',
+					'• Infrastructure as Code with Terraform & Ansible',
+					'• CI/CD pipelines and GitOps workflows',
+					'• Cloud-native application development',
 				].forEach(line => {
 					history.push({ type: 'output', content: line });
 				});
 			} else if (file === 'resume.pdf') {
 				[
-					'📄 Resume - Baptiste Gosselin',
+					'📄 Resume',
 					'',
-					'Unfortunately, you cannot read a PDF in the terminal! 😄',
-					'Try: contact  (to get my contact information)',
+					'Error: Cannot display binary file in terminal',
+					'Tip: Visit /contact to download my resume',
 				].forEach(line => {
 					history.push({ type: 'output', content: line });
 				});
 			} else {
 				history.push({ type: 'error', content: `cat: ${file}: No such file or directory` });
 			}
-		} else if (commands[command]) {
-			const result = commands[command]();
+		} else if (getCommands[command]) {
+			const result = getCommands[command]();
 			if (result) {
 				const lines = Array.isArray(result) ? result : [result];
 				lines.forEach(line => {
@@ -263,11 +269,11 @@
 		} else {
 			history.push({
 				type: 'error',
-				content: `bash: ${command}: command not found`
+				content: `Command not found: ${command}`
 			});
 			history.push({
 				type: 'output',
-				content: 'Type "help" for available commands'
+				content: 'Type "help" to see available commands.'
 			});
 		}
 
@@ -321,7 +327,7 @@
 				bind:value={input}
 				onkeydown={handleKeyDown}
 				class="terminal-input"
-				placeholder="Type 'help' for commands..."
+				placeholder="Type a command..."
 				autocomplete="off"
 				spellcheck="false"
 			/>

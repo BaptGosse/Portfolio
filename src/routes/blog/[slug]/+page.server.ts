@@ -4,8 +4,11 @@ import { db } from '$lib/server/db';
 import { POR_POSTS, POR_POSTS_TAGS, POR_TAGS } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { marked } from 'marked';
+import { getLocale } from '$lib/utils/locale';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
+	const locale = getLocale(locals.locale);
+
 	// Récupérer l'article depuis la base de données
 	const [post] = await db
 		.select()
@@ -27,16 +30,17 @@ export const load: PageServerLoad = async ({ params }) => {
 		.innerJoin(POR_TAGS, eq(POR_POSTS_TAGS.TAG_ID, POR_TAGS.TAG_ID))
 		.where(eq(POR_POSTS_TAGS.POS_ID, post.POS_ID));
 
-	// Convertir le Markdown en HTML
-	const htmlContent = await marked(post.POS_CONTENT);
+	// Convertir le Markdown en HTML avec la bonne locale
+	const markdownContent = post.POS_CONTENT[locale] || post.POS_CONTENT.fr;
+	const htmlContent = await marked(markdownContent);
 
 	return {
 		post: {
-			title: post.POS_TITLE,
-			description: post.POS_DESCRIPTION,
+			title: post.POS_TITLE[locale] || post.POS_TITLE.fr,
+			description: post.POS_DESCRIPTION[locale] || post.POS_DESCRIPTION.fr,
 			content: htmlContent,
 			date: post.POS_PUBLISHED_AT?.toISOString() || post.POS_CREATED_AT.toISOString(),
-			tags: postTags.map(t => t.name)
+			tags: postTags.map((t) => t.name)
 		}
 	};
 };

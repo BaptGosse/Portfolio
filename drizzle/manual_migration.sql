@@ -1,0 +1,72 @@
+-- Migration manuelle pour convertir les colonnes en JSONB
+-- Les données existantes seront converties en format {fr: "valeur", en: "valeur"}
+
+-- Créer la nouvelle table POR_EXPERIENCES
+CREATE TABLE IF NOT EXISTS "POR_EXPERIENCES" (
+	"EXP_ID" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"EXP_COMPANY" jsonb NOT NULL,
+	"EXP_ROLE" jsonb NOT NULL,
+	"EXP_DESCRIPTION" jsonb NOT NULL,
+	"EXP_TYPE" varchar(20) NOT NULL,
+	"EXP_ORDER" varchar(10) DEFAULT '0' NOT NULL,
+	"EXP_START_DATE" timestamp NOT NULL,
+	"EXP_END_DATE" timestamp,
+	"EXP_COMPANY_URL" varchar(255),
+	"EXP_LOGO" varchar(255),
+	"USR_ID" uuid NOT NULL,
+	"EXP_CREATED_AT" timestamp DEFAULT now() NOT NULL,
+	"EXP_UPDATED_AT" timestamp DEFAULT now()
+);
+
+-- Créer la table de liaison expériences-technologies
+CREATE TABLE IF NOT EXISTS "POR_EXPERIENCES_TECHNOLOGIES" (
+	"EXP_ID" uuid NOT NULL,
+	"TEC_ID" uuid NOT NULL,
+	CONSTRAINT "POR_EXPERIENCES_TECHNOLOGIES_EXP_ID_TEC_ID_pk" PRIMARY KEY("EXP_ID","TEC_ID")
+);
+
+-- Supprimer la contrainte unique sur TEC_NAME avant modification
+ALTER TABLE "POR_TECHNOLOGIES" DROP CONSTRAINT IF EXISTS "POR_TECHNOLOGIES_TEC_NAME_unique";
+
+-- Convertir POR_POSTS en JSONB (wrap existing strings)
+ALTER TABLE "POR_POSTS"
+  ALTER COLUMN "POS_TITLE" TYPE jsonb
+  USING jsonb_build_object('fr', "POS_TITLE", 'en', "POS_TITLE");
+
+ALTER TABLE "POR_POSTS"
+  ALTER COLUMN "POS_DESCRIPTION" TYPE jsonb
+  USING jsonb_build_object('fr', "POS_DESCRIPTION", 'en', "POS_DESCRIPTION");
+
+ALTER TABLE "POR_POSTS"
+  ALTER COLUMN "POS_CONTENT" TYPE jsonb
+  USING jsonb_build_object('fr', "POS_CONTENT", 'en', "POS_CONTENT");
+
+-- Convertir POR_PROJECTS en JSONB (wrap existing strings)
+ALTER TABLE "POR_PROJECTS"
+  ALTER COLUMN "PRJ_TITLE" TYPE jsonb
+  USING jsonb_build_object('fr', "PRJ_TITLE", 'en', "PRJ_TITLE");
+
+ALTER TABLE "POR_PROJECTS"
+  ALTER COLUMN "PRJ_DESCRIPTION" TYPE jsonb
+  USING jsonb_build_object('fr', "PRJ_DESCRIPTION", 'en', "PRJ_DESCRIPTION");
+
+-- Convertir POR_TECHNOLOGIES en JSONB (wrap existing strings)
+ALTER TABLE "POR_TECHNOLOGIES"
+  ALTER COLUMN "TEC_NAME" TYPE jsonb
+  USING jsonb_build_object('fr', "TEC_NAME", 'en', "TEC_NAME");
+
+-- Ajouter les foreign keys pour POR_EXPERIENCES
+ALTER TABLE "POR_EXPERIENCES"
+  ADD CONSTRAINT "POR_EXPERIENCES_USR_ID_POR_USERS_USR_ID_fk"
+  FOREIGN KEY ("USR_ID") REFERENCES "public"."POR_USERS"("USR_ID")
+  ON DELETE no action ON UPDATE no action;
+
+ALTER TABLE "POR_EXPERIENCES_TECHNOLOGIES"
+  ADD CONSTRAINT "POR_EXPERIENCES_TECHNOLOGIES_EXP_ID_POR_EXPERIENCES_EXP_ID_fk"
+  FOREIGN KEY ("EXP_ID") REFERENCES "public"."POR_EXPERIENCES"("EXP_ID")
+  ON DELETE cascade ON UPDATE no action;
+
+ALTER TABLE "POR_EXPERIENCES_TECHNOLOGIES"
+  ADD CONSTRAINT "POR_EXPERIENCES_TECHNOLOGIES_TEC_ID_POR_TECHNOLOGIES_TEC_ID_fk"
+  FOREIGN KEY ("TEC_ID") REFERENCES "public"."POR_TECHNOLOGIES"("TEC_ID")
+  ON DELETE cascade ON UPDATE no action;

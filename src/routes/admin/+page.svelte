@@ -74,7 +74,7 @@
 				{#each data.recentPosts as post}
 					<a href="/admin/posts/{post.POS_ID}" class="post-item">
 						<div class="post-info">
-							<span class="post-title">{post.POS_TITLE}</span>
+							<span class="post-title">{post.POS_TITLE.fr}</span>
 							<span class="post-date">
 								{new Date(post.POS_CREATED_AT).toLocaleDateString('fr-FR')}
 							</span>

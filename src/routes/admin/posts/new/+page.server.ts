@@ -20,53 +20,50 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		const data = await request.formData();
-		const title = data.get('title')?.toString();
-		const description = data.get('description')?.toString();
-		const content = data.get('content')?.toString();
+		const titleFr = data.get('title_fr')?.toString();
+		const titleEn = data.get('title_en')?.toString();
+		const descFr = data.get('description_fr')?.toString();
+		const descEn = data.get('description_en')?.toString();
+		const contentFr = data.get('content_fr')?.toString();
+		const contentEn = data.get('content_en')?.toString();
 		const published = data.get('published') === 'on';
-		const tagIds = data.getAll('tags').map(t => t.toString());
+		const tagIds = data.getAll('tags').map((t) => t.toString());
 
-		if (!title || !description || !content) {
+		if (!titleFr || !titleEn || !descFr || !descEn || !contentFr || !contentEn) {
 			return fail(400, {
-				error: 'Titre, description et contenu requis',
-				title,
-				description,
-				content
+				error: 'Titre, description et contenu requis en FR et EN'
 			});
 		}
 
-		const slug = slugify(title);
+		const slug = slugify(titleFr);
 
 		try {
-			// @ts-ignore
+			const [newPost] = await db
+				.insert(POR_POSTS)
+				.values({
+					POS_SLUG: slug,
+					POS_TITLE: { fr: titleFr, en: titleEn },
+					POS_DESCRIPTION: { fr: descFr, en: descEn },
+					POS_CONTENT: { fr: contentFr, en: contentEn },
+					POS_PUBLISHED: published,
+					USR_ID: locals.user.id,
+					POS_PUBLISHED_AT: published ? new Date() : null
+				})
+				.returning();
 
-            const [newPost] = await db.insert(POR_POSTS).values({
-				POS_SLUG: slug,
-				POS_TITLE: title,
-				POS_DESCRIPTION: description,
-				POS_CONTENT: content,
-				POS_PUBLISHED: published,
-				USR_ID: locals.user.id,
-				POS_PUBLISHED_AT: published ? new Date() : null
-			}).returning();
-
-			// Ajouter les tags
+			// Add tags
 			if (tagIds.length > 0 && newPost) {
 				await db.insert(POR_POSTS_TAGS).values(
-					tagIds.map(tagId => ({
+					tagIds.map((tagId) => ({
 						POS_ID: newPost.POS_ID,
 						TAG_ID: tagId as string
 					}))
 				);
 			}
-
 		} catch (err) {
 			console.error('Erreur lors de la création:', err);
 			return fail(500, {
-				error: `Erreur lors de la création de l'article: ${err instanceof Error ? err.message : 'Erreur inconnue'}`,
-				title,
-				description,
-				content
+				error: `Erreur: ${err instanceof Error ? err.message : 'Erreur inconnue'}`
 			});
 		}
 
