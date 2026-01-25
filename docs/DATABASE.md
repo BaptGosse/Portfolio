@@ -146,6 +146,44 @@ Compétences individuelles par catégorie.
 - SKI_UPDATED_AT: TIMESTAMP
 ```
 
+#### POR_PASSIONS
+Passions et hobbies personnels.
+
+```sql
+- PAS_ID: UUID (Primary Key)
+- PAS_TITLE: JSONB { fr: string, en: string }
+- PAS_DESCRIPTION: JSONB { fr: string, en: string }
+- PAS_ICON: VARCHAR(50) (Nom de l'icône Lucide)
+- PAS_IMAGE: VARCHAR(255) (URL d'image optionnelle)
+- PAS_ORDER: VARCHAR(10) (Ordre d'affichage)
+- USR_ID: UUID (Foreign Key → POR_USERS)
+- PAS_CREATED_AT: TIMESTAMP
+- PAS_UPDATED_AT: TIMESTAMP
+```
+
+#### POR_SOFT_SKILLS
+Compétences transversales (soft skills).
+
+```sql
+- SSK_ID: UUID (Primary Key)
+- SSK_NAME: JSONB { fr: string, en: string }
+- SSK_DESCRIPTION: JSONB { fr: string, en: string }
+- SSK_ICON: VARCHAR(50) (Nom de l'icône Lucide)
+- SSK_ORDER: VARCHAR(10) (Ordre d'affichage)
+- USR_ID: UUID (Foreign Key → POR_USERS)
+- SSK_CREATED_AT: TIMESTAMP
+- SSK_UPDATED_AT: TIMESTAMP
+```
+
+#### POR_PASSIONS_SOFT_SKILLS
+Table de liaison entre passions et soft skills (Many-to-Many).
+
+```sql
+- PAS_ID: UUID (Foreign Key → POR_PASSIONS)
+- SSK_ID: UUID (Foreign Key → POR_SOFT_SKILLS)
+- Primary Key: (PAS_ID, SSK_ID)
+```
+
 #### POR_SESSIONS
 Sessions d'authentification.
 
@@ -223,6 +261,27 @@ const skills = await db
 	.orderBy(asc(POR_SKILLS.SKI_ORDER));
 ```
 
+### Récupérer les passions avec leurs soft skills associées
+
+```typescript
+const passions = await db
+	.select()
+	.from(POR_PASSIONS)
+	.orderBy(asc(POR_PASSIONS.PAS_ORDER));
+
+// Pour chaque passion, récupérer les soft skills
+const softSkills = await db
+	.select({
+		id: POR_SOFT_SKILLS.SSK_ID,
+		name: POR_SOFT_SKILLS.SSK_NAME,
+		description: POR_SOFT_SKILLS.SSK_DESCRIPTION,
+		icon: POR_SOFT_SKILLS.SSK_ICON
+	})
+	.from(POR_PASSIONS_SOFT_SKILLS)
+	.innerJoin(POR_SOFT_SKILLS, eq(POR_PASSIONS_SOFT_SKILLS.SSK_ID, POR_SOFT_SKILLS.SSK_ID))
+	.where(eq(POR_PASSIONS_SOFT_SKILLS.PAS_ID, passionId));
+```
+
 ### Accéder aux champs JSONB avec locale
 
 ```typescript
@@ -261,10 +320,12 @@ Des scripts sont disponibles dans `/scripts/` pour migrer les données depuis le
 
 - `migrate-data.ts` : Migration complète des technologies, projets, expériences et posts
 - `migrate-skills.ts` : Migration des compétences et catégories
+- `migrate-passions.ts` : Migration des passions et soft skills
 
 ```bash
 tsx scripts/migrate-data.ts
 tsx scripts/migrate-skills.ts
+tsx scripts/migrate-passions.ts
 ```
 
 ## Configuration
@@ -289,11 +350,19 @@ export const db = drizzle(client);
 
 Le dashboard admin (`/admin`) permet de gérer toutes les données:
 
+**Blog :**
 - **/admin/posts** : Gestion des articles de blog
+- **/admin/tags** : Gestion des tags
+
+**Portfolio :**
 - **/admin/projects** : Gestion des projets
-- **/admin/experiences** : Gestion des expériences
-- **/admin/technologies** : Gestion des technologies
-- **/admin/skills** : _(À implémenter)_ Gestion des compétences
+- **/admin/experiences** : Gestion des expériences professionnelles/éducatives
+- **/admin/technologies** : Gestion des technologies (partagées)
+
+**Compétences & Passions :**
+- **/admin/skills** : Gestion des compétences techniques par catégories
+- **/admin/passions** : Gestion des passions et hobbies
+- **/admin/soft-skills** : Gestion des soft skills (compétences transversales)
 
 Toutes les interfaces incluent des onglets FR/EN pour la saisie multilingue.
 

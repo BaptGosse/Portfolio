@@ -1,52 +1,167 @@
-// Portfolio Blog Database Schema
-// Compatible with DrawDB.io
+// Portfolio Database Schema
+// Compatible with DrawDB.io and dbdiagram.io
+// Note: JSONB fields contain {fr: string, en: string} for i18n support
 
 Table POR_USERS [headercolor: #8b5cf6] {
-	USR_ID uuid [ pk, not null, unique ]
-	USR_EMAIL varchar(255) [ not null, unique ]
-	USR_PASSWORD_HASH varchar(255) [ not null ]
-	USR_NAME varchar(64) [ not null ]
-	USR_CREATED_AT timestamp [ not null ]
-	USR_UPDATED_AT timestamp
+	USR_ID uuid [ pk, not null, note: 'User unique identifier' ]
+	USR_EMAIL varchar(255) [ not null, unique, note: 'User email for login' ]
+	USR_PASSWORD_HASH varchar(255) [ not null, note: 'Hashed password' ]
+	USR_NAME varchar(64) [ not null, note: 'Display name' ]
+	USR_CREATED_AT timestamp [ not null, note: 'Account creation date' ]
+	USR_UPDATED_AT timestamp [ note: 'Last update date' ]
 }
 
 Table POR_POSTS [headercolor: #3b82f6] {
-	POS_ID uuid [ pk, not null, unique ]
-	POS_SLUG varchar(128) [ not null, unique ]
-	POS_TITLE varchar(255) [ not null ]
-	POS_DESCRIPTION varchar(500) [ not null ]
-	POS_CONTENT text [ not null ]
-	POS_PUBLISHED boolean [ not null, default: false ]
+	POS_ID uuid [ pk, not null ]
+	POS_SLUG varchar(128) [ not null, unique, note: 'URL-friendly identifier' ]
+	POS_TITLE jsonb [ not null, note: 'Multilingual title {fr, en}' ]
+	POS_DESCRIPTION jsonb [ not null, note: 'Multilingual description {fr, en}' ]
+	POS_CONTENT jsonb [ not null, note: 'Multilingual markdown content {fr, en}' ]
+	POS_PUBLISHED boolean [ not null, default: false, note: 'Publication status' ]
 	USR_ID uuid [ not null ]
 	POS_CREATED_AT timestamp [ not null ]
 	POS_UPDATED_AT timestamp
-	POS_PUBLISHED_AT timestamp
+	POS_PUBLISHED_AT timestamp [ note: 'Publication date' ]
 }
 
 Table POR_TAGS [headercolor: #10b981] {
-	TAG_ID uuid [ pk, not null, unique ]
+	TAG_ID uuid [ pk, not null ]
 	TAG_NAME varchar(64) [ not null, unique ]
 	TAG_SLUG varchar(64) [ not null, unique ]
 	TAG_CREATED_AT timestamp [ not null ]
 }
 
 Table POR_POSTS_TAGS [headercolor: #f59e0b] {
-	POS_ID uuid [ pk, not null ]
-	TAG_ID uuid [ pk, not null ]
+	POS_ID uuid [ not null ]
+	TAG_ID uuid [ not null ]
 
 	indexes {
-		(POS_ID, TAG_ID) [ name: 'POR_POSTS_TAGS_index_0', unique ]
+		(POS_ID, TAG_ID) [ pk ]
 	}
 }
 
 Table POR_SESSIONS [headercolor: #ec4899] {
-	SES_ID uuid [ pk, not null, unique ]
+	SES_ID uuid [ pk, not null ]
 	USR_ID uuid [ not null ]
-	SES_TOKEN varchar(255) [ not null, unique ]
-	SES_EXPIRES_AT timestamp [ not null ]
+	SES_TOKEN varchar(255) [ not null, unique, note: 'Session token' ]
+	SES_EXPIRES_AT timestamp [ not null, note: 'Expiration date' ]
 	SES_CREATED_AT timestamp [ not null ]
 }
 
+Table POR_PROJECTS [headercolor: #06b6d4] {
+	PRJ_ID uuid [ pk, not null ]
+	PRJ_SLUG varchar(128) [ not null, unique, note: 'URL-friendly identifier' ]
+	PRJ_TITLE jsonb [ not null, note: 'Multilingual title {fr, en}' ]
+	PRJ_DESCRIPTION jsonb [ not null, note: 'Multilingual description {fr, en}' ]
+	PRJ_LINK varchar(255) [ note: 'Demo/live URL' ]
+	PRJ_GITHUB varchar(255) [ note: 'GitHub repository URL' ]
+	PRJ_IMAGE varchar(255) [ note: 'Project screenshot/image' ]
+	PRJ_FEATURED boolean [ not null, default: false, note: 'Featured on homepage' ]
+	PRJ_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	USR_ID uuid [ not null ]
+	PRJ_CREATED_AT timestamp [ not null ]
+	PRJ_UPDATED_AT timestamp
+}
+
+Table POR_TECHNOLOGIES [headercolor: #a855f7] {
+	TEC_ID uuid [ pk, not null ]
+	TEC_NAME jsonb [ not null, note: 'Multilingual name {fr, en}' ]
+	TEC_SLUG varchar(64) [ not null, unique ]
+	TEC_CREATED_AT timestamp [ not null ]
+}
+
+Table POR_PROJECTS_TECHNOLOGIES [headercolor: #f472b6] {
+	PRJ_ID uuid [ not null ]
+	TEC_ID uuid [ not null ]
+
+	indexes {
+		(PRJ_ID, TEC_ID) [ pk ]
+	}
+}
+
+Table POR_EXPERIENCES [headercolor: #14b8a6] {
+	EXP_ID uuid [ pk, not null ]
+	EXP_COMPANY jsonb [ not null, note: 'Multilingual company name {fr, en}' ]
+	EXP_ROLE jsonb [ not null, note: 'Multilingual role/position {fr, en}' ]
+	EXP_DESCRIPTION jsonb [ not null, note: 'Multilingual description {fr, en}' ]
+	EXP_TYPE varchar(20) [ not null, note: 'Type: work or education' ]
+	EXP_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	EXP_START_DATE timestamp [ not null, note: 'Start date' ]
+	EXP_END_DATE timestamp [ note: 'End date (null = present)' ]
+	EXP_COMPANY_URL varchar(255) [ note: 'Company website' ]
+	EXP_LOGO varchar(255) [ note: 'Company logo path/URL' ]
+	USR_ID uuid [ not null ]
+	EXP_CREATED_AT timestamp [ not null ]
+	EXP_UPDATED_AT timestamp
+}
+
+Table POR_EXPERIENCES_TECHNOLOGIES [headercolor: #22d3ee] {
+	EXP_ID uuid [ not null ]
+	TEC_ID uuid [ not null ]
+
+	indexes {
+		(EXP_ID, TEC_ID) [ pk ]
+	}
+}
+
+Table POR_SKILL_CATEGORIES [headercolor: #fb923c] {
+	CAT_ID uuid [ pk, not null ]
+	CAT_NAME jsonb [ not null, note: 'Multilingual category name {fr, en}' ]
+	CAT_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	USR_ID uuid [ not null ]
+	CAT_CREATED_AT timestamp [ not null ]
+	CAT_UPDATED_AT timestamp
+}
+
+Table POR_SKILLS [headercolor: #fbbf24] {
+	SKI_ID uuid [ pk, not null ]
+	SKI_NAME jsonb [ not null, note: 'Multilingual skill name {fr, en}' ]
+	SKI_CONTEXT jsonb [ not null, note: 'Multilingual context/description {fr, en}' ]
+	SKI_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	CAT_ID uuid [ not null, note: 'Category reference' ]
+	USR_ID uuid [ not null ]
+	SKI_CREATED_AT timestamp [ not null ]
+	SKI_UPDATED_AT timestamp
+}
+
+Table POR_PASSIONS [headercolor: #f472b6] {
+	PAS_ID uuid [ pk, not null ]
+	PAS_TITLE jsonb [ not null, note: 'Multilingual title {fr, en}' ]
+	PAS_DESCRIPTION jsonb [ not null, note: 'Multilingual description {fr, en}' ]
+	PAS_ICON varchar(50) [ not null, note: 'Lucide icon name' ]
+	PAS_IMAGE varchar(255) [ note: 'Optional image URL' ]
+	PAS_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	USR_ID uuid [ not null ]
+	PAS_CREATED_AT timestamp [ not null ]
+	PAS_UPDATED_AT timestamp
+}
+
+Table POR_SOFT_SKILLS [headercolor: #c084fc] {
+	SSK_ID uuid [ pk, not null ]
+	SSK_NAME jsonb [ not null, note: 'Multilingual name {fr, en}' ]
+	SSK_DESCRIPTION jsonb [ not null, note: 'Multilingual description {fr, en}' ]
+	SSK_ICON varchar(50) [ not null, note: 'Lucide icon name' ]
+	SSK_ORDER varchar(10) [ not null, default: '0', note: 'Display order' ]
+	USR_ID uuid [ not null ]
+	SSK_CREATED_AT timestamp [ not null ]
+	SSK_UPDATED_AT timestamp
+}
+
+Table POR_PASSIONS_SOFT_SKILLS [headercolor: #e879f9] {
+	PAS_ID uuid [ not null ]
+	SSK_ID uuid [ not null ]
+
+	indexes {
+		(PAS_ID, SSK_ID) [ pk ]
+	}
+}
+
+// References - Authentication & Users
+Ref fk_POR_SESSIONS_USR_ID_POR_USERS {
+	POR_SESSIONS.USR_ID > POR_USERS.USR_ID [ delete: cascade, update: no action ]
+}
+
+// References - Blog Posts
 Ref fk_POR_POSTS_USR_ID_POR_USERS {
 	POR_POSTS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
 }
@@ -59,6 +174,59 @@ Ref fk_POR_POSTS_TAGS_TAG_ID_POR_TAGS {
 	POR_POSTS_TAGS.TAG_ID > POR_TAGS.TAG_ID [ delete: cascade, update: no action ]
 }
 
-Ref fk_POR_SESSIONS_USR_ID_POR_USERS {
-	POR_SESSIONS.USR_ID > POR_USERS.USR_ID [ delete: cascade, update: no action ]
+// References - Projects
+Ref fk_POR_PROJECTS_USR_ID_POR_USERS {
+	POR_PROJECTS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+Ref fk_POR_PROJECTS_TECHNOLOGIES_PRJ_ID_POR_PROJECTS {
+	POR_PROJECTS_TECHNOLOGIES.PRJ_ID > POR_PROJECTS.PRJ_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_PROJECTS_TECHNOLOGIES_TEC_ID_POR_TECHNOLOGIES {
+	POR_PROJECTS_TECHNOLOGIES.TEC_ID > POR_TECHNOLOGIES.TEC_ID [ delete: cascade, update: no action ]
+}
+
+// References - Experiences
+Ref fk_POR_EXPERIENCES_USR_ID_POR_USERS {
+	POR_EXPERIENCES.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+Ref fk_POR_EXPERIENCES_TECHNOLOGIES_EXP_ID_POR_EXPERIENCES {
+	POR_EXPERIENCES_TECHNOLOGIES.EXP_ID > POR_EXPERIENCES.EXP_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_EXPERIENCES_TECHNOLOGIES_TEC_ID_POR_TECHNOLOGIES {
+	POR_EXPERIENCES_TECHNOLOGIES.TEC_ID > POR_TECHNOLOGIES.TEC_ID [ delete: cascade, update: no action ]
+}
+
+// References - Skills
+Ref fk_POR_SKILL_CATEGORIES_USR_ID_POR_USERS {
+	POR_SKILL_CATEGORIES.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+Ref fk_POR_SKILLS_CAT_ID_POR_SKILL_CATEGORIES {
+	POR_SKILLS.CAT_ID > POR_SKILL_CATEGORIES.CAT_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_SKILLS_USR_ID_POR_USERS {
+	POR_SKILLS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+// References - Passions
+Ref fk_POR_PASSIONS_USR_ID_POR_USERS {
+	POR_PASSIONS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+// References - Soft Skills
+Ref fk_POR_SOFT_SKILLS_USR_ID_POR_USERS {
+	POR_SOFT_SKILLS.USR_ID > POR_USERS.USR_ID [ delete: no action, update: no action ]
+}
+
+Ref fk_POR_PASSIONS_SOFT_SKILLS_PAS_ID_POR_PASSIONS {
+	POR_PASSIONS_SOFT_SKILLS.PAS_ID > POR_PASSIONS.PAS_ID [ delete: cascade, update: no action ]
+}
+
+Ref fk_POR_PASSIONS_SOFT_SKILLS_SSK_ID_POR_SOFT_SKILLS {
+	POR_PASSIONS_SOFT_SKILLS.SSK_ID > POR_SOFT_SKILLS.SSK_ID [ delete: cascade, update: no action ]
 }
