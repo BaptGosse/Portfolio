@@ -60,7 +60,7 @@
 				</button>
 			</div>
 
-			{#if activeTab === 'fr'}
+			<div class:hidden={activeTab !== 'fr'}>
 				<div class="form-group">
 					<label for="title_fr">Titre (FR)</label>
 					<input type="text" id="title_fr" name="title_fr" required placeholder="Titre de l'article" />
@@ -75,7 +75,9 @@
 					<label for="content_fr">Contenu (FR)</label>
 					<textarea id="content_fr" name="content_fr" rows="20" required placeholder="Contenu en Markdown..."></textarea>
 				</div>
-			{:else}
+			</div>
+
+			<div class:hidden={activeTab !== 'en'}>
 				<div class="form-group">
 					<label for="title_en">Title (EN)</label>
 					<input type="text" id="title_en" name="title_en" required placeholder="Article title" />
@@ -90,7 +92,7 @@
 					<label for="content_en">Content (EN)</label>
 					<textarea id="content_en" name="content_en" rows="20" required placeholder="Markdown content..."></textarea>
 				</div>
-			{/if}
+			</div>
 		</div>
 
 		<div class="form-section">
@@ -216,6 +218,10 @@
 
 	.form-group:last-child {
 		margin-bottom: 0;
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.form-group label {

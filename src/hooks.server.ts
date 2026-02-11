@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { getLocale, type Locale } from '$lib/utils/locale';
+import { validateSession } from '$lib/server/auth';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	// Get locale from cookie
@@ -29,6 +30,19 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	event.locals.locale = locale;
+
+	// User session validation
+	const sessionToken = event.cookies.get('session');
+	if (sessionToken) {
+		const user = await validateSession(sessionToken);
+		if (user) {
+			event.locals.user = {
+				id: user.USR_ID,
+				email: user.USR_EMAIL,
+				name: user.USR_NAME
+			};
+		}
+	}
 
 	return resolve(event);
 };

@@ -4,6 +4,7 @@
 
 	let { data, form } = $props();
 	let loading = $state(false);
+	let activeTab = $state<'fr' | 'en'>('fr');
 	let showDeleteConfirm = $state(false);
 </script>
 
@@ -50,72 +51,95 @@
 		}}
 	>
 		<div class="form-main">
-			<div class="form-group">
-				<label for="title_fr">Titre (FR)</label>
-				<input
-					type="text"
-					id="title_fr"
-					name="title_fr"
-					placeholder="Titre de l'article"
-					required
-					value={data.post.POS_TITLE.fr}
-				/>
+			<div class="tabs">
+				<button
+					type="button"
+					class="tab"
+					class:active={activeTab === 'fr'}
+					onclick={() => (activeTab = 'fr')}
+				>
+					🇫🇷 Français
+				</button>
+				<button
+					type="button"
+					class="tab"
+					class:active={activeTab === 'en'}
+					onclick={() => (activeTab = 'en')}
+				>
+					🇬🇧 English
+				</button>
 			</div>
 
-			<div class="form-group">
-				<label for="title_en">Title (EN)</label>
-				<input
-					type="text"
-					id="title_en"
-					name="title_en"
-					placeholder="Article title"
-					required
-					value={data.post.POS_TITLE.en}
-				/>
+			<div class:hidden={activeTab !== 'fr'}>
+				<div class="form-group">
+					<label for="title_fr">Titre (FR)</label>
+					<input
+						type="text"
+						id="title_fr"
+						name="title_fr"
+						placeholder="Titre de l'article"
+						required
+						value={data.post.POS_TITLE.fr}
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="description_fr">Description (FR)</label>
+					<textarea
+						id="description_fr"
+						name="description_fr"
+						placeholder="Description courte pour les aperçus"
+						rows="2"
+						required
+					>{data.post.POS_DESCRIPTION.fr}</textarea>
+				</div>
+
+				<div class="form-group">
+					<label for="content_fr">Contenu (FR) (Markdown)</label>
+					<textarea
+						id="content_fr"
+						name="content_fr"
+						placeholder="Écrivez votre article en Markdown..."
+						rows="15"
+						required
+					>{data.post.POS_CONTENT.fr}</textarea>
+				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="description_fr">Description (FR)</label>
-				<textarea
-					id="description_fr"
-					name="description_fr"
-					placeholder="Description courte pour les aperçus"
-					rows="2"
-					required
-				>{data.post.POS_DESCRIPTION.fr}</textarea>
-			</div>
+			<div class:hidden={activeTab !== 'en'}>
+				<div class="form-group">
+					<label for="title_en">Title (EN)</label>
+					<input
+						type="text"
+						id="title_en"
+						name="title_en"
+						placeholder="Article title"
+						required
+						value={data.post.POS_TITLE.en}
+					/>
+				</div>
 
-			<div class="form-group">
-				<label for="description_en">Description (EN)</label>
-				<textarea
-					id="description_en"
-					name="description_en"
-					placeholder="Short description for previews"
-					rows="2"
-					required
-				>{data.post.POS_DESCRIPTION.en}</textarea>
-			</div>
+				<div class="form-group">
+					<label for="description_en">Description (EN)</label>
+					<textarea
+						id="description_en"
+						name="description_en"
+						placeholder="Short description for previews"
+						rows="2"
+						required
+					>{data.post.POS_DESCRIPTION.en}</textarea>
+				</div>
 
-			<div class="form-group">
-				<label for="content_fr">Contenu (FR) (Markdown)</label>
-				<textarea
-					id="content_fr"
-					name="content_fr"
-					placeholder="Écrivez votre article en Markdown..."
-					rows="15"
-					required
-				>{data.post.POS_CONTENT.fr}</textarea>
-			</div>
-
-			<div class="form-group">
-				<label for="content_en">Content (EN) (Markdown)</label>
-				<textarea
-					id="content_en"
-					name="content_en"
-					placeholder="Write your article in Markdown..."
-					rows="15"
-					required
-				>{data.post.POS_CONTENT.en}</textarea>
+				<div class="form-group">
+					<label for="content_en">Content (EN) (Markdown)</label>
+					<textarea
+						id="content_en"
+						name="content_en"
+						placeholder="Write your article in Markdown..."
+						rows="15"
+						required
+					>{data.post.POS_CONTENT.en}</textarea>
+				</div>
 			</div>
 		</div>
 
@@ -278,6 +302,37 @@
 		gap: var(--spacing-lg);
 	}
 
+	.tabs {
+		display: flex;
+		gap: var(--spacing-xs);
+		margin-bottom: var(--spacing-md);
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.tab {
+		padding: var(--spacing-sm) var(--spacing-md);
+		background: none;
+		border: none;
+		border-bottom: 2px solid transparent;
+		color: var(--text-tertiary);
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.tab:hover {
+		color: var(--text-secondary);
+	}
+
+	.tab.active {
+		color: var(--color-primary-400);
+		border-bottom-color: var(--color-primary-400);
+	}
+
+	.hidden {
+		display: none;
+	}
+
 	.form-group {
 		display: flex;
 		flex-direction: column;
@@ -288,31 +343,6 @@
 		color: var(--text-secondary);
 		font-size: 0.875rem;
 		font-weight: 500;
-	}
-
-	.label-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.preview-toggle {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-xs);
-		padding: var(--spacing-xs) var(--spacing-sm);
-		background: transparent;
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-sm);
-		color: var(--text-tertiary);
-		font-size: 0.75rem;
-		cursor: pointer;
-		transition: all var(--transition-fast);
-	}
-
-	.preview-toggle:hover {
-		border-color: var(--color-primary-400);
-		color: var(--color-primary-400);
 	}
 
 	.form-group input,
@@ -336,14 +366,6 @@
 		resize: vertical;
 		min-height: 200px;
 		font-family: 'Consolas', 'Monaco', monospace;
-	}
-
-	.preview-content {
-		min-height: 200px;
-		padding: var(--spacing-md);
-		background-color: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
 	}
 
 	.form-sidebar {

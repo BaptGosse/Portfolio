@@ -5,23 +5,20 @@ import {
 	POR_TECHNOLOGIES,
 	POR_EXPERIENCES_TECHNOLOGIES
 } from '$lib/server/db/schema';
-import { validateSession } from '$lib/server/auth';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
+	if (!locals.user) {
+		throw redirect(302, '/admin/login');
+	}
+
 	const technologies = await db.select().from(POR_TECHNOLOGIES);
 	return { technologies };
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
-		const sessionToken = cookies.get('session');
-		if (!sessionToken) {
-			return fail(401, { error: 'Non autorisé' });
-		}
-
-		const user = await validateSession(sessionToken);
-		if (!user) {
+	default: async ({ request, locals }) => {
+		if (!locals.user) {
 			return fail(401, { error: 'Non autorisé' });
 		}
 
@@ -63,7 +60,7 @@ export const actions: Actions = {
 					EXP_END_DATE: endDate ? new Date(endDate) : null,
 					EXP_COMPANY_URL: companyUrl || null,
 					EXP_LOGO: logo || null,
-					USR_ID: user.USR_ID
+					USR_ID: locals.user.id
 				})
 				.returning();
 

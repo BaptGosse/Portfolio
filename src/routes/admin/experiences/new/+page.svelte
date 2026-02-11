@@ -60,7 +60,7 @@
 				</button>
 			</div>
 
-			{#if activeTab === 'fr'}
+			<div class:hidden={activeTab !== 'fr'}>
 				<div class="form-group">
 					<label for="company_fr">Entreprise / École (FR)</label>
 					<input
@@ -93,7 +93,9 @@
 						placeholder="Description détaillée de l'expérience..."
 					></textarea>
 				</div>
-			{:else}
+			</div>
+
+			<div class:hidden={activeTab !== 'en'}>
 				<div class="form-group">
 					<label for="company_en">Company / School (EN)</label>
 					<input
@@ -126,7 +128,7 @@
 						placeholder="Detailed experience description..."
 					></textarea>
 				</div>
-			{/if}
+			</div>
 		</div>
 
 		<div class="form-section">
@@ -294,6 +296,10 @@
 
 	.form-group:last-child {
 		margin-bottom: 0;
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.form-group label {

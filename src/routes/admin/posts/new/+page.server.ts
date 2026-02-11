@@ -12,13 +12,21 @@ function slugify(text: string): string {
 		.replace(/(^-|-$)+/g, '');
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
+	if (!locals.user) {
+		throw redirect(302, '/admin/login');
+	}
+
 	const tags = await db.select().from(POR_TAGS);
 	return { tags };
 };
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
+		if (!locals.user) {
+			return fail(401, { error: 'Non autorisé' });
+		}
+
 		const data = await request.formData();
 		const titleFr = data.get('title_fr')?.toString();
 		const titleEn = data.get('title_en')?.toString();

@@ -41,7 +41,7 @@
 				</button>
 			</div>
 
-			{#if activeTab === 'fr'}
+			<div class:hidden={activeTab !== 'fr'}>
 				<div class="form-group">
 					<label for="name_fr">Nom (Français) *</label>
 					<input
@@ -64,7 +64,9 @@
 						placeholder="Décrivez la compétence et comment elle est développée..."
 					>{data.softSkill.SSK_DESCRIPTION.fr}</textarea>
 				</div>
-			{:else}
+			</div>
+
+			<div class:hidden={activeTab !== 'en'}>
 				<div class="form-group">
 					<label for="name_en">Name (English) *</label>
 					<input
@@ -87,7 +89,7 @@
 						placeholder="Describe the skill and how it is developed..."
 					>{data.softSkill.SSK_DESCRIPTION.en}</textarea>
 				</div>
-			{/if}
+			</div>
 
 			<div class="form-divider"></div>
 
@@ -250,6 +252,10 @@
 		font-weight: 600;
 		color: var(--text-primary);
 		margin-bottom: var(--spacing-sm);
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.form-group input[type='text'],

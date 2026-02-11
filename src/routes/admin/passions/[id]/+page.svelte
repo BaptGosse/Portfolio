@@ -41,7 +41,7 @@
 				</button>
 			</div>
 
-			{#if activeTab === 'fr'}
+			<div class:hidden={activeTab !== 'fr'}>
 				<div class="form-group">
 					<label for="title_fr">Titre (Français) *</label>
 					<input
@@ -64,7 +64,9 @@
 						placeholder="Décrivez votre passion et ce qu'elle vous apporte..."
 					>{data.passion.PAS_DESCRIPTION.fr}</textarea>
 				</div>
-			{:else}
+			</div>
+
+			<div class:hidden={activeTab !== 'en'}>
 				<div class="form-group">
 					<label for="title_en">Title (English) *</label>
 					<input
@@ -87,7 +89,7 @@
 						placeholder="Describe your passion and what it brings you..."
 					>{data.passion.PAS_DESCRIPTION.en}</textarea>
 				</div>
-			{/if}
+			</div>
 
 			<div class="form-divider"></div>
 
@@ -266,6 +268,10 @@
 		font-weight: 600;
 		color: var(--text-primary);
 		margin-bottom: var(--spacing-sm);
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.form-group input[type='text'],
