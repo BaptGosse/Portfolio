@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { Calendar, ChevronLeft } from 'lucide-svelte';
+	import { _, locale } from 'svelte-i18n';
 
 	let { data }: { data: PageData } = $props();
 
 	function formatDate(dateStr: string): string {
 		const date = new Date(dateStr);
-		return new Intl.DateTimeFormat('fr-FR', {
+		return new Intl.DateTimeFormat($locale || 'fr', {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
@@ -62,7 +63,7 @@
 		<div class="article-footer">
 			<a href="/blog" class="back-link">
 				<ChevronLeft size={20} />
-				Retour au blog
+				{$_('blog.backToBlog')}
 			</a>
 		</div>
 	</div>

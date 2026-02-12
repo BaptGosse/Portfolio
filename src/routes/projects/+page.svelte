@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>{$t('projectsPage.titleGradient')} - Baptiste Gosselin</title>
+	<title>{$t('nav.projects')} - Baptiste Gosselin</title>
 	<meta name="description" content={$t('projectsPage.metaDescription')} />
 </svelte:head>
 

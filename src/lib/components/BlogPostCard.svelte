@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types';
 	import { ChevronRight, Calendar, Tags } from 'lucide-svelte';
+	import { _, locale } from 'svelte-i18n';
 
 	let { post }: { post: BlogPost } = $props();
 
 	function formatDate(dateStr: string): string {
 		const date = new Date(dateStr);
-		return new Intl.DateTimeFormat('fr-FR', {
+		return new Intl.DateTimeFormat($locale || 'fr', {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
@@ -25,7 +26,7 @@
 		<span class="meta-separator">•</span>
 		<div class="meta-item">
 			<Tags size={14} />
-			<span>{post.tags.length} tags</span>
+			<span>{$_('blog.tags', { values: { count: post.tags.length } })}</span>
 		</div>
 	</div>
 
@@ -51,7 +52,7 @@
 		href="/blog/{post.slug}"
 		class="read-more"
 	>
-		Lire la suite
+		{$_('blog.readMore')}
 		<ChevronRight size={16} />
 	</a>
 </article>

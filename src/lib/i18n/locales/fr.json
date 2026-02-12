@@ -29,7 +29,7 @@
 		"allProjects": "Tous les projets"
 	},
 	"projectsPage": {
-		"title": "Mes Projets",
+		"title": "Mes",
 		"titleGradient": "Projets",
 		"description": "Une sélection de mes projets en infrastructure, cloud-native et développement système. De la virtualisation bare-metal aux applications distribuées sur Kubernetes.",
 		"metaDescription": "Découvrez mes projets en infrastructure cloud-native, Kubernetes, DevOps et développement système.",
@@ -239,5 +239,19 @@
 		"history": {
 			"title": "Historique des commandes :"
 		}
+	},
+	"blog": {
+		"title": "Blog",
+		"subtitle": "Articles techniques sur Linux, DevOps, infrastructure et développement",
+		"metaDescription": "Articles techniques sur Linux, DevOps, infrastructure et développement",
+		"rss": "Flux RSS",
+		"atom": "Flux Atom",
+		"empty": {
+			"title": "Aucun article publié pour le moment.",
+			"description": "Revenez bientôt pour du contenu technique !"
+		},
+		"readMore": "Lire la suite",
+		"backToBlog": "Retour au blog",
+		"tags": "{count} tags"
 	}
 }

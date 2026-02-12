@@ -2,39 +2,54 @@
 	import type { PageData } from './$types';
 	import BlogPostCard from '$lib/components/BlogPostCard.svelte';
 	import { Rss } from 'lucide-svelte';
+	import { _, locale } from 'svelte-i18n';
 
 	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
-	<title>Blog - Baptiste Gosselin</title>
-	<meta name="description" content="Articles techniques sur Linux, DevOps, infrastructure et développement" />
+	<title>{$_('blog.title')} - Baptiste Gosselin</title>
+	<meta name="description" content={$_('blog.metaDescription')} />
+	<!-- RSS Discovery -->
+	<link rel="alternate" type="application/rss+xml" title="RSS Blog (FR)" href="/rss.xml?lang=fr" />
+	<link rel="alternate" type="application/rss+xml" title="RSS Blog (EN)" href="/rss.xml?lang=en" />
+	<link rel="alternate" type="application/atom+xml" title="Atom Blog (FR)" href="/atom.xml?lang=fr" />
+	<link rel="alternate" type="application/atom+xml" title="Atom Blog (EN)" href="/atom.xml?lang=en" />
 </svelte:head>
 
 <section class="section">
 	<div class="container" style="max-width: 56rem;">
 		<div class="page-header">
 			<h1 class="page-title">
-				Blog
+				{$_('blog.title')}
 			</h1>
 			<p class="page-description">
-				Articles techniques sur Linux, DevOps, infrastructure et développement
+				{$_('blog.subtitle')}
 			</p>
-			<div class="flex gap-4 mt-6">
-				<a
-					href="/rss.xml"
-					class="section-link"
-				>
-					<Rss size={20} />
-					Flux RSS
-				</a>
-				<a
-					href="/atom.xml"
-					class="section-link"
-				>
-					<Rss size={20} />
-					Flux Atom
-				</a>
+			
+			<div class="mt-8 space-y-4">
+				<div class="flex flex-wrap gap-4 items-center">
+					<span class="text-sm font-medium text-tertiary">Flux RSS :</span>
+					<a href="/rss.xml?lang=fr" class="section-link text-xs">
+						<Rss size={16} />
+						Français
+					</a>
+					<a href="/rss.xml?lang=en" class="section-link text-xs">
+						<Rss size={16} />
+						English
+					</a>
+				</div>
+				<div class="flex flex-wrap gap-4 items-center">
+					<span class="text-sm font-medium text-tertiary">Flux Atom :</span>
+					<a href="/atom.xml?lang=fr" class="section-link text-xs">
+						<Rss size={16} />
+						Français
+					</a>
+					<a href="/atom.xml?lang=en" class="section-link text-xs">
+						<Rss size={16} />
+						English
+					</a>
+				</div>
 			</div>
 		</div>
 
@@ -46,8 +61,8 @@
 			</div>
 		{:else}
 			<div class="empty-state">
-				<p class="text-lg" style="color: var(--text-secondary);">Aucun article publié pour le moment.</p>
-				<p class="text-sm mt-2" style="color: var(--text-tertiary);">Revenez bientôt pour du contenu technique !</p>
+				<p class="text-lg" style="color: var(--text-secondary);">{$_('blog.empty.title')}</p>
+				<p class="text-sm mt-2" style="color: var(--text-tertiary);">{$_('blog.empty.description')}</p>
 			</div>
 		{/if}
 	</div>
