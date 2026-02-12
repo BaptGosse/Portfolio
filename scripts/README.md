@@ -8,7 +8,10 @@ Ce dossier contient tous les scripts utilitaires pour gérer votre portfolio.
 Créer un utilisateur administrateur pour accéder au dashboard `/admin`.
 
 ```bash
-# Créer un admin
+# Via npm
+npm run db:create-admin admin@example.com MotDePasse123 "Votre Nom"
+
+# Ou via tsx
 tsx scripts/create-admin.ts admin@example.com MotDePasse123 "Votre Nom"
 
 # Arguments :
@@ -24,10 +27,11 @@ Créer une sauvegarde de la base de données.
 
 ```bash
 # Backup manuel
-DATABASE_URL="postgresql://user:pass@host:5432/db" ./scripts/backup-db.sh
+./scripts/backup-db.sh
 
 # Les backups sont stockés dans ./backups/
 # Format: portfolio_YYYYMMDD_HHMMSS.sql.gz
+# Nécessite DATABASE_URL dans .env
 ```
 
 ### `restore-db.sh`
@@ -35,7 +39,7 @@ Restaurer une sauvegarde de la base de données.
 
 ```bash
 # Restaurer un backup
-DATABASE_URL="postgresql://user:pass@host:5432/db" ./scripts/restore-db.sh backups/portfolio_20250125_120000.sql.gz
+./scripts/restore-db.sh backups/portfolio_20250125_120000.sql.gz
 
 # ⚠️ ATTENTION : Cela remplace toutes les données existantes !
 ```
@@ -46,21 +50,21 @@ DATABASE_URL="postgresql://user:pass@host:5432/db" ./scripts/restore-db.sh backu
 Migrer les données initiales (technologies, projets, expériences).
 
 ```bash
-tsx scripts/migrate-data.ts
+npm run migrate:data
 ```
 
 ### `migrate-skills.ts`
 Migrer les compétences et catégories.
 
 ```bash
-tsx scripts/migrate-skills.ts
+npm run migrate:skills
 ```
 
 ### `migrate-passions.ts`
 Migrer les passions et soft skills.
 
 ```bash
-tsx scripts/migrate-passions.ts
+npm run migrate:passions
 ```
 
 ## 🌐 Traduction
@@ -69,14 +73,14 @@ tsx scripts/migrate-passions.ts
 Traduire automatiquement le contenu manquant.
 
 ```bash
-tsx scripts/translate-content.ts
+npm run translate
 ```
 
 ### `check-translations.ts`
 Vérifier la cohérence des traductions.
 
 ```bash
-tsx scripts/check-translations.ts
+npm run check:translations
 ```
 
 ## 📝 Notes

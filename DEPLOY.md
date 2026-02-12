@@ -1,107 +1,85 @@
-# Guide de déploiement sur VM Linux
+# Guide de déploiement (Application & VM)
 
-## Prérequis sur la VM
+Ce guide explique comment déployer l'application portfolio sur un serveur Linux (VPS) utilisant Node.js et PM2.
 
+## 📋 Prérequis
+
+- Node.js 20+ installé sur le serveur
+- PostgreSQL 14+ (voir le [Guide de déploiement PostgreSQL](./docs/DEPLOYMENT.md))
+- Git
+- PM2 (`npm install -g pm2`)
+
+## 🛠️ Préparation du serveur
+
+### 1. Installation de Node.js (si nécessaire)
 ```bash
-# Installer Node.js (version 18 ou supérieure)
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs
-
-# Installer PostgreSQL
-sudo apt-get install -y postgresql postgresql-contrib
-
-# Installer PM2 (gestionnaire de processus Node.js)
-sudo npm install -g pm2
 ```
 
-## Configuration de la base de données
-
+### 2. Cloner le projet
 ```bash
-# Se connecter à PostgreSQL
-sudo -u postgres psql
-
-# Créer la base de données et l'utilisateur
-CREATE DATABASE portfolio;
-CREATE USER portfolio_user WITH ENCRYPTED PASSWORD 'ton_mot_de_passe_fort';
-GRANT ALL PRIVILEGES ON DATABASE portfolio TO portfolio_user;
-\q
-```
-
-## Déploiement du projet
-
-### Option 1: Avec Git (recommandé)
-
-```bash
-# Sur ta VM
 cd /var/www
-sudo git clone https://github.com/ton-username/portfolio.git
+git clone https://github.com/BaptGosse/portfolio.git
 cd portfolio
-
-# Copier et configurer le .env
-sudo nano .env
 ```
 
-Contenu du `.env`:
-```env
-# Database
-DATABASE_URL="postgresql://portfolio_user:ton_mot_de_passe@localhost:5432/portfolio"
-
-# Auth
-SESSION_SECRET="ton_secret_aleatoire_tres_long_et_securise"
-
-# Email (si configuré)
-SMTP_HOST="smtp.ton-provider.com"
-SMTP_PORT=587
-SMTP_USER="ton-email@example.com"
-SMTP_PASS="ton-mot-de-passe"
-
-# Node
-NODE_ENV=production
-PORT=3000
+### 3. Configuration de l'environnement
+Copiez le fichier d'exemple et éditez-le avec vos informations de production.
+```bash
+cp .env.example .env
+nano .env
 ```
+
+Assurez-vous que `DATABASE_URL` pointe vers votre base de données PostgreSQL de production.
+
+## 🚀 Déploiement
+
+### 1. Installer les dépendances et Build
+```bash
+npm install
+npm run build
+```
+
+### 2. Initialiser la base de données
+Si c'est votre premier déploiement, assurez-vous que les tables sont créées :
+```bash
+npm run db:push
+```
+
+Importez les données initiales si nécessaire :
+```bash
+npm run migrate:data
+npm run migrate:skills
+npm run migrate:passions
+```
+
+Créez votre utilisateur admin :
+```bash
+npm run db:create-admin votre@email.com "votre-mot-de-passe" "Votre Nom"
+```
+
+### 3. Démarrer avec PM2
+L'application utilise `ecosystem.config.cjs` pour la gestion par PM2.
 
 ```bash
-# Installer les dépendances
-npm install --production
-
-# Initialiser la base de données
-npm run db:push
-
-# Construire le projet (si pas déjà fait)
-npm run build
-
-# Démarrer avec PM2
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.cjs
 pm2 save
 pm2 startup
 ```
 
-### Option 2: Transfert manuel
+## 🌐 Configuration Nginx (Reverse Proxy)
 
-```bash
-# Sur ta machine locale, créer une archive
-tar -czf portfolio.tar.gz build/ package.json package-lock.json ecosystem.config.js static/ drizzle/
-
-# Transférer vers la VM (depuis ta machine locale)
-scp portfolio.tar.gz user@ip-de-ta-vm:/var/www/
-
-# Sur la VM
-cd /var/www
-tar -xzf portfolio.tar.gz
-npm install --production
-```
-
-## Configuration Nginx (reverse proxy)
-
+Créez un fichier de configuration pour votre site :
 ```bash
 sudo nano /etc/nginx/sites-available/portfolio
 ```
 
-Contenu:
+Exemple de configuration :
 ```nginx
 server {
     listen 80;
-    server_name ton-domaine.fr www.ton-domaine.fr;
+    server_name votre-domaine.fr;
 
     location / {
         proxy_pass http://localhost:3000;
@@ -117,90 +95,36 @@ server {
 }
 ```
 
+Activez le site et rechargez Nginx :
 ```bash
-# Activer le site
 sudo ln -s /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## SSL avec Let's Encrypt
+## 🔐 SSL avec Let's Encrypt
 
 ```bash
-# Installer Certbot
-sudo apt-get install -y certbot python3-certbot-nginx
-
-# Obtenir un certificat SSL
-sudo certbot --nginx -d ton-domaine.fr -d www.ton-domaine.fr
+sudo apt-get install certbot python3-certbot-nginx
+sudo certbot --nginx -d votre-domaine.fr
 ```
 
-## Alternative: Service systemd (sans PM2)
+## 🔄 Mise à jour du projet
 
-Créer `/etc/systemd/system/portfolio.service`:
-
-```ini
-[Unit]
-Description=Portfolio SvelteKit
-After=network.target postgresql.service
-
-[Service]
-Type=simple
-User=www-data
-WorkingDirectory=/var/www/portfolio
-Environment=NODE_ENV=production
-Environment=PORT=3000
-ExecStart=/usr/bin/node build/index.js
-Restart=on-failure
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
-
+Pour déployer une nouvelle version :
 ```bash
-# Activer et démarrer le service
-sudo systemctl daemon-reload
-sudo systemctl enable portfolio
-sudo systemctl start portfolio
-sudo systemctl status portfolio
-```
-
-## Commandes utiles
-
-```bash
-# Voir les logs PM2
-pm2 logs portfolio
-
-# Redémarrer l'application
-pm2 restart portfolio
-
-# Avec systemd
-sudo journalctl -u portfolio -f
-sudo systemctl restart portfolio
-
-# Mise à jour du projet
-cd /var/www/portfolio
 git pull
-npm install --production
+npm install
 npm run build
 pm2 restart portfolio
 ```
 
-## Sécurité
+## 📂 Documentation complémentaire
 
-1. **Firewall**: Autoriser seulement les ports nécessaires
-```bash
-sudo ufw allow 22/tcp  # SSH
-sudo ufw allow 80/tcp  # HTTP
-sudo ufw allow 443/tcp # HTTPS
-sudo ufw enable
-```
+- [Déploiement Base de Données](./docs/DEPLOYMENT.md)
+- [Documentation Schéma DB](./docs/DATABASE.md)
+- [Guide de personnalisation](./CUSTOMIZATION.md)
 
-2. **PostgreSQL**: N'autoriser que les connexions locales
-3. **Variables d'environnement**: Utiliser des mots de passe forts
-4. **Sauvegardes**: Configurer des backups automatiques de la DB
+---
 
-```bash
-# Backup manuel
-pg_dump -U portfolio_user portfolio > backup_$(date +%Y%m%d).sql
-```
+**Note** : Ce projet est configuré pour utiliser `@sveltejs/adapter-node` ou `adapter-auto`. Assurez-vous que l'adapter correct est sélectionné dans `svelte.config.js` si vous avez des besoins spécifiques.

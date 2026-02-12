@@ -305,13 +305,13 @@ Les migrations sont gérées par Drizzle Kit.
 ### Générer une migration
 
 ```bash
-npx drizzle-kit generate
+npm run db:generate
 ```
 
 ### Appliquer les migrations
 
 ```bash
-npx drizzle-kit push
+npm run db:push
 ```
 
 ### Scripts de migration de données
@@ -323,9 +323,9 @@ Des scripts sont disponibles dans `/scripts/` pour migrer les données depuis le
 - `migrate-passions.ts` : Migration des passions et soft skills
 
 ```bash
-tsx scripts/migrate-data.ts
-tsx scripts/migrate-skills.ts
-tsx scripts/migrate-passions.ts
+npm run migrate:data
+npm run migrate:skills
+npm run migrate:passions
 ```
 
 ## Configuration

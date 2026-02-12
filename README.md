@@ -47,11 +47,12 @@ cp .env.example .env
 docker-compose up -d
 
 # Générer et appliquer les migrations
-npx drizzle-kit push
+npm run db:push
 
 # Migrer les données initiales (optionnel)
-tsx scripts/migrate-data.ts
-tsx scripts/migrate-skills.ts
+npm run migrate:data
+npm run migrate:skills
+npm run migrate:passions
 
 # Lancer le serveur de développement
 npm run dev
@@ -93,12 +94,18 @@ src/
 └── posts/                   # (vide, données en BDD)
 
 scripts/
+├── backup-db.sh             # Sauvegarde de la base de données
+├── restore-db.sh            # Restauration de la base de données
+├── create-admin.ts          # Création du premier utilisateur
 ├── migrate-data.ts          # Migration projets/posts/expériences
 ├── migrate-skills.ts        # Migration compétences
+├── migrate-passions.ts      # Migration passions et soft skills
+├── check-translations.ts    # Vérification des clés de traduction
 └── translate-content.ts     # Traduction automatique FR→EN
 
 docs/
-└── DATABASE.md              # Documentation complète du schéma
+├── DATABASE.md              # Documentation complète du schéma
+└── DEPLOYMENT.md            # Guide de déploiement PostgreSQL
 
 archive/
 └── old-data/                # Anciens fichiers statiques archivés
@@ -113,11 +120,13 @@ Le projet utilise PostgreSQL avec des colonnes JSONB pour le multilingue:
 - **POR_USERS** - Utilisateurs administrateurs
 - **POR_POSTS** - Articles de blog multilingues
 - **POR_TAGS** - Tags pour les articles
-- **POR_PROJECTS** - Projets multilingues avec featured flag
-- **POR_TECHNOLOGIES** - Technologies (partagées entre projets/expériences/skills)
+- **POR_PROJECTS** - Projets multilingues
+- **POR_TECHNOLOGIES** - Technologies partagées
 - **POR_EXPERIENCES** - Parcours professionnel et éducatif
 - **POR_SKILL_CATEGORIES** - Catégories de compétences
 - **POR_SKILLS** - Compétences individuelles
+- **POR_PASSIONS** - Passions et hobbies
+- **POR_SOFT_SKILLS** - Compétences transversales
 - **POR_SESSIONS** - Sessions d'authentification
 
 Voir la [documentation complète du schéma](./docs/DATABASE.md).
@@ -126,25 +135,25 @@ Voir la [documentation complète du schéma](./docs/DATABASE.md).
 
 ```bash
 # Générer une nouvelle migration
-npx drizzle-kit generate
+npm run db:generate
 
 # Appliquer les migrations
-npx drizzle-kit push
+npm run db:push
 
 # Voir le schéma actuel
-npx drizzle-kit studio
+npm run db:studio
 ```
 
 ## 🔐 Administration
 
 ### Accès au dashboard
 
-L'interface d'administration est disponible à `/admin` :
+L'interface d'administration est disponible à `/admin`.
 
-```
-URL: http://localhost:5173/admin
-Email: portfolio@baptiste-gosselin.fr
-Mot de passe: (configuré lors de la création utilisateur)
+### Créer le premier utilisateur
+
+```bash
+npm run db:create-admin <email> <password> <name>
 ```
 
 ### Fonctionnalités admin
@@ -153,6 +162,7 @@ Mot de passe: (configuré lors de la création utilisateur)
 - ✅ **Projets** : Gestion des projets avec technologies et featured toggle
 - ✅ **Expériences** : Timeline professionnelle avec dates et technologies
 - ✅ **Compétences** : Catégories et compétences (Stack technique)
+- ✅ **Passions & Soft Skills** : Gestion des hobbies et compétences transversales
 - ✅ **Technologies** : Base partagée par projets/expériences/skills
 - ✅ **Tags** : Organisation des articles
 
@@ -172,7 +182,7 @@ Le site supporte français et anglais via `svelte-i18n`.
 
 ```bash
 # Traduire automatiquement tous les contenus FR → EN
-tsx scripts/translate-content.ts
+npm run translate
 ```
 
 ### Traductions dans le code
@@ -195,21 +205,12 @@ const title = project.PRJ_TITLE[locale] || project.PRJ_TITLE.fr;
 
 ### Via scripts de migration
 
-Pour importer des données en masse, créer un script dans `/scripts/`:
+Pour importer les données initiales :
 
-```typescript
-import { db } from '../src/lib/server/db';
-import { POR_PROJECTS } from '../src/lib/server/db/schema';
-
-const projects = [
-  {
-    PRJ_TITLE: { fr: 'Mon Projet', en: 'My Project' },
-    PRJ_DESCRIPTION: { fr: '...', en: '...' },
-    // ...
-  }
-];
-
-await db.insert(POR_PROJECTS).values(projects);
+```bash
+npm run migrate:data
+npm run migrate:skills
+npm run migrate:passions
 ```
 
 ## 🎨 Personnalisation
@@ -277,6 +278,8 @@ Le projet utilise `adapter-auto` compatible avec:
 - **Netlify** - Nécessite PostgreSQL externe
 - **VPS/Serveur** - Node.js + PostgreSQL + PM2/systemd
 
+Voir le [guide de déploiement PostgreSQL](./docs/DEPLOYMENT.md) et le [guide de déploiement VM](./DEPLOY.md).
+
 ### Variables d'environnement requises
 
 ```env
@@ -310,19 +313,25 @@ npm run test:integration
 ## 📚 Documentation
 
 - [Schéma de la base de données](./docs/DATABASE.md)
+- [Guide de déploiement PostgreSQL](./docs/DEPLOYMENT.md)
 - [SvelteKit Docs](https://svelte.dev/docs/kit)
 - [Drizzle ORM Docs](https://orm.drizzle.team)
 
 ## 🛠️ Scripts disponibles
 
 ```bash
-npm run dev              # Serveur de développement
-npm run build            # Build production
-npm run preview          # Preview build local
-npm run check            # Type-check TypeScript
-npm run migrate:data     # Migrer données initiales
-npm run migrate:skills   # Migrer compétences
-npm run translate        # Traduction auto FR→EN
+npm run dev                 # Serveur de développement
+npm run build               # Build production
+npm run preview             # Preview build local
+npm run check               # Type-check TypeScript
+npm run db:push             # Appliquer schéma à la BDD
+npm run db:studio           # Explorer la BDD via UI
+npm run db:create-admin     # Créer un utilisateur admin
+npm run migrate:data        # Migrer données initiales (projets, etc.)
+npm run migrate:skills      # Migrer compétences
+npm run migrate:passions    # Migrer passions et soft skills
+npm run translate           # Traduction auto FR→EN
+npm run check:translations  # Vérifier les clés de traduction
 ```
 
 ## 📄 Licence

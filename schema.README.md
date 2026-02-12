@@ -10,13 +10,13 @@ Le schéma TypeScript Drizzle ORM est le **fichier source principal**. C'est lui
 **Utilisation :**
 ```bash
 # Générer une nouvelle migration après modification
-npx drizzle-kit generate
+npm run db:generate
 
 # Appliquer les migrations à la base
-npx drizzle-kit push
+npm run db:push
 
-# Vérifier la cohérence
-npx drizzle-kit check
+# Voir le schéma actuel
+npm run db:studio
 ```
 
 ### 2. `schema.dbml` (Visualisation)
@@ -123,8 +123,8 @@ export const MA_NOUVELLE_TABLE = pgTable('MA_NOUVELLE_TABLE', {
 
 ### 2. Générer et appliquer la migration
 ```bash
-npx drizzle-kit generate
-npx drizzle-kit push
+npm run db:generate
+npm run db:push
 ```
 
 ### 3. Mettre à jour le DBML
@@ -141,27 +141,17 @@ Ajoutez une section dans `docs/DATABASE.md` pour expliquer la nouvelle table.
 
 ## Vérification de Cohérence
 
-### Vérifier Drizzle
-```bash
-npx drizzle-kit check
-```
-
-### Vérifier la base PostgreSQL
-```bash
-docker exec portfolio-db psql -U portfolio -d portfolio -c "\dt"
-```
-
 ### Visualiser le schéma
 ```bash
 # Avec Drizzle Studio (interface graphique)
-npx drizzle-kit studio
+npm run db:studio
 ```
 
 ## Outils Recommandés
 
 - **Drizzle Studio** : Interface graphique pour explorer la DB
   ```bash
-  npx drizzle-kit studio
+  npm run db:studio
   ```
 
 - **dbdiagram.io** : Visualisation ER interactive

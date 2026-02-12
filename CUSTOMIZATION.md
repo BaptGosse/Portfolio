@@ -1,284 +1,129 @@
 # Guide de personnalisation
 
-Ce guide explique comment personnaliser ton portfolio selon tes besoins.
+Ce guide explique comment personnaliser ton portfolio selon tes besoins, que ce soit au niveau des données ou du design.
 
-## 📝 Informations personnelles
+## ✍️ Gestion du contenu
 
-### 1. Données de base
+Le contenu est désormais géré via une base de données PostgreSQL et une interface d'administration.
 
-Modifier `src/lib/data/projects.ts` :
+### 1. Utiliser le Dashboard Admin
 
-```typescript
-// Ajouter tes projets
-export const projects: Project[] = [
-  {
-    id: 'mon-projet',
-    title: 'Mon Super Projet',
-    description: 'Description...',
-    technologies: ['Tech1', 'Tech2'],
-    github: 'https://github.com/...',
-    featured: true
-  }
-];
+Le moyen le plus simple de personnaliser ton contenu est d'utiliser l'interface d'administration à `/admin`.
 
-// Ajouter tes expériences
-export const experiences: Experience[] = [
-  // ...
-];
+- **Projets** : Ajouter, modifier ou supprimer tes projets phares.
+- **Expériences** : Gérer ton parcours professionnel et éducatif.
+- **Compétences** : Organiser tes compétences techniques par catégories.
+- **Blog** : Écrire des articles en Markdown avec support multilingue.
+- **Passions & Soft Skills** : Personnaliser tes hobbies et compétences transversales.
+- **Technologies** : Gérer la liste des technos partagées.
 
-// Modifier tes compétences
-export const skills = {
-  'Catégorie 1': ['Skill 1', 'Skill 2'],
-  // ...
-};
+### 2. Internationalisation (FR/EN)
+
+Chaque formulaire dans l'admin possède des onglets **Français** et **Anglais**. Assure-toi de remplir les deux pour une expérience utilisateur complète.
+
+Si tu as beaucoup de contenu en français, tu peux utiliser le script de traduction automatique :
+```bash
+npm run translate
 ```
 
-### 2. Footer et contact
+### 3. Migration initiale
 
-Modifier `src/lib/components/Footer.svelte` :
+Si tu souhaites repartir des données statiques présentes dans `src/lib/data/projects.ts` ou des fichiers Markdown dans `src/posts/`, utilise les scripts de migration :
 
-```typescript
-const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/ton-username', icon: 'github' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/ton-profil', icon: 'linkedin' },
-  { name: 'Email', href: 'mailto:ton-email@exemple.com', icon: 'email' }
-];
+```bash
+npm run migrate:data
+npm run migrate:skills
+npm run migrate:passions
 ```
 
-### 3. Configuration des flux RSS/Atom
+## 🎨 Design et Style
 
-Modifier dans `src/routes/rss.xml/+server.ts` et `src/routes/atom.xml/+server.ts` :
+Le projet utilise des variables CSS (Custom Properties) pour une personnalisation facile et globale.
 
-```typescript
-const siteUrl = 'https://ton-domaine.com';
-const author = {
-  name: 'Ton Nom',
-  email: 'ton-email@exemple.com'
-};
-```
+### 1. Couleurs et Thèmes
 
-## 🎨 Design et couleurs
+Toutes les couleurs sont définies dans `src/app.css` sous le sélecteur `:root`.
 
-### Thème de couleurs
-
-Modifier `tailwind.config.js` :
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        50: '#...',
-        100: '#...',
-        // ... personnaliser toute la palette
-        900: '#...',
-      }
-    }
-  }
-}
-```
-
-### Couleurs de fond
-
-Modifier `src/app.css` :
+#### Palette de base
+Modifie les variables `--color-primary-*` pour changer la couleur d'accentuation principale (actuellement violet).
 
 ```css
-@layer base {
-  body {
-    @apply bg-gray-950 text-gray-100; /* Changer ici */
-  }
+:root {
+  --color-primary-500: #a855f7; /* Couleur principale */
+  /* ... */
 }
 ```
 
-## ✍️ Créer du contenu
+#### Variables thématiques
+Tu peux ajuster les couleurs de fond et de texte pour le mode sombre (défaut) et le mode clair :
 
-### Ajouter un article de blog
+```css
+:root {
+  /* Mode Sombre */
+  --bg-primary: #0f1420;
+  --text-primary: #f8fafc;
+}
 
-1. Créer un fichier dans `src/posts/nom-article.md`
-2. Ajouter le frontmatter :
-
-```markdown
----
-title: 'Titre de mon article'
-description: 'Description courte'
-date: '2025-12-12'
-tags: ['tag1', 'tag2', 'tag3']
-published: true
----
-
-# Titre
-
-Contenu en Markdown...
+[data-theme="light"] {
+  /* Mode Clair */
+  --bg-primary: #ffffff;
+  --text-primary: #1e293b;
+}
 ```
 
-### Syntaxe Markdown supportée
+### 2. Typographie
 
-- Headings : `# H1`, `## H2`, etc.
-- **Gras** : `**texte**`
-- *Italique* : `*texte*`
-- Listes : `- item` ou `1. item`
-- Code inline : `` `code` ``
-- Blocs de code :
-  ````markdown
-  ```javascript
-  const code = 'here';
-  ```
-  ````
-- Liens : `[texte](url)`
-- Images : `![alt](url)`
+Les polices sont importées au début de `src/app.css`. Tu peux changer les polices par défaut en modifiant les variables :
 
-## 🖼️ Images et médias
-
-### Ajouter des images statiques
-
-1. Placer les images dans `static/`
-2. Référencer : `/nom-image.jpg`
-
-Exemple dans un composant :
-```svelte
-<img src="/projets/mon-projet.png" alt="Description" />
+```css
+:root {
+  --font-display: 'Sora', sans-serif; /* Titres */
+  --font-body: 'DM Sans', sans-serif;  /* Corps de texte */
+  --font-mono: 'JetBrains Mono', monospace; /* Code */
+}
 ```
 
-### Images dans les articles
+### 3. Espacements et Bordures
 
-```markdown
-![Description de l'image](/images/mon-image.png)
+Tu peux globalement changer l'arrondi des cartes ou les espacements :
+
+```css
+:root {
+  --radius-lg: 0.75rem;
+  --spacing-md: 1rem;
+}
 ```
 
-## 🔧 Composants personnalisés
+## ⚙️ Configuration système
 
-### Créer un nouveau composant
+Les informations globales (Email, GitHub, LinkedIn) se configurent via les variables d'environnement dans le fichier `.env`.
 
-1. Créer un fichier dans `src/lib/components/MonComposant.svelte`
-2. Utiliser dans une page :
-
-```svelte
-<script>
-  import MonComposant from '$lib/components/MonComposant.svelte';
-</script>
-
-<MonComposant prop="valeur" />
+```env
+PUBLIC_SITE_URL=https://ton-domaine.com
+PUBLIC_EMAIL=contact@ton-domaine.com
+PUBLIC_GITHUB=https://github.com/ton-username
+PUBLIC_LINKEDIN=https://linkedin.com/in/ton-username
 ```
 
-## 🌐 SEO et métadonnées
+## 🖼️ Médias et Favicon
 
-### Modifier les meta tags
+- **Favicon** : Remplace `static/favicon.svg` ou `static/images/favicon.jpg`.
+- **CV** : Remplace `static/documents/CV.pdf`.
+- **Signature** : Remplace `static/images/signature.png`.
+- **Images Projets** : Télécharge-les dans `static/images/` et utilise le chemin relatif dans l'admin (ex: `/images/mon-projet.png`).
 
-Dans chaque page, utiliser :
+## 🚀 Fonctionnalités avancées
 
-```svelte
-<svelte:head>
-  <title>Titre de la page</title>
-  <meta name="description" content="Description..." />
-</svelte:head>
-```
+### Flux RSS/Atom
 
-### Ajouter Open Graph (réseaux sociaux)
+Les informations de l'auteur pour les flux RSS sont récupérées depuis les variables d'environnement `PUBLIC_EMAIL` et `PUBLIC_SITE_URL`. Pour changer le nom de l'auteur, modifie :
+- `src/routes/rss.xml/+server.ts`
+- `src/routes/atom.xml/+server.ts`
 
-```svelte
-<svelte:head>
-  <meta property="og:title" content="Titre" />
-  <meta property="og:description" content="Description" />
-  <meta property="og:image" content="https://ton-site.com/image.jpg" />
-  <meta property="og:url" content="https://ton-site.com/page" />
-  <meta name="twitter:card" content="summary_large_image" />
-</svelte:head>
-```
+### SEO
 
-## 📱 Responsive design
-
-Les breakpoints Tailwind :
-- `sm:` : ≥640px
-- `md:` : ≥768px
-- `lg:` : ≥1024px
-- `xl:` : ≥1280px
-- `2xl:` : ≥1536px
-
-Exemple :
-```svelte
-<div class="text-base md:text-lg lg:text-xl">
-  Texte responsive
-</div>
-```
-
-## 🚀 Déploiement
-
-### Variables d'environnement
-
-Créer un fichier `.env` basé sur `.env.example` :
-
-```bash
-cp .env.example .env
-```
-
-Puis modifier les valeurs.
-
-### Build de production
-
-```bash
-npm run build
-npm run preview  # Tester localement
-```
-
-### Adapters SvelteKit
-
-Pour un déploiement spécifique, installer l'adapter approprié :
-
-```bash
-# Node.js
-npm i -D @sveltejs/adapter-node
-
-# Static (GitHub Pages, etc.)
-npm i -D @sveltejs/adapter-static
-
-# Vercel
-npm i -D @sveltejs/adapter-vercel
-
-# Netlify
-npm i -D @sveltejs/adapter-netlify
-```
-
-Puis modifier `svelte.config.js` :
-
-```javascript
-import adapter from '@sveltejs/adapter-node'; // ou autre
-
-const config = {
-  kit: {
-    adapter: adapter()
-  }
-};
-```
-
-## 💡 Astuces
-
-### Performance
-
-- Optimiser les images (WebP, compression)
-- Utiliser le lazy loading : `<img loading="lazy" />`
-- Minimiser les imports
-
-### Accessibilité
-
-- Toujours ajouter des `alt` aux images
-- Utiliser des titres hiérarchiques (H1 → H2 → H3)
-- Tester au clavier (navigation Tab)
-
-### TypeScript
-
-Typer les props des composants :
-
-```typescript
-<script lang="ts">
-  import type { MonType } from '$lib/types';
-
-  let { prop1, prop2 }: {
-    prop1: string;
-    prop2: MonType
-  } = $props();
-</script>
-```
+Pour modifier les meta tags globaux, édite `src/routes/+layout.svelte`. Pour des pages spécifiques, utilise le bloc `<svelte:head>` dans le fichier `+page.svelte` correspondant.
 
 ---
 
-Pour plus d'informations, consulter la [documentation SvelteKit](https://svelte.dev/docs/kit).
+Besoin d'aide ? Consulte la documentation SvelteKit ou contacte-moi via GitHub.

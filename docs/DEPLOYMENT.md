@@ -192,7 +192,7 @@ DATABASE_URL=postgresql://portfolio_user:VOTRE_MOT_DE_PASSE@VOTRE_SERVEUR:5432/p
 npm install
 
 # Appliquer toutes les migrations
-npx drizzle-kit push
+npm run db:push
 
 # Alternative : Exécuter les fichiers SQL manuellement
 psql "postgresql://portfolio_user:PASSWORD@SERVEUR:5432/portfolio" < drizzle/0000_handy_mulholland_black.sql
@@ -271,7 +271,7 @@ createAdmin();
 
 **Exécution :**
 ```bash
-tsx scripts/create-admin.ts admin@example.com MotDePasseSecurise "Votre Nom"
+npm run db:create-admin admin@example.com MotDePasseSecurise "Votre Nom"
 ```
 
 ### Méthode 2 : Directement en SQL
