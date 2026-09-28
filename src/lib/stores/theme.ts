@@ -3,30 +3,31 @@ import { browser } from '$app/environment';
 
 type Theme = 'light' | 'dark';
 
-function createThemeStore() {
-	const storedTheme = browser ? localStorage.getItem('theme') as Theme : null;
-	const initialTheme = storedTheme || 'dark';
+// The theme is applied before render by the inline script in app.html
+function readTheme(): Theme {
+	if (!browser) return 'dark';
+	return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+}
 
-	const { subscribe, set } = writable<Theme>(initialTheme);
+function createThemeStore() {
+	const { subscribe, set } = writable<Theme>(readTheme());
 
 	return {
 		subscribe,
 		toggle: () => {
 			if (!browser) return;
-
-			const currentTheme = localStorage.getItem('theme') as Theme || 'dark';
-			const newTheme: Theme = currentTheme === 'dark' ? 'light' : 'dark';
-
-			localStorage.setItem('theme', newTheme);
-			document.documentElement.setAttribute('data-theme', newTheme);
-			set(newTheme);
+			const next: Theme = readTheme() === 'dark' ? 'light' : 'dark';
+			document.documentElement.dataset.theme = next;
+			try {
+				localStorage.setItem('theme', next);
+			} catch {
+				// Storage unavailable (private browsing): the theme only lasts for this page
+			}
+			set(next);
 		},
 		init: () => {
 			if (!browser) return;
-
-			const theme = localStorage.getItem('theme') as Theme || 'dark';
-			document.documentElement.setAttribute('data-theme', theme);
-			set(theme);
+			set(readTheme());
 		}
 	};
 }

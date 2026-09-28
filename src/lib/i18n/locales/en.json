@@ -1,257 +1,176 @@
 {
+	"meta": {
+		"title": "Baptiste Gosselin, infrastructure, code and theater",
+		"description": "Computer science student in Caen, France. I build infrastructure (Kubernetes, networking, Go) and I do theater. Looking for an apprenticeship for 2026-2027."
+	},
 	"nav": {
-		"home": "Home",
 		"projects": "Projects",
-		"blog": "Blog"
+		"blog": "Blog",
+		"cv": "Résumé",
+		"homeLabel": "Baptiste Gosselin, back to home",
+		"mainLabel": "Main navigation",
+		"skip": "Skip to content"
+	},
+	"lang": {
+		"switchTo": "FR",
+		"switchLabel": "Lire ce site en français"
+	},
+	"theme": {
+		"toLight": "House lights up (light theme)",
+		"toDark": "House lights down (dark theme)"
 	},
 	"hero": {
-		"badge": "Looking for an internship (2nd year) and an apprenticeship (3rd year)",
-		"title": "Building tomorrow's",
-		"titleGradient": "infrastructure",
-		"description": "Computer Science student passionate about cloud-native infrastructure. I build reliable and performant systems, from bare-metal virtualization to distributed applications on Kubernetes.",
-		"cta": "Discover my projects",
-		"contact": "Contact me",
-		"stats": {
-			"projects": "Infrastructure Projects",
-			"cloudNative": "Cloud-Native Expert",
-			"programming": "Systems Programming"
-		}
+		"stageDirection": "The curtain rises. A ghost light was left on, network cables trail across the stage.",
+		"character": "Baptiste",
+		"characterDirection": "stepping toward the audience",
+		"line": "Hello. I'm Baptiste. I study computer science in Caen, France, and I take care of what nobody sees: infrastructure. Kubernetes clusters, networking, an orchestrator written in Go. And when the servers run on their own, I go on stage.",
+		"status": "He is looking for an apprenticeship for the 2026-2027 season.",
+		"cta": "See my projects",
+		"cvMain": "My résumé",
+		"cvStub": "PDF, in French",
+		"photoAlt": "Portrait of Baptiste Gosselin",
+		"photoCaption": "Baptiste Gosselin, in every role."
 	},
 	"stack": {
-		"title": "Technical Stack",
-		"subtitle": "Hands-on expertise gained through my projects"
+		"title": "Tech rider",
+		"note": "What the crew needs backstage for the show to run. In other words: the tools I actually use, and where I used them."
 	},
 	"projects": {
-		"title": "Featured Projects",
-		"subtitle": "Modern infrastructure, distributed systems and automation",
-		"featured": "Featured",
-		"viewOnGithub": "View on GitHub",
-		"allProjects": "All projects"
+		"title": "Repertoire",
+		"note": "The shows I've put on. Some are still running.",
+		"cast": "Starring {list}.",
+		"code": "Read the code",
+		"live": "See it live",
+		"all": "The full repertoire",
+		"empty": "Nothing on the bill yet."
 	},
 	"projectsPage": {
-		"title": "My",
-		"titleGradient": "Projects",
-		"description": "A selection of my projects in infrastructure, cloud-native and system development. From bare-metal virtualization to distributed applications on Kubernetes.",
-		"metaDescription": "Discover my projects in cloud-native infrastructure, Kubernetes, DevOps and system development.",
+		"title": "The full repertoire",
+		"note": "Infrastructure, cloud-native and systems programming: everything I've put on, from bare metal to apps on Kubernetes.",
+		"metaTitle": "Projects - Baptiste Gosselin",
+		"metaDescription": "My projects in infrastructure, Kubernetes, DevOps and systems programming.",
+		"filtersLabel": "Filter projects",
 		"filters": {
-			"all": "All projects",
+			"all": "All",
 			"infrastructure": "Infrastructure",
-			"cloudNative": "Cloud-Native",
+			"cloudNative": "Cloud-native",
 			"development": "Development"
 		},
-		"featured": "Featured",
-		"github": "GitHub",
-		"demo": "Demo",
 		"empty": {
-			"title": "No projects found",
-			"description": "Try changing the filters to see other projects."
+			"title": "Nothing on the bill in this genre.",
+			"action": "See the full repertoire"
 		}
 	},
 	"opportunities": {
-		"title": "Opportunities Sought",
-		"subtitle": "I am currently looking for new professional experiences",
-		"internship": {
-			"badge": "2nd year",
-			"title": "End-of-year Internship",
-			"duration": "8 to 10 weeks • April to June 2026",
-			"description": "I'm looking for a 2nd year internship to deepen my skills in cloud-native infrastructure, DevOps or system development. The ideal opportunity to contribute to real projects while continuing to learn.",
-			"skills": [
-				"Infrastructure & Cloud",
-				"Kubernetes / Docker",
-				"DevOps & CI/CD",
-				"System Administration"
-			]
-		},
-		"apprenticeship": {
-			"badge": "3rd year",
-			"title": "Apprenticeship",
-			"duration": "1 year • September 2026 - August 2027",
-			"description": "I'm looking for an apprenticeship for my 3rd year of Computer Science degree. An opportunity to fully invest myself in a team and participate in strategic long-term projects.",
-			"skills": [
-				"Cloud-native infrastructure",
-				"Go / Rust Development",
-				"System Architecture",
-				"Automation"
-			]
-		},
-		"downloadCV": "Download my CV",
-		"contactMe": "Contact me"
+		"title": "Looking for a company",
+		"note": "A theater company or any other kind: somewhere to do my apprenticeship.",
+		"topicsLabel": "On the program:",
+		"notices": [
+			{
+				"kicker": "3rd year of my degree",
+				"title": "Apprenticeship",
+				"when": "One year, September 2026 to August 2027",
+				"text": "I've already built a Kubernetes cluster and its network for UnxWares. Now I'm looking for a team that does this at a larger scale, trusts me with real responsibilities, and keeps me for a year.",
+				"topics": [
+					"cloud-native infrastructure",
+					"Go and Rust",
+					"systems architecture",
+					"automation"
+				]
+			},
+			{
+				"kicker": "2nd year of my degree",
+				"title": "Internship",
+				"when": "8 to 10 weeks, April to June 2026",
+				"text": "An internship to get my hands on infrastructure running in production: cloud, containers, CI/CD or system administration.",
+				"topics": [
+					"infrastructure and cloud",
+					"Kubernetes and Docker",
+					"DevOps and CI/CD",
+					"system administration"
+				]
+			}
+		],
+		"cv": "Download my résumé",
+		"write": "Write to me"
 	},
 	"experience": {
-		"title": "Background",
-		"subtitle": "Professional experiences and completed projects"
+		"title": "Cue sheet",
+		"note": "Backstage, the cue sheet lists every change in order, cue after cue. Mine tells where I've worked and studied.",
+		"cueWord": "cue",
+		"present": "today",
+		"cast": "Starring {list}."
 	},
 	"passions": {
-		"title": "Cultural Passions",
-		"subtitle": "Beyond code, my artistic activities that enrich my professional skills",
-		"skills_developed": "Skills Developed"
+		"title": "Intermission",
+		"note": "A fifteen-minute break. What I do when I'm not in front of a terminal.",
+		"learned": "What it taught me: {list}."
 	},
 	"contact": {
-		"title": "Let's work together",
-		"subtitle": "Looking for an <strong>8 to 10 week internship (2nd year)</strong> and an <strong>apprenticeship (3rd year)</strong>.<br />An infrastructure project? Need cloud-native expertise?<br />Let's discuss it over a coffee (virtual or real) ☕",
-		"email": "Email",
-		"github": "GitHub",
-		"linkedin": "LinkedIn"
+		"title": "Stage door",
+		"text": "An apprenticeship to offer, a question about a project, or you just want to talk theater? Write to me, I answer.",
+		"elsewhere": "You can also find me on",
+		"and": "and"
 	},
 	"footer": {
-		"navigation": "Navigation",
-		"contactTitle": "Contact me",
-		"backToTop": "Back to top",
-		"copyright": "© {year} Baptiste Gosselin. All rights reserved.",
-		"description": "Computer Science student passionate about cloud-native infrastructure and system development.",
-		"credits": "Credits"
+		"curtain": "Curtain.",
+		"copyright": "© {year} Baptiste Gosselin",
+		"source": "Source code",
+		"backstage": "Backstage",
+		"rss": "RSS feed",
+		"top": "Back to curtain up"
 	},
 	"credits": {
-		"title": "Credits",
-		"titleGradient": "Technologies",
-		"subtitle": "This site was built with these amazing open source technologies",
-		"metaTitle": "Credits & Technologies - Baptiste Gosselin",
-		"metaDescription": "Technologies and open source tools used to build this portfolio.",
+		"metaTitle": "Backstage - Baptiste Gosselin",
+		"metaDescription": "The open-source tools that run this site.",
+		"title": "Backstage",
+		"note": "This site's tech rider: the open-source tools that keep it running. Thanks to the people behind them.",
 		"categories": {
-			"framework": "Framework & Build",
-			"language": "Languages",
+			"framework": "Framework and build",
+			"language": "Language",
 			"database": "Database",
-			"ui": "UI & Icons",
-			"devops": "DevOps & Deployment",
-			"tools": "Development Tools"
+			"ui": "Interface",
+			"devops": "Hosting",
+			"tools": "Tools"
 		},
-		"madeWith": "Made with",
-		"viewSource": "View source code",
-		"openSource": "This project is open source"
-	},
-	"terminal": {
-		"welcome": "Welcome! Type \"help\" to see available commands 👋",
-		"placeholder": "Type 'help' for commands...",
-		"commandNotFound": "bash: {command}: command not found",
-		"typeHelp": "Type \"help\" for available commands",
-		"help": {
-			"title": "Available commands:",
-			"commands": {
-				"help": "Show this help message",
-				"about": "Learn more about me",
-				"skills": "List my technical skills",
-				"projects": "View my projects",
-				"contact": "Get my contact information",
-				"whoami": "Display current user",
-				"date": "Show current date",
-				"echo": "Print a message",
-				"clear": "Clear the terminal",
-				"neofetch": "Display system information",
-				"fortune": "Get a random quote",
-				"matrix": "Enter the Matrix... (just kidding)",
-				"sudo": "With great power...",
-				"kubectl": "Check Kubernetes cluster status",
-				"docker": "List running containers",
-				"weather": "Check the weather",
-				"joke": "Tell me a joke",
-				"cat": "Display file contents",
-				"history": "Show command history"
-			}
-		},
-		"about": {
-			"line1": "Baptiste Gosselin",
-			"line2": "Computer Science student passionate about cloud-native infrastructure.",
-			"line3": "Specialized in Kubernetes, DevOps and system development.",
-			"location": "📍 France",
-			"education": "🎓 Computer Science Student",
-			"role": "💼 CEO at UnxWares"
-		},
-		"skills": {
-			"title": "Technical Stack:",
-			"cloudNative": "☸️  Cloud-Native: Kubernetes, k3s, ArgoCD, Helm",
-			"containers": "🐳 Containers: Docker, Containerd",
-			"infrastructure": "🔧 Infrastructure: Proxmox, Debian, NGINX",
-			"devops": "⚙️  DevOps: Jenkins, GitOps, CI/CD",
-			"languages": "💻 Languages: Go, Rust, TypeScript, PHP",
-			"monitoring": "📊 Monitoring: Prometheus, Grafana"
-		},
-		"projects": {
-			"title": "Featured Projects:",
-			"k8s": "Kubernetes Homelab Cluster",
-			"k8sDesc": "→ Complete cloud-native infrastructure on k3s",
-			"orchestrator": "Go Service Orchestrator",
-			"orchestratorDesc": "→ Custom orchestration system in Go",
-			"infra": "Self-Hosted Infrastructure",
-			"infraDesc": "→ Full self-hosted stack with GitOps",
-			"visitMore": "Visit /projects for more details!"
-		},
-		"contact": {
-			"title": "Contact Information:",
-			"email": "📧 Email: contact@baptiste-gosselin.fr",
-			"github": "🐙 GitHub: github.com/baptgosse",
-			"linkedin": "💼 LinkedIn: Baptiste Gosselin",
-			"reachOut": "Feel free to reach out!"
-		},
-		"neofetch": {
-			"user": "baptiste@portfolio",
-			"os": "OS: Arch Linux btw",
-			"host": "Host: Cloud-Native Infrastructure",
-			"kernel": "Kernel: k3s-5.15.0",
-			"uptime": "Uptime: 420 days",
-			"packages": "Packages: ∞",
-			"shell": "Shell: zsh",
-			"resolution": "Resolution: 1920x1080",
-			"de": "DE: SvelteKit",
-			"theme": "Theme: Technical Elegance",
-			"icons": "Icons: Lucide"
-		},
-		"matrix": {
-			"line1": "Wake up, Baptiste...",
-			"line2": "The Matrix has you...",
-			"line3": "Follow the white rabbit.",
-			"joke": "(Just kidding, this is a portfolio website 😄)"
-		},
-		"sudo": "Nice try! 😏",
-		"exit": "You cannot escape the terminal! Try \"clear\" instead.",
-		"kubectl": {
-			"healthyCluster": "Cluster is healthy! ✅"
-		},
-		"docker": {
-			"running": "{count} containers running"
-		},
-		"weather": {
-			"sunny": "☀️ Sunny",
-			"partlyCloudy": "🌤️ Partly Cloudy",
-			"cloudy": "☁️ Cloudy",
-			"rainy": "🌧️ Rainy",
-			"stormy": "⛈️ Stormy",
-			"temperature": "Temperature: {temp}°C",
-			"perfect": "Perfect weather for coding! 💻"
-		},
-		"cat": {
-			"usage": "Usage: cat [filename]",
-			"available": "Available files:",
-			"aboutFile": "  cat about.md",
-			"resumeFile": "  cat resume.pdf",
-			"try": "Try: cat about.md",
-			"noFile": "cat: {file}: No such file or directory",
-			"aboutTitle": "# Baptiste Gosselin",
-			"aboutDesc": "Computer Science student passionate about infrastructure.",
-			"aboutExpertise": "## Expertise",
-			"aboutSkill1": "- Cloud-Native & Kubernetes",
-			"aboutSkill2": "- DevOps & GitOps",
-			"aboutSkill3": "- Infrastructure as Code",
-			"aboutSkill4": "- System development (Go, Rust)",
-			"resumeTitle": "📄 Resume - Baptiste Gosselin",
-			"resumeError": "Unfortunately, you cannot read a PDF in the terminal! 😄",
-			"resumeTip": "Try: contact  (to get my contact information)"
-		},
-		"history": {
-			"title": "Command history:"
-		}
+		"site": "Website",
+		"source": "Code",
+		"openSource": "This site is open source too.",
+		"viewSource": "Read the site's code"
 	},
 	"blog": {
-		"title": "Blog",
-		"subtitle": "Technical articles on Linux, DevOps, infrastructure and development",
-		"metaDescription": "Technical articles on Linux, DevOps, infrastructure and development",
-		"rss": "RSS Feed",
-		"atom": "Atom Feed",
+		"title": "Rehearsal notes",
+		"note": "Technical articles on Linux, DevOps, infrastructure and code, written between rehearsals.",
+		"metaTitle": "Blog - Baptiste Gosselin",
+		"metaDescription": "Technical articles on Linux, DevOps, infrastructure and development.",
+		"subscribe": "Subscribe:",
+		"rss": "RSS",
+		"atom": "Atom",
+		"inFrench": "in French",
+		"inEnglish": "in English",
 		"empty": {
-			"title": "No posts published yet.",
-			"description": "Come back soon for technical content!"
+			"title": "Nothing to read yet.",
+			"text": "The first article is still in rehearsal.",
+			"action": "See the projects in the meantime"
 		},
-		"readMore": "Read more",
-		"backToBlog": "Back to blog",
-		"tags": "{count} tags"
+		"readMore": "Read the article",
+		"backToBlog": "Back to the notes"
+	},
+	"error": {
+		"notFound": {
+			"title": "There's nobody here.",
+			"text": "This page doesn't exist, or it moved to another room. Only the ghost light is still on."
+		},
+		"server": {
+			"title": "Something broke backstage.",
+			"text": "An error occurred on my side. Try again in a moment; if it keeps happening, write to me."
+		},
+		"other": {
+			"title": "The show has been interrupted.",
+			"text": "This page can't be displayed. Go back home to start from the top."
+		},
+		"home": "Back to home",
+		"projects": "See the projects",
+		"details": "Technical details"
 	}
 }

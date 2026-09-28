@@ -1,18 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Calendar, ChevronLeft } from 'lucide-svelte';
 	import { _, locale } from 'svelte-i18n';
 
 	let { data }: { data: PageData } = $props();
 
-	function formatDate(dateStr: string): string {
-		const date = new Date(dateStr);
-		return new Intl.DateTimeFormat($locale || 'fr', {
+	const date = $derived(
+		new Intl.DateTimeFormat($locale || 'fr', {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
-		}).format(date);
-	}
+		}).format(new Date(data.post.date))
+	);
 </script>
 
 <svelte:head>
@@ -20,134 +18,79 @@
 	<meta name="description" content={data.post.description} />
 </svelte:head>
 
-<article class="article">
-	<div class="container" style="max-width: 56rem;">
-		<!-- Header -->
-		<header class="article-header">
-			<h1 class="article-title">
-				{data.post.title}
-			</h1>
-
-			<div class="article-meta">
-				<div class="meta-item">
-					<Calendar size={16} />
-					<time datetime={data.post.date}>
-						{formatDate(data.post.date)}
-					</time>
-				</div>
-				{#if data.post.tags && data.post.tags.length > 0}
-					<span class="meta-separator">•</span>
-					<div class="article-tags">
+<article class="scene page">
+	<div class="wrap">
+		<header class="head">
+			<p class="back"><a href="/blog">{$_('blog.backToBlog')}</a></p>
+			<h1>{data.post.title}</h1>
+			<p class="meta">
+				<time datetime={data.post.date}>{date}</time>
+				{#if data.post.tags?.length}
+					<span class="tags">
 						{#each data.post.tags as tag}
-							<span class="article-tag">
-								#{tag}
-							</span>
+							<span>#{tag}</span>
 						{/each}
-					</div>
+					</span>
 				{/if}
-			</div>
-
+			</p>
 			{#if data.post.description}
-				<p class="article-description">
-					{data.post.description}
-				</p>
+				<p class="didascalie lede">({data.post.description})</p>
 			{/if}
 		</header>
 
-		<!-- Content -->
 		<div class="prose">
 			{@html data.post.content}
 		</div>
 
-		<!-- Footer -->
-		<div class="article-footer">
-			<a href="/blog" class="back-link">
-				<ChevronLeft size={20} />
-				{$_('blog.backToBlog')}
-			</a>
-		</div>
+		<footer class="end">
+			<a href="/blog">{$_('blog.backToBlog')}</a>
+		</footer>
 	</div>
 </article>
 
 <style>
-	.article {
-		padding: var(--spacing-2xl) var(--spacing-md);
+	.page {
+		padding-top: clamp(2.5rem, 7vw, 5rem);
 	}
 
-	.article-header {
-		margin-bottom: var(--spacing-2xl);
+	.head {
+		display: grid;
+		gap: 1rem;
+		max-width: 48rem;
+		margin-bottom: clamp(2.5rem, 6vw, 4rem);
 	}
 
-	.article-title {
-		font-size: 2.25rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		margin-bottom: var(--spacing-md);
+	.back {
+		font-size: var(--step--1);
 	}
 
-	.article-meta {
+	h1 {
+		font-size: var(--step-4);
+		font-weight: 900;
+		line-height: 0.9;
+	}
+
+	.meta {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--spacing-md);
-		color: var(--text-tertiary);
-		margin-bottom: var(--spacing-lg);
+		gap: 0.25rem 1.25rem;
+		font-style: italic;
+		color: var(--ink-soft);
 	}
 
-	.meta-item {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-xs);
-	}
-
-	.meta-separator {
-		color: var(--border-color);
-	}
-
-	.article-tags {
+	.tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--spacing-sm);
+		gap: 0.25rem 1rem;
 	}
 
-	.article-tag {
-		padding: var(--spacing-xs) 0.75rem;
-		font-size: 0.75rem;
-		font-weight: 500;
-		background-color: var(--bg-elevated);
-		color: var(--text-secondary);
-		border-radius: 9999px;
-		border: 1px solid var(--border-color);
+	.lede {
+		font-size: var(--step-1);
 	}
 
-	.article-description {
-		font-size: 1.125rem;
-		color: var(--text-secondary);
-		line-height: 1.75;
-	}
-
-	.article-footer {
-		margin-top: var(--spacing-2xl);
-		padding-top: var(--spacing-xl);
-		border-top: 1px solid var(--border-color);
-	}
-
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-sm);
-		color: var(--color-primary-400);
-		font-weight: 500;
-		transition: color var(--transition-fast);
-	}
-
-	.back-link:hover {
-		color: var(--color-primary-300);
-	}
-
-	@media (min-width: 768px) {
-		.article-title {
-			font-size: 3rem;
-		}
+	.end {
+		max-width: var(--measure);
+		margin-top: clamp(3rem, 7vw, 4.5rem);
+		font-weight: 600;
 	}
 </style>

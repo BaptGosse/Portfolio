@@ -38,61 +38,42 @@ npm run migrate:passions
 
 ## 🎨 Design et Style
 
-Le projet utilise des variables CSS (Custom Properties) pour une personnalisation facile et globale.
+Le site est pensé comme une salle de spectacle : le plateau est baigné de bleu Congo (la gélatine Lee 181), une poursuite ambrée éclaire la signature, et les marques au sol sont du scotch rose. Chaque section porte un nom de plateau (Répertoire, Fiche technique, Entracte, Conduite, Sortie des artistes) suivi d'une didascalie qui dit en clair ce qu'on y trouve.
 
-### 1. Couleurs et Thèmes
+### 1. Couleurs et thèmes
 
-Toutes les couleurs sont définies dans `src/app.css` sous le sélecteur `:root`.
-
-#### Palette de base
-Modifie les variables `--color-primary-*` pour changer la couleur d'accentuation principale (actuellement violet).
+Tout est défini dans `src/app.css`. Les couleurs de base :
 
 ```css
 :root {
-  --color-primary-500: #a855f7; /* Couleur principale */
-  /* ... */
+  --congo: #1c1842;      /* fond du plateau */
+  --ivory: #f3ead9;      /* texte */
+  --amber: #ffb547;      /* poursuite, liens */
+  --spike: #ff5a8f;      /* marques de scotch, soulignés */
 }
 ```
 
-#### Variables thématiques
-Tu peux ajuster les couleurs de fond et de texte pour le mode sombre (défaut) et le mode clair :
-
-```css
-:root {
-  /* Mode Sombre */
-  --bg-primary: #0f1420;
-  --text-primary: #f8fafc;
-}
-
-[data-theme="light"] {
-  /* Mode Clair */
-  --bg-primary: #ffffff;
-  --text-primary: #1e293b;
-}
-```
+Les composants n'utilisent que les jetons sémantiques (`--paper`, `--ink`, `--ink-soft`, `--link`, `--mark`, `--spot`). Le thème clair (« salle allumée ») les redéfinit sous `[data-theme='light']`. Les anciens noms (`--bg-primary`, `--text-primary`, `--color-primary-*`…) restent disponibles pour l'admin.
 
 ### 2. Typographie
 
-Les polices sont importées au début de `src/app.css`. Tu peux changer les polices par défaut en modifiant les variables :
+Deux familles, chargées depuis Google Fonts dans `src/app.html` :
 
-```css
-:root {
-  --font-display: 'Sora', sans-serif; /* Titres */
-  --font-body: 'DM Sans', sans-serif;  /* Corps de texte */
-  --font-mono: 'JetBrains Mono', monospace; /* Code */
-}
-```
+- **Big Shoulders Display** (`--font-poster`) : titres, navigation, numéros de la conduite.
+- **Spectral** (`--font-text`) : texte courant et didascalies en italique.
 
-### 3. Espacements et Bordures
+L'échelle typographique est dans les variables `--step--1` à `--step-4`.
 
-Tu peux globalement changer l'arrondi des cartes ou les espacements :
+### 3. La signature
 
-```css
-:root {
-  --radius-lg: 0.75rem;
-  --spacing-md: 1rem;
-}
-```
+`static/images/signature-mask.png` est une version recadrée et allégée (≈ 110 Ko) de `signature.png`. Elle est utilisée comme masque CSS par `Signature.svelte` : elle prend donc la couleur du texte autour d'elle. Si tu changes de signature, régénère le masque au même format (blanc sur fond transparent).
+
+### 4. Composants de mise en scène
+
+- `SceneTitle.svelte` : titre de section + didascalie.
+- `Servante.svelte` : l'ampoule de la servante, utilisée pour le bouton de thème et la page 404.
+- `ProjectEntry.svelte` : une entrée du répertoire (accueil et page projets).
+- Les textes des annonces « Cherche compagnie » sont dans `opportunities.notices` des fichiers de traduction : ajoute, modifie ou retire une annonce directement là.
 
 ## ⚙️ Configuration système
 
@@ -109,7 +90,7 @@ PUBLIC_LINKEDIN=https://linkedin.com/in/ton-username
 
 - **Favicon** : Remplace `static/favicon.svg` ou `static/images/favicon.jpg`.
 - **CV** : Remplace `static/documents/CV.pdf`.
-- **Signature** : Remplace `static/images/signature.png`.
+- **Signature** : Remplace `static/images/signature.png` et régénère `static/images/signature-mask.png`.
 - **Images Projets** : Télécharge-les dans `static/images/` et utilise le chemin relatif dans l'admin (ex: `/images/mon-projet.png`).
 
 ## 🚀 Fonctionnalités avancées
