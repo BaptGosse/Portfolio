@@ -1,503 +1,269 @@
 <script lang="ts">
-	import { ArrowRight, Server, Cloud, Code2 } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-	import InteractiveTerminal from '$lib/components/InteractiveTerminal.svelte';
+	import Signature from './Signature.svelte';
 </script>
 
-<section class="hero">
-	<div class="hero-background">
-		<div class="grid-pattern"></div>
-		<div class="gradient-orb orb-1"></div>
-		<div class="gradient-orb orb-2"></div>
-	</div>
+<section class="affiche" aria-labelledby="hero-title">
+	<div class="wrap stage">
+		<p class="didascalie opening">({$_('hero.stageDirection')})</p>
 
-	<div class="prismatic-divider">
-		<div class="divider-glow"></div>
-		<div class="divider-line"></div>
-		<div class="divider-particles">
-			<span class="particle" style="left: 15%; animation-delay: 0s;"></span>
-			<span class="particle" style="left: 35%; animation-delay: 0.8s;"></span>
-			<span class="particle" style="left: 55%; animation-delay: 1.6s;"></span>
-			<span class="particle" style="left: 75%; animation-delay: 2.4s;"></span>
-			<span class="particle" style="left: 25%; animation-delay: 1.2s;"></span>
-			<span class="particle" style="left: 65%; animation-delay: 2s;"></span>
-		</div>
-	</div>
+		<h1 id="hero-title" class="title">
+			<span class="spot" aria-hidden="true"></span>
+			<Signature class="sig" />
+			<span class="lit" aria-hidden="true"><Signature /></span>
+			<span class="visually-hidden">Baptiste Gosselin</span>
+		</h1>
 
-	<div class="container hero-container">
-		<div class="hero-content">
-			<div class="hero-badge">
-				<span class="badge-dot"></span>
-				{$_('hero.badge')}
+		<figure class="headshot">
+			<span class="gaffer" aria-hidden="true"></span>
+			<div class="print">
+				<img src="/images/favicon.jpg" alt={$_('hero.photoAlt')} width="460" height="460" />
 			</div>
+			<figcaption>{$_('hero.photoCaption')}</figcaption>
+		</figure>
 
-			<h1 class="hero-title">
-				{$_('hero.title')}
-				<span class="gradient-text">{$_('hero.titleGradient')}</span>
-			</h1>
-
-			<p class="hero-description">
-				{$_('hero.description')}
+		<div class="speech">
+			<p class="character">
+				<span class="name">{$_('hero.character')}</span>,
+				<em>{$_('hero.characterDirection')}</em>.
 			</p>
+			<p class="line">{$_('hero.line')}</p>
+			<p class="didascalie status">({$_('hero.status')})</p>
 
-			<div class="hero-actions">
-				<a href="#projects" class="btn btn-primary hero-cta">
-					<span>{$_('hero.cta')}</span>
-					<ArrowRight size={18} />
-				</a>
-				<a href="#contact" class="btn btn-secondary">
-					{$_('hero.contact')}
+			<div class="actions">
+				<a href="#repertoire" class="cta">{$_('hero.cta')}</a>
+				<a href="/documents/CV.pdf" class="ticket" download>
+					<span>{$_('hero.cvMain')}</span>
+					<span>{$_('hero.cvStub')}</span>
 				</a>
 			</div>
-
-			<div class="hero-stats">
-				<div class="stat">
-					<div class="stat-icon">
-						<Server size={24} />
-					</div>
-					<div class="stat-content">
-						<div class="stat-value">5+</div>
-						<div class="stat-label">{$_('hero.stats.projects')}</div>
-					</div>
-				</div>
-				<div class="stat">
-					<div class="stat-icon">
-						<Cloud size={24} />
-					</div>
-					<div class="stat-content">
-						<div class="stat-value">K8s</div>
-						<div class="stat-label">{$_('hero.stats.cloudNative')}</div>
-					</div>
-				</div>
-				<div class="stat">
-					<div class="stat-icon">
-						<Code2 size={24} />
-					</div>
-					<div class="stat-content">
-						<div class="stat-value">Go/Rust</div>
-						<div class="stat-label">{$_('hero.stats.programming')}</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="hero-visual">
-			<InteractiveTerminal />
 		</div>
 	</div>
 </section>
 
 <style>
-	.hero {
+	.affiche {
+		padding-top: clamp(2rem, 6vw, 4.5rem);
+		overflow: hidden;
+	}
+
+	.stage {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		column-gap: clamp(1rem, 2.5vw, 2rem);
+		align-items: start;
+	}
+
+	.opening {
+		grid-column: 1 / span 7;
+		grid-row: 1;
+		font-size: var(--step--1);
+	}
+
+	/* The poster: the signature under the follow spot */
+	.title {
 		position: relative;
-		min-height: 800px;
-		display: flex;
-		align-items: center;
-		overflow: visible;
-		padding: var(--spacing-4xl) 0;
-		z-index: 10;
+		grid-column: 1 / span 9;
+		grid-row: 2;
+		margin-block: clamp(3rem, 7vw, 5.5rem) clamp(4rem, 8vw, 6rem);
+		color: var(--ink);
+		isolation: isolate;
+		/* Spotlight geometry, shared by the disc and the clipped signature */
+		--spot-rx: 54%;
+		--spot-ry: 68%;
+		--spot-cx: 49%;
+		--spot-cy: 53%;
 	}
 
-	.hero-background {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		overflow: hidden;
+	.title :global(.sig) {
+		position: relative;
+		width: 100%;
+		animation: allumage 1.3s 0.6s both;
 	}
 
-	.prismatic-divider {
+	/*
+	 * The follow spot: a hard-edged amber disc. The lit part of the signature
+	 * turns dark, letters that leave the circle stay light.
+	 * On load the name sits in the dark, then the light cue reveals it.
+	 */
+	.spot {
 		position: absolute;
-		bottom: -1px;
-		left: 0;
-		right: 0;
-		height: 120px;
-		z-index: 5;
-		pointer-events: none;
-		overflow: hidden;
-	}
-
-	.divider-glow {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 100%;
-		background:
-			linear-gradient(to bottom,
-				transparent 0%,
-				rgba(193, 159, 255, 0.02) 30%,
-				rgba(193, 159, 255, 0.04) 60%,
-				rgba(193, 159, 255, 0.06) 85%,
-				rgba(15, 20, 32, 0.2) 97%,
-				rgba(15, 20, 32, 0.5) 99%,
-				var(--bg-primary) 100%
-			);
-	}
-
-	.divider-line {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 2px;
-		background: linear-gradient(
-			90deg,
-			transparent 0%,
-			rgba(193, 159, 255, 0.2) 10%,
-			rgba(193, 159, 255, 0.6) 30%,
-			#c19fff 50%,
-			rgba(167, 139, 250, 0.6) 70%,
-			rgba(167, 139, 250, 0.2) 90%,
-			transparent 100%
+		inset: -15% -3% -21% -5%;
+		border-radius: 50%;
+		background: radial-gradient(
+			ellipse closest-side,
+			color-mix(in srgb, var(--spot), #fff 28%) 0%,
+			var(--spot) 72%
 		);
-		box-shadow:
-			0 0 20px rgba(193, 159, 255, 0.5),
-			0 0 40px rgba(193, 159, 255, 0.3),
-			0 0 60px rgba(193, 159, 255, 0.1);
-		animation: prismaticPulse 4s ease-in-out infinite;
+		opacity: var(--spot-strength);
+		animation: top-lumiere 1.3s 0.6s both;
 	}
 
-	@keyframes prismaticPulse {
-		0%, 100% {
-			opacity: 0.6;
-			transform: scaleX(1);
-		}
-		50% {
-			opacity: 1;
-			transform: scaleX(1.02);
-		}
-	}
-
-	.divider-particles {
-		position: absolute;
-		bottom: -1px;
-		left: 0;
-		right: 0;
-		height: 4px;
-	}
-
-	.particle {
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		background: #c19fff;
-		border-radius: 50%;
-		box-shadow:
-			0 0 10px rgba(193, 159, 255, 0.8),
-			0 0 20px rgba(193, 159, 255, 0.4);
-		animation: particleFloat 3s ease-in-out infinite;
-		opacity: 0;
-	}
-
-	@keyframes particleFloat {
-		0%, 100% {
-			opacity: 0;
-			transform: translateY(0) scale(0.5);
-		}
-		10% {
-			opacity: 1;
-			transform: translateY(-5px) scale(1);
-		}
-		90% {
-			opacity: 1;
-			transform: translateY(-25px) scale(1.2);
-		}
-		100% {
-			opacity: 0;
-			transform: translateY(-30px) scale(0.5);
-		}
-	}
-
-	.grid-pattern {
+	.lit {
 		position: absolute;
 		inset: 0;
-		background-image:
-			linear-gradient(var(--border-color) 1px, transparent 1px),
-			linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-		background-size: 50px 50px;
-		opacity: 0.3;
-		mask-image: radial-gradient(ellipse 80% 50% at 50% 40%, black 40%, transparent 100%);
-		-webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 40%, black 40%, transparent 100%);
+		color: var(--sig-ink);
+		clip-path: ellipse(var(--spot-rx) var(--spot-ry) at var(--spot-cx) var(--spot-cy));
+		opacity: var(--spot-strength);
+		animation: top-lumiere 1.3s 0.6s both;
 	}
 
-	.gradient-orb {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(80px);
-		opacity: 0.3;
-		animation: float 20s ease-in-out infinite;
-	}
-
-	.orb-1 {
-		width: 500px;
-		height: 500px;
-		top: -250px;
-		right: -100px;
-		background: linear-gradient(135deg, var(--color-accent), var(--color-secondary-accent));
-	}
-
-	.orb-2 {
-		width: 400px;
-		height: 400px;
-		bottom: -200px;
-		left: -100px;
-		background: linear-gradient(135deg, var(--color-secondary-accent), var(--color-accent));
-		animation-delay: -10s;
-	}
-
-	@keyframes float {
-		0%, 100% {
-			transform: translate(0, 0) scale(1);
+	@keyframes allumage {
+		from {
+			opacity: 0.12;
 		}
-		33% {
-			transform: translate(30px, -30px) scale(1.1);
+	}
+
+	/* House lights up: no follow spot, no cue */
+	:global([data-theme='light']) .title :global(.sig) {
+		animation: none;
+	}
+
+	@keyframes top-lumiere {
+		0% {
+			opacity: 0;
+		}
+		30% {
+			opacity: calc(var(--spot-strength) * 0.9);
+		}
+		42% {
+			opacity: calc(var(--spot-strength) * 0.35);
+		}
+		58% {
+			opacity: var(--spot-strength);
 		}
 		66% {
-			transform: translate(-20px, 20px) scale(0.9);
+			opacity: calc(var(--spot-strength) * 0.7);
+		}
+		100% {
+			opacity: var(--spot-strength);
 		}
 	}
 
-	.hero-container {
+	/* The headshot, gaffer-taped */
+	.headshot {
 		position: relative;
 		z-index: 1;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--spacing-3xl);
-		align-items: center;
+		grid-column: 10 / span 3;
+		grid-row: 2 / span 2;
+		margin-top: clamp(1rem, 4vw, 3rem);
+		transform: rotate(2.5deg);
 	}
 
-	.hero-content {
-		animation: slideIn 0.8s ease-out;
+	.print {
+		position: relative;
+		padding: 0.55rem;
+		background: var(--notice);
+		box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.6);
 	}
 
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	.print img {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1;
+		object-fit: cover;
+		filter: grayscale(1) contrast(1.08);
 	}
 
-	.hero-badge {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-sm);
-		padding: var(--spacing-sm) var(--spacing-lg);
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-full);
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--text-secondary);
-		margin-bottom: var(--spacing-xl);
-		animation: fadeIn 0.8s ease-out 0.2s both;
+	/* The headshot takes the stage's tint */
+	.print::after {
+		content: '';
+		position: absolute;
+		inset: 0.55rem;
+		background: var(--photo-wash);
+		mix-blend-mode: color;
+		opacity: 0.7;
+		pointer-events: none;
 	}
 
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
+	.gaffer {
+		z-index: 1;
+		top: -0.8rem;
+		left: 50%;
+		translate: -50% 0;
+		rotate: -5deg;
 	}
 
-	.badge-dot {
-		width: 8px;
-		height: 8px;
-		background: var(--color-accent);
-		border-radius: 50%;
-		animation: pulse-dot 2s ease-in-out infinite;
+	figcaption {
+		margin-top: 0.8rem;
+		font-style: italic;
+		font-size: var(--step--1);
+		line-height: 1.4;
+		color: var(--ink-soft);
 	}
 
-	@keyframes pulse-dot {
-		0%, 100% {
-			opacity: 1;
-			transform: scale(1);
-		}
-		50% {
-			opacity: 0.5;
-			transform: scale(1.2);
-		}
+	/* The line, set like a play script */
+	.speech {
+		grid-column: 1 / span 8;
+		grid-row: 3;
+		max-width: 38rem;
 	}
 
-	.hero-title {
-		font-size: clamp(2.5rem, 6vw, 4.5rem);
+	.character {
+		margin-bottom: 0.6rem;
+		color: var(--ink-soft);
+	}
+
+	.name {
+		font-family: var(--font-poster);
 		font-weight: 800;
-		line-height: 1.1;
-		margin-bottom: var(--spacing-xl);
-		animation: slideIn 0.8s ease-out 0.1s both;
+		font-size: 1.3rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink);
 	}
 
-	.gradient-text {
-		display: block;
-		background: linear-gradient(135deg, var(--color-accent), var(--color-secondary-accent));
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+	.line {
+		font-size: var(--step-1);
+		line-height: 1.55;
 	}
 
-	.gradient-text::selection {
-		-webkit-text-fill-color: var(--text-primary);
-		background: var(--color-accent);
+	.status {
+		margin-top: 1.4rem;
 	}
 
-	.gradient-text::-moz-selection {
-		-webkit-text-fill-color: var(--text-primary);
-		background: var(--color-accent);
-	}
-
-	.hero-description {
-		font-size: clamp(1.125rem, 2vw, 1.375rem);
-		line-height: 1.7;
-		color: var(--text-secondary);
-		max-width: 100%;
-		margin-bottom: var(--spacing-2xl);
-		animation: slideIn 0.8s ease-out 0.2s both;
-	}
-
-	.hero-actions {
+	.actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--spacing-md);
-		margin-bottom: var(--spacing-3xl);
-		animation: slideIn 0.8s ease-out 0.3s both;
-	}
-
-	.hero-cta {
-		background: linear-gradient(135deg, #a26df9, #b88dfc) !important;
-		color: #ffffff !important;
-		box-shadow: 0 4px 16px rgba(162, 109, 249, 0.3) !important;
-		border: 1px solid rgba(162, 109, 249, 0.5) !important;
-		display: inline-flex !important;
-		align-items: center !important;
-		padding: 14px 24px !important;
-	}
-
-	.hero-cta:hover {
-		box-shadow: 0 8px 24px rgba(162, 109, 249, 0.5) !important;
-		background: linear-gradient(135deg, #9456f8, #a26df9) !important;
-		border-color: rgba(148, 86, 248, 0.6) !important;
-	}
-
-	.hero-cta span {
-		display: block;
-		line-height: 1;
-		margin: 0;
-		padding: 0;
-	}
-
-	.hero-cta :global(svg) {
-		display: block !important;
-		margin: 0 !important;
-	}
-
-	.hero-actions .btn-secondary {
-		display: inline-flex !important;
-		align-items: center !important;
-		justify-content: center !important;
-		padding: 14px 24px !important;
-		line-height: 1 !important;
-	}
-
-	.hero-stats {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-md);
-		animation: slideIn 0.8s ease-out 0.4s both;
-	}
-
-	.stat {
-		display: flex;
 		align-items: center;
-		gap: var(--spacing-sm);
-		padding: var(--spacing-md);
-		background: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-xl);
-		transition: all var(--transition-normal);
+		gap: 1.25rem 2rem;
+		margin-top: 2.25rem;
 	}
 
-	.stat:hover {
-		border-color: var(--color-accent);
-		transform: translateY(-2px);
+	.cta {
+		color: var(--ink);
+		font-family: var(--font-poster);
+		font-weight: 800;
+		font-size: 1.5rem;
+		text-decoration: underline;
+		text-decoration-color: var(--mark);
+		text-decoration-thickness: 0.2em;
+		text-underline-offset: 0.2em;
 	}
 
-	.stat-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 48px;
-		height: 48px;
-		background: var(--bg-hover);
-		border-radius: var(--radius-lg);
-		color: var(--color-accent);
-		flex-shrink: 0;
+	.cta:hover {
+		color: var(--link);
 	}
 
-	.stat-value {
-		font-family: var(--font-display);
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		line-height: 1;
-		white-space: nowrap;
-	}
-
-	.stat-label {
-		font-size: 0.875rem;
-		color: var(--text-tertiary);
-		margin-top: var(--spacing-xs);
-	}
-
-	.hero-visual {
-		display: none;
-		animation: slideIn 0.8s ease-out 0.5s both;
-	}
-
-	@media (min-width: 768px) {
-		.hero-container {
-			grid-template-columns: 1.4fr 0.6fr;
-			align-items: start;
+	@media (max-width: 52rem) {
+		.opening {
+			grid-column: 1 / -1;
 		}
 
-		.hero-visual {
-			display: block;
-			margin-top: var(--spacing-5xl);
-		}
-	}
-
-	@media (max-width: 768px) {
-		.hero {
-			min-height: auto;
-			padding: var(--spacing-3xl) 0;
+		.title {
+			grid-column: 1 / -1;
 		}
 
-		.hero-stats {
-			grid-template-columns: repeat(3, 1fr);
-			gap: var(--spacing-sm);
+		.headshot {
+			grid-column: 7 / -1;
+			grid-row: 3;
+			margin-top: 0;
+			margin-bottom: 2rem;
 		}
 
-		.stat {
-			flex-direction: column;
-			padding: var(--spacing-md);
-		}
-
-		.stat-icon {
-			width: 40px;
-			height: 40px;
-		}
-
-		.stat-value {
-			font-size: 1.25rem;
-		}
-
-		.stat-label {
-			font-size: 0.75rem;
-			text-align: center;
+		.speech {
+			grid-column: 1 / -1;
+			grid-row: 4;
 		}
 	}
 </style>

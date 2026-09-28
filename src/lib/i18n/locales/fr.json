@@ -1,257 +1,176 @@
 {
+	"meta": {
+		"title": "Baptiste Gosselin, infrastructure, code et théâtre",
+		"description": "Étudiant en BUT informatique à Caen. Je monte de l'infrastructure (Kubernetes, réseau, Go) et je fais du théâtre. Je cherche une alternance pour 2026-2027."
+	},
 	"nav": {
-		"home": "Accueil",
 		"projects": "Projets",
-		"blog": "Blog"
+		"blog": "Blog",
+		"cv": "CV",
+		"homeLabel": "Baptiste Gosselin, retour à l'accueil",
+		"mainLabel": "Navigation principale",
+		"skip": "Aller au contenu"
+	},
+	"lang": {
+		"switchTo": "EN",
+		"switchLabel": "Read this site in English"
+	},
+	"theme": {
+		"toLight": "Allumer la salle (thème clair)",
+		"toDark": "Éteindre la salle (thème sombre)"
 	},
 	"hero": {
-		"badge": "À la recherche d'un stage (2e année) et d'une alternance (3e année)",
-		"title": "Construire l'infrastructure",
-		"titleGradient": "de demain",
-		"description": "Étudiant en BUT Informatique passionné par l'infrastructure cloud-native. Je construis des systèmes fiables et performants, de la virtualisation bare-metal aux applications distribuées sur Kubernetes.",
-		"cta": "Découvrir mes projets",
-		"contact": "Me contacter",
-		"stats": {
-			"projects": "Projets Infrastructure",
-			"cloudNative": "Cloud-Native Expert",
-			"programming": "Systems Programming"
-		}
+		"stageDirection": "Le rideau se lève. Une servante est restée allumée, des câbles réseau traînent côté jardin.",
+		"character": "Baptiste",
+		"characterDirection": "s'avançant vers la salle",
+		"line": "Bonjour. Moi, c'est Baptiste. Je suis en BUT informatique à Caen et je m'occupe de ce que personne ne voit : l'infrastructure. Des clusters Kubernetes, du réseau, un orchestrateur écrit en Go. Et quand les serveurs tournent tout seuls, je monte sur scène.",
+		"status": "Il cherche une alternance pour la saison 2026-2027.",
+		"cta": "Voir mes projets",
+		"cvMain": "Mon CV",
+		"cvStub": "PDF",
+		"photoAlt": "Portrait de Baptiste Gosselin",
+		"photoCaption": "Baptiste Gosselin, dans tous les rôles."
 	},
 	"stack": {
-		"title": "Stack Technique",
-		"subtitle": "Expertise concrète acquise à travers mes projets"
+		"title": "Fiche technique",
+		"note": "Ce qu'il faut en régie pour que le spectacle tourne. Autrement dit : les outils que j'utilise vraiment, et où je m'en suis servi."
 	},
 	"projects": {
-		"title": "Projets Phares",
-		"subtitle": "Infrastructure moderne, systèmes distribués et automatisation",
-		"featured": "Featured",
-		"viewOnGithub": "Voir sur GitHub",
-		"allProjects": "Tous les projets"
+		"title": "Répertoire",
+		"note": "Les pièces que j'ai montées. Certaines tournent encore.",
+		"cast": "Avec {list}.",
+		"code": "Lire le code",
+		"live": "Voir en ligne",
+		"all": "Tout le répertoire",
+		"empty": "Aucune pièce à l'affiche pour l'instant."
 	},
 	"projectsPage": {
-		"title": "Mes",
-		"titleGradient": "Projets",
-		"description": "Une sélection de mes projets en infrastructure, cloud-native et développement système. De la virtualisation bare-metal aux applications distribuées sur Kubernetes.",
-		"metaDescription": "Découvrez mes projets en infrastructure cloud-native, Kubernetes, DevOps et développement système.",
+		"title": "Tout le répertoire",
+		"note": "Infra, cloud-native et développement système : tout ce que j'ai monté, du bare-metal aux applis sur Kubernetes.",
+		"metaTitle": "Projets - Baptiste Gosselin",
+		"metaDescription": "Mes projets en infrastructure, Kubernetes, DevOps et développement système.",
+		"filtersLabel": "Filtrer les projets",
 		"filters": {
-			"all": "Tous les projets",
+			"all": "Tout",
 			"infrastructure": "Infrastructure",
-			"cloudNative": "Cloud-Native",
+			"cloudNative": "Cloud-native",
 			"development": "Développement"
 		},
-		"featured": "Phare",
-		"github": "GitHub",
-		"demo": "Demo",
 		"empty": {
-			"title": "Aucun projet trouvé",
-			"description": "Essayez de changer les filtres pour voir d'autres projets."
+			"title": "Rien à l'affiche dans ce genre.",
+			"action": "Voir tout le répertoire"
 		}
 	},
 	"opportunities": {
-		"title": "Opportunités recherchées",
-		"subtitle": "Je suis actuellement à la recherche de nouvelles expériences professionnelles",
-		"internship": {
-			"badge": "2e année",
-			"title": "Stage de fin d'année",
-			"duration": "8 à 10 semaines • Avril à Juin 2026",
-			"description": "Je recherche un stage de 2e année pour approfondir mes compétences en infrastructure cloud-native, DevOps ou développement système. L'occasion idéale de contribuer à des projets concrets tout en continuant à apprendre.",
-			"skills": [
-				"Infrastructure & Cloud",
-				"Kubernetes / Docker",
-				"DevOps & CI/CD",
-				"Administration système"
-			]
-		},
-		"apprenticeship": {
-			"badge": "3e année",
-			"title": "Alternance",
-			"duration": "1 an • Septembre 2026 - Août 2027",
-			"description": "Je suis à la recherche d'une alternance pour ma 3e année de BUT Informatique. Une opportunité de m'investir pleinement dans une équipe et de participer à des projets stratégiques sur le long terme.",
-			"skills": [
-				"Infrastructure cloud-native",
-				"Développement Go / Rust",
-				"Architecture système",
-				"Automatisation"
-			]
-		},
-		"downloadCV": "Télécharger mon CV",
-		"contactMe": "Me contacter"
+		"title": "Cherche compagnie",
+		"note": "De théâtre ou non : une entreprise où faire mon alternance.",
+		"topicsLabel": "Au programme :",
+		"notices": [
+			{
+				"kicker": "3e année de BUT",
+				"title": "Alternance",
+				"when": "Un an, de septembre 2026 à août 2027",
+				"text": "J'ai déjà monté un cluster Kubernetes et son réseau pour UnxWares. Je cherche maintenant une équipe qui fait ça à plus grande échelle, qui me confie de vraies responsabilités et qui me garde un an.",
+				"topics": [
+					"infrastructure cloud-native",
+					"Go et Rust",
+					"architecture système",
+					"automatisation"
+				]
+			},
+			{
+				"kicker": "2e année de BUT",
+				"title": "Stage",
+				"when": "8 à 10 semaines, d'avril à juin 2026",
+				"text": "Un stage pour mettre les mains dans une infrastructure qui tourne en production : cloud, conteneurs, CI/CD ou administration système.",
+				"topics": [
+					"infrastructure et cloud",
+					"Kubernetes et Docker",
+					"DevOps et CI/CD",
+					"administration système"
+				]
+			}
+		],
+		"cv": "Télécharger mon CV",
+		"write": "M'écrire"
 	},
 	"experience": {
-		"title": "Parcours",
-		"subtitle": "Expériences professionnelles et projets réalisés"
+		"title": "Conduite",
+		"note": "En régie, la conduite liste chaque changement dans l'ordre, top après top. La mienne raconte mon parcours.",
+		"cueWord": "top",
+		"present": "aujourd'hui",
+		"cast": "Avec {list}."
 	},
 	"passions": {
-		"title": "Passions Culturelles",
-		"subtitle": "Au-delà du code, mes activités artistiques qui enrichissent mes compétences professionnelles",
-		"skills_developed": "Compétences développées"
+		"title": "Entracte",
+		"note": "Un quart d'heure de pause. Ce que je fais quand je ne suis pas devant un terminal.",
+		"learned": "Ce que ça m'a appris : {list}."
 	},
 	"contact": {
-		"title": "Travaillons ensemble",
-		"subtitle": "À la recherche d'un <strong>stage de 8 à 10 semaines (2e année)</strong> et d'une <strong>alternance (3e année)</strong>.<br />Un projet d'infrastructure ? Besoin d'expertise cloud-native ?<br />Discutons-en autour d'un café (virtuel ou réel) ☕",
-		"email": "Email",
-		"github": "GitHub",
-		"linkedin": "LinkedIn"
+		"title": "Sortie des artistes",
+		"text": "Une alternance à proposer, une question sur un projet, ou juste envie de parler théâtre ? Écrivez-moi, je réponds.",
+		"elsewhere": "Je suis aussi sur",
+		"and": "et"
 	},
 	"footer": {
-		"navigation": "Navigation",
-		"contactTitle": "Contactez-moi",
-		"backToTop": "Retour en haut",
-		"copyright": "© {year} Baptiste Gosselin. Tous droits réservés.",
-		"description": "Étudiant en informatique passionné par l'infrastructure cloud-native et le développement système.",
-		"credits": "Crédits"
+		"curtain": "Rideau.",
+		"copyright": "© {year} Baptiste Gosselin",
+		"source": "Code source",
+		"backstage": "Coulisses du site",
+		"rss": "Flux RSS",
+		"top": "Revenir au lever de rideau"
 	},
 	"credits": {
-		"title": "Crédits",
-		"titleGradient": "Technologies",
-		"subtitle": "Ce site a été construit avec ces incroyables technologies open source",
-		"metaTitle": "Crédits & Technologies - Baptiste Gosselin",
-		"metaDescription": "Technologies et outils open source utilisés pour construire ce portfolio.",
+		"metaTitle": "Coulisses - Baptiste Gosselin",
+		"metaDescription": "Les outils open source qui font tourner ce site.",
+		"title": "Coulisses",
+		"note": "La fiche technique de ce site : les outils open source qui le font tourner. Merci aux équipes derrière.",
 		"categories": {
-			"framework": "Framework & Build",
-			"language": "Langages",
+			"framework": "Framework et build",
+			"language": "Langage",
 			"database": "Base de données",
-			"ui": "Interface & Icônes",
-			"devops": "DevOps & Déploiement",
-			"tools": "Outils de développement"
+			"ui": "Interface",
+			"devops": "Hébergement",
+			"tools": "Outils"
 		},
-		"madeWith": "Fait avec",
-		"viewSource": "Voir le code source",
-		"openSource": "Ce projet est open source"
-	},
-	"terminal": {
-		"welcome": "Bienvenue ! Tapez \"help\" pour voir les commandes disponibles 👋",
-		"placeholder": "Tapez 'help' pour les commandes...",
-		"commandNotFound": "bash: {command}: commande introuvable",
-		"typeHelp": "Tapez \"help\" pour les commandes disponibles",
-		"help": {
-			"title": "Commandes disponibles :",
-			"commands": {
-				"help": "Afficher ce message d'aide",
-				"about": "En savoir plus sur moi",
-				"skills": "Lister mes compétences techniques",
-				"projects": "Voir mes projets",
-				"contact": "Obtenir mes informations de contact",
-				"whoami": "Afficher l'utilisateur actuel",
-				"date": "Afficher la date actuelle",
-				"echo": "Afficher un message",
-				"clear": "Effacer le terminal",
-				"neofetch": "Afficher les informations système",
-				"fortune": "Obtenir une citation aléatoire",
-				"matrix": "Entrer dans la Matrix... (je plaisante)",
-				"sudo": "Avec de grands pouvoirs...",
-				"kubectl": "Vérifier l'état du cluster Kubernetes",
-				"docker": "Lister les conteneurs en cours d'exécution",
-				"weather": "Vérifier la météo",
-				"joke": "Raconter une blague",
-				"cat": "Afficher le contenu d'un fichier",
-				"history": "Afficher l'historique des commandes"
-			}
-		},
-		"about": {
-			"line1": "Baptiste Gosselin",
-			"line2": "Étudiant en informatique passionné par l'infrastructure cloud-native.",
-			"line3": "Spécialisé en Kubernetes, DevOps et développement système.",
-			"location": "📍 France",
-			"education": "🎓 Étudiant en Informatique",
-			"role": "💼 Dirigeant d'UnxWares"
-		},
-		"skills": {
-			"title": "Stack Technique :",
-			"cloudNative": "☸️  Cloud-Native: Kubernetes, k3s, ArgoCD, Helm",
-			"containers": "🐳 Containers: Docker, Containerd",
-			"infrastructure": "🔧 Infrastructure: Proxmox, Debian, NGINX",
-			"devops": "⚙️  DevOps: Jenkins, GitOps, CI/CD",
-			"languages": "💻 Langages: Go, Rust, TypeScript, PHP",
-			"monitoring": "📊 Monitoring: Prometheus, Grafana"
-		},
-		"projects": {
-			"title": "Projets Phares :",
-			"k8s": "Cluster Kubernetes Homelab",
-			"k8sDesc": "→ Infrastructure cloud-native complète sur k3s",
-			"orchestrator": "Orchestrateur de Services en Go",
-			"orchestratorDesc": "→ Système d'orchestration personnalisé en Go",
-			"infra": "Infrastructure Self-Hosted",
-			"infraDesc": "→ Stack complète self-hosted avec GitOps",
-			"visitMore": "Visitez /projects pour plus de détails !"
-		},
-		"contact": {
-			"title": "Informations de contact :",
-			"email": "📧 Email: contact@baptiste-gosselin.fr",
-			"github": "🐙 GitHub: github.com/baptgosse",
-			"linkedin": "💼 LinkedIn: Baptiste Gosselin",
-			"reachOut": "N'hésitez pas à me contacter !"
-		},
-		"neofetch": {
-			"user": "baptiste@portfolio",
-			"os": "OS: Arch Linux btw",
-			"host": "Host: Cloud-Native Infrastructure",
-			"kernel": "Kernel: k3s-5.15.0",
-			"uptime": "Uptime: 420 jours",
-			"packages": "Packages: ∞",
-			"shell": "Shell: zsh",
-			"resolution": "Resolution: 1920x1080",
-			"de": "DE: SvelteKit",
-			"theme": "Theme: Technical Elegance",
-			"icons": "Icons: Lucide"
-		},
-		"matrix": {
-			"line1": "Réveille-toi, Baptiste...",
-			"line2": "Matrix t'a...",
-			"line3": "Suis le lapin blanc.",
-			"joke": "(Je plaisante, c'est un site portfolio 😄)"
-		},
-		"sudo": "Bien essayé ! 😏",
-		"exit": "Vous ne pouvez pas échapper au terminal ! Essayez \"clear\" à la place.",
-		"kubectl": {
-			"healthyCluster": "Le cluster est en bonne santé ! ✅"
-		},
-		"docker": {
-			"running": "{count} conteneurs en cours d'exécution"
-		},
-		"weather": {
-			"sunny": "☀️ Ensoleillé",
-			"partlyCloudy": "🌤️ Partiellement nuageux",
-			"cloudy": "☁️ Nuageux",
-			"rainy": "🌧️ Pluvieux",
-			"stormy": "⛈️ Orageux",
-			"temperature": "Température: {temp}°C",
-			"perfect": "Météo parfaite pour coder ! 💻"
-		},
-		"cat": {
-			"usage": "Usage: cat [filename]",
-			"available": "Fichiers disponibles :",
-			"aboutFile": "  cat about.md",
-			"resumeFile": "  cat resume.pdf",
-			"try": "Essayez: cat about.md",
-			"noFile": "cat: {file}: Aucun fichier ou dossier de ce type",
-			"aboutTitle": "# Baptiste Gosselin",
-			"aboutDesc": "Étudiant en informatique passionné par l'infrastructure.",
-			"aboutExpertise": "## Expertise",
-			"aboutSkill1": "- Cloud-Native & Kubernetes",
-			"aboutSkill2": "- DevOps & GitOps",
-			"aboutSkill3": "- Infrastructure as Code",
-			"aboutSkill4": "- Développement système (Go, Rust)",
-			"resumeTitle": "📄 CV - Baptiste Gosselin",
-			"resumeError": "Malheureusement, vous ne pouvez pas lire un PDF dans le terminal ! 😄",
-			"resumeTip": "Essayez: contact  (pour obtenir mes informations de contact)"
-		},
-		"history": {
-			"title": "Historique des commandes :"
-		}
+		"site": "Site",
+		"source": "Code",
+		"openSource": "Ce site est open source, lui aussi.",
+		"viewSource": "Lire le code du site"
 	},
 	"blog": {
-		"title": "Blog",
-		"subtitle": "Articles techniques sur Linux, DevOps, infrastructure et développement",
-		"metaDescription": "Articles techniques sur Linux, DevOps, infrastructure et développement",
-		"rss": "Flux RSS",
-		"atom": "Flux Atom",
+		"title": "Notes de répétition",
+		"note": "Des articles techniques sur Linux, le DevOps, l'infra et le code, écrits entre deux répétitions.",
+		"metaTitle": "Blog - Baptiste Gosselin",
+		"metaDescription": "Articles techniques sur Linux, DevOps, infrastructure et développement.",
+		"subscribe": "S'abonner :",
+		"rss": "RSS",
+		"atom": "Atom",
+		"inFrench": "en français",
+		"inEnglish": "en anglais",
 		"empty": {
-			"title": "Aucun article publié pour le moment.",
-			"description": "Revenez bientôt pour du contenu technique !"
+			"title": "Rien à lire pour l'instant.",
+			"text": "Le premier article est encore en répétition.",
+			"action": "Voir les projets en attendant"
 		},
-		"readMore": "Lire la suite",
-		"backToBlog": "Retour au blog",
-		"tags": "{count} tags"
+		"readMore": "Lire l'article",
+		"backToBlog": "Retour aux notes"
+	},
+	"error": {
+		"notFound": {
+			"title": "Il n'y a personne ici.",
+			"text": "Cette page n'existe pas, ou elle a changé de salle. Seule la servante est restée allumée."
+		},
+		"server": {
+			"title": "Quelque chose a lâché en régie.",
+			"text": "Une erreur s'est produite de mon côté. Réessayez dans un instant ; si ça continue, écrivez-moi."
+		},
+		"other": {
+			"title": "La représentation est interrompue.",
+			"text": "Cette page ne peut pas s'afficher. Revenez à l'accueil pour reprendre depuis le début."
+		},
+		"home": "Retour à l'accueil",
+		"projects": "Voir les projets",
+		"details": "Détails techniques"
 	}
 }

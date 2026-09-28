@@ -1,302 +1,127 @@
 <script lang="ts">
-	import { Zap } from 'lucide-svelte';
 	import { _, locale } from 'svelte-i18n';
+	import { pick, formatList, formatPeriod, type Localized } from '$lib/utils/i18n-helpers';
+	import SceneTitle from './SceneTitle.svelte';
 
 	type ExperienceData = {
-		company: { fr: string; en: string };
-		role: { fr: string; en: string };
+		company: Localized;
+		role: Localized;
 		startDate: Date;
 		endDate: Date | null;
-		description: { fr: string; en: string };
-		technologies: Array<{ fr: string; en: string }>;
+		description: Localized;
+		technologies: Localized[];
 		type: string;
 	};
 
 	let { experiences = [] }: { experiences: ExperienceData[] } = $props();
 
-	function formatPeriod(start: Date, end: Date | null, currentLocale: string): string {
-		const formatter = new Intl.DateTimeFormat(currentLocale, {
-			year: 'numeric',
-			month: 'long'
-		});
-		const startStr = formatter.format(new Date(start));
-		const endStr = end
-			? formatter.format(new Date(end))
-			: currentLocale === 'fr' ? 'Présent' : 'Present';
-		return `${startStr} - ${endStr}`;
-	}
-
-	const formattedExperiences = $derived(experiences.map(exp => ({
-		company: exp.company[$locale as 'fr' | 'en'] || exp.company.fr,
-		role: exp.role[$locale as 'fr' | 'en'] || exp.role.fr,
-		period: formatPeriod(exp.startDate, exp.endDate, $locale || 'fr'),
-		description: exp.description[$locale as 'fr' | 'en'] || exp.description.fr,
-		technologies: exp.technologies.map(t => t[$locale as 'fr' | 'en'] || t.fr),
-		type: exp.type
-	})));
+	const cues = $derived(
+		experiences.map((exp) => ({
+			company: pick(exp.company, $locale),
+			role: pick(exp.role, $locale),
+			period: formatPeriod(exp.startDate, exp.endDate, $locale, $_('experience.present')),
+			description: pick(exp.description, $locale),
+			cast: exp.technologies.length
+				? formatList(
+						exp.technologies.map((t) => pick(t, $locale)),
+						$locale
+					)
+				: ''
+		}))
+	);
 </script>
 
-<section class="section experience-section-enhanced">
-	<div class="container">
-		<div class="section-header-enhanced">
-			<div class="section-icon">
-				<Zap size={32} />
-			</div>
-			<h2 class="section-title-enhanced">{$_('experience.title')}</h2>
-			<p class="section-subtitle-enhanced">
-				{$_('experience.subtitle')}
-			</p>
-		</div>
+<section class="scene" aria-labelledby="conduite-title">
+	<div class="wrap">
+		<SceneTitle id="conduite-title" title={$_('experience.title')} note={$_('experience.note')} />
 
-		<div class="timeline-enhanced">
-			{#each formattedExperiences as exp, index}
-				<div class="timeline-item-enhanced" style="animation-delay: {index * 200}ms">
-					<div class="timeline-marker-enhanced"></div>
-					<div class="timeline-card-enhanced">
-						<div class="timeline-glow"></div>
-						<div class="timeline-header">
-							<div>
-								<h3 class="timeline-role">{exp.role}</h3>
-								<p class="timeline-company">{exp.company}</p>
-							</div>
-							<span class="timeline-period">{exp.period}</span>
-						</div>
-						<p class="timeline-description">{exp.description}</p>
-						{#if exp.technologies}
-							<div class="timeline-tags">
-								{#each exp.technologies as tech}
-									<span class="tech-tag">{tech}</span>
-								{/each}
-							</div>
+		<ol class="cues">
+			{#each cues as cue, index}
+				<li class="cue">
+					<p class="number">
+						<span class="top">{$_('experience.cueWord')}</span>
+						<span class="n">{index + 1}</span>
+					</p>
+					<div class="body">
+						<p class="period">{cue.period}</p>
+						<h3>{cue.role}</h3>
+						<p class="company">{cue.company}</p>
+						<p class="description">{cue.description}</p>
+						{#if cue.cast}
+							<p class="cast">{$_('experience.cast', { values: { list: cue.cast } })}</p>
 						{/if}
 					</div>
-				</div>
+				</li>
 			{/each}
-		</div>
+		</ol>
 	</div>
 </section>
 
 <style>
-	.section {
-		position: relative;
-		padding: var(--spacing-3xl) 0;
+	.cues {
+		display: grid;
+		gap: clamp(2.75rem, 6vw, 4rem);
+		list-style: none;
 	}
 
-	.section .container {
-		position: relative;
-		z-index: 1;
-	}
-
-	.section-header-enhanced {
-		text-align: center;
-		margin-bottom: var(--spacing-4xl);
-		position: relative;
-	}
-
-	.section-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 64px;
-		height: 64px;
-		background: linear-gradient(135deg, var(--color-accent), var(--color-secondary-accent));
-		border-radius: var(--radius-2xl);
-		color: var(--bg-primary);
-		margin-bottom: var(--spacing-lg);
-		box-shadow: 0 8px 32px var(--color-accent-glow);
-		animation: iconFloat 3s ease-in-out infinite;
-	}
-
-	@keyframes iconFloat {
-		0%, 100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-10px);
-		}
-	}
-
-	.section-title-enhanced {
-		font-size: clamp(2.5rem, 5vw, 3.5rem);
-		font-weight: 800;
-		margin-bottom: var(--spacing-md);
-		background: linear-gradient(135deg, var(--text-primary), var(--color-accent));
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-
-	.section-subtitle-enhanced {
-		font-size: clamp(1rem, 2vw, 1.25rem);
-		color: var(--text-tertiary);
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.experience-section-enhanced {
-		background: transparent;
-	}
-
-	.timeline-enhanced {
-		max-width: 900px;
-		margin: 0 auto;
-		position: relative;
-		z-index: 1;
-	}
-
-	.timeline-enhanced::after {
-		content: '';
-		position: absolute;
-		left: 20px;
-		top: 0;
-		bottom: 0;
-		width: 2px;
-		background: linear-gradient(180deg, rgba(193, 159, 255, 0.3) 0%, rgba(167, 139, 250, 0.3) 100%);
-	}
-
-	.timeline-item-enhanced {
-		position: relative;
-		padding-left: var(--spacing-4xl);
-		margin-bottom: var(--spacing-3xl);
-		animation: fadeInUp 0.6s ease-out both;
-	}
-
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	.timeline-item-enhanced:last-child {
-		margin-bottom: 0;
-	}
-
-	.timeline-marker-enhanced {
-		position: absolute;
-		left: 12px;
-		top: 0;
-		width: 16px;
-		height: 16px;
-		background: linear-gradient(135deg, var(--color-accent), var(--color-secondary-accent));
-		border-radius: 50%;
-		box-shadow: 0 0 16px var(--color-accent-glow), 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--border-color);
-		z-index: 2;
-	}
-
-	.timeline-card-enhanced {
-		position: relative;
-		background: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-2xl);
-		padding: var(--spacing-xl);
-		transition: all var(--transition-normal);
-		overflow: hidden;
-	}
-
-	.timeline-glow {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 100%;
-		background: radial-gradient(circle at top right, var(--color-accent-glow) 0%, transparent 60%);
-		opacity: 0;
-		transition: opacity var(--transition-normal);
-	}
-
-	.timeline-card-enhanced:hover {
-		border-color: var(--color-accent);
-		transform: translateX(8px);
-		box-shadow: 0 20px 60px rgba(193, 159, 255, 0.2);
-	}
-
-	.timeline-card-enhanced:hover .timeline-glow {
-		opacity: 1;
-	}
-
-	.timeline-header {
-		display: flex;
-		justify-content: space-between;
+	.cue {
+		display: grid;
+		grid-template-columns: clamp(4rem, 10vw, 7rem) minmax(0, 1fr);
+		gap: clamp(1rem, 3vw, 2.5rem);
 		align-items: start;
-		margin-bottom: var(--spacing-lg);
-		gap: var(--spacing-md);
-		position: relative;
-		z-index: 1;
 	}
 
-	.timeline-role {
-		font-size: 1.375rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		margin-bottom: var(--spacing-xs);
+	.number {
+		display: grid;
+		justify-items: end;
+		line-height: 1;
+		color: var(--spot);
 	}
 
-	.timeline-company {
-		font-size: 1.125rem;
-		color: var(--color-accent);
-		font-weight: 500;
+	:global([data-theme='light']) .number {
+		color: var(--link);
 	}
 
-	.timeline-period {
-		padding: var(--spacing-sm) var(--spacing-lg);
-		background: var(--bg-hover);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-full);
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--text-secondary);
-		white-space: nowrap;
+	.top {
+		font-style: italic;
+		font-size: var(--step--1);
+		color: var(--ink-soft);
 	}
 
-	.timeline-description {
-		color: var(--text-secondary);
-		line-height: 1.7;
-		margin-bottom: var(--spacing-lg);
-		position: relative;
-		z-index: 1;
+	.n {
+		font-family: var(--font-poster);
+		font-weight: 900;
+		font-size: var(--step-4);
+		line-height: 0.85;
+		font-variant-numeric: tabular-nums;
 	}
 
-	.timeline-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-sm);
-		position: relative;
-		z-index: 1;
+	.body {
+		display: grid;
+		gap: 0.4rem;
+		max-width: var(--measure);
+		padding-top: 0.35rem;
 	}
 
-	.tech-tag {
-		padding: var(--spacing-xs) var(--spacing-md);
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-full);
-		font-size: 0.8125rem;
-		font-weight: 500;
-		color: var(--text-secondary);
-		transition: all var(--transition-fast);
+	.period {
+		font-style: italic;
+		color: var(--ink-soft);
 	}
 
-	.tech-tag:hover {
-		border-color: var(--color-accent);
-		color: var(--color-accent);
-		background: var(--bg-hover);
+	h3 {
+		font-size: var(--step-2);
 	}
 
-	@media (max-width: 768px) {
-		.timeline-enhanced {
-			padding-left: 12px;
-		}
+	.company {
+		font-weight: 600;
+	}
 
-		.timeline-item-enhanced {
-			padding-left: var(--spacing-3xl);
-		}
+	.description {
+		margin-top: 0.4rem;
+	}
 
-		.timeline-marker-enhanced {
-			left: 4px;
-		}
+	.cast {
+		font-style: italic;
+		color: var(--ink-soft);
 	}
 </style>
