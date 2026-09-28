@@ -101,14 +101,6 @@ export const experiences: Experience[] = [
 		type: 'work'
 	},
 	{
-		company: 'Projet Bazenville',
-		role: 'Création d\'un site web',
-		period: 'Mars 2025 - Présent',
-		description: 'Développement Full-stack et relation client pour la création d\'un site web sur l\'histoire du village de Bazenville (Calvados), en collaboration avec deux journalistes nationales.',
-		technologies: ['Web', 'Full-stack', 'Relation client'],
-		type: 'work'
-	},
-	{
 		company: 'Lycée Saint Thomas d\'Aquin - Flers',
 		role: 'Baccalauréat Général',
 		period: '2021 - 2024',

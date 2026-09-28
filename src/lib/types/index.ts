@@ -25,6 +25,7 @@ export interface Experience {
 	period: string;
 	description: string;
 	technologies?: string[];
+	type?: 'work' | 'education';
 }
 
 export interface Testimonial {

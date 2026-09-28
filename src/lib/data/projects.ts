@@ -69,6 +69,22 @@ export const projects: Project[] = [
 
 export const experiences: Experience[] = [
 	{
+		company: 'Deepthought Solutions',
+		role: 'Alternant architecture cloud, R&D et DevOps',
+		period: 'Septembre 2026 - Présent',
+		description: 'Conception d\'architectures de plateformes cloud hautement disponibles, développement (notamment en R&D) et DevOps, pour une entreprise française d\'architecture logicielle et d\'intégration open source.',
+		technologies: ['Kubernetes', 'DevOps', 'R&D'],
+		type: 'work'
+	},
+	{
+		company: 'Traktion',
+		role: 'Architecture cloud et DevOps, stage puis bénévolat',
+		period: 'Avril 2026 - Présent',
+		description: 'Conception de toute l\'architecture de la plateforme cloud hautement disponible de l\'entreprise sur Kubernetes, développement et DevOps. Après mon stage, je reste dans l\'équipe comme membre bénévole. Traktion édite un assistant de conduite pour le fret ferroviaire.',
+		technologies: ['Kubernetes', 'ArgoCD', 'DevOps'],
+		type: 'work'
+	},
+	{
 		company: 'IUT Grand Ouest Normandie - Site d\'IFS',
 		role: 'BUT Informatique',
 		period: '2024 - 2027',
@@ -98,14 +114,6 @@ export const experiences: Experience[] = [
 		period: 'Juin 2025 - Présent',
 		description: 'Création d\'une infrastructure cloud basée sur Kubernetes (Kubeadm et K3s) avec configuration d\'un réseau avancé à base de VLAN et de tunnel IP en GRE (matériel Fortinet et Mikrotik).',
 		technologies: ['Kubernetes', 'k3s', 'Kubeadm', 'VLAN', 'GRE', 'Fortinet', 'Mikrotik'],
-		type: 'work'
-	},
-	{
-		company: 'Projet Bazenville',
-		role: 'Création d\'un site web',
-		period: 'Mars 2025 - Présent',
-		description: 'Développement Full-stack et relation client pour la création d\'un site web sur l\'histoire du village de Bazenville (Calvados), en collaboration avec deux journalistes nationales.',
-		technologies: ['Web', 'Full-stack', 'Relation client'],
 		type: 'work'
 	},
 	{
