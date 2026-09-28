@@ -48,7 +48,7 @@
 
 <section class="scene page" aria-labelledby="projects-title">
 	<div class="wrap">
-		<SceneTitle as="h1" id="projects-title" title={$_('projectsPage.title')} note={$_('projectsPage.note')} />
+		<SceneTitle as="h1" id="projects-title" title={$_('projectsPage.title')} label={$_('projectsPage.label')} note={$_('projectsPage.note')} />
 
 		<div class="filters" role="group" aria-label={$_('projectsPage.filtersLabel')}>
 			{#each categories as category}

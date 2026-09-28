@@ -38,22 +38,18 @@ npm run migrate:passions
 
 ## 🎨 Design et Style
 
-Le site est pensé comme une salle de spectacle : le plateau est baigné de bleu Congo (la gélatine Lee 181), une poursuite ambrée éclaire la signature, et les marques au sol sont du scotch rose. Chaque section porte un nom de plateau (Répertoire, Fiche technique, Entracte, Conduite, Sortie des artistes) suivi d'une didascalie qui dit en clair ce qu'on y trouve.
+Le site est pensé comme une salle de spectacle et son programme imprimé : papier blanc, encre noire, rouge rideau. Chaque section porte un nom de plateau (Répertoire, Fiche technique, Entracte, Conduite, Prochaine saison, Sortie des artistes) suivi d'un sous-titre en clair et d'une didascalie.
 
 ### 1. Couleurs et thèmes
 
-Tout est défini dans `src/app.css`. Les couleurs de base :
+Tout est défini dans `src/app.css`. Deux thèmes :
 
-```css
-:root {
-  --congo: #1c1842;      /* fond du plateau */
-  --ivory: #f3ead9;      /* texte */
-  --amber: #ffb547;      /* poursuite, liens */
-  --spike: #ff5a8f;      /* marques de scotch, soulignés */
-}
-```
+- **Clair** (`[data-theme='light']`, par défaut) : le programme, papier `#fbf9f5`, encre `#1b1715`, rouge `#c4261e`.
+- **Sombre** (`[data-theme='dark']`) : son négatif, noir neutre `#161616`, texte `#f2f0ec`, même rouge.
 
-Les composants n'utilisent que les jetons sémantiques (`--paper`, `--ink`, `--ink-soft`, `--link`, `--mark`, `--spot`). Le thème clair (« salle allumée ») les redéfinit sous `[data-theme='light']`. Les anciens noms (`--bg-primary`, `--text-primary`, `--color-primary-*`…) restent disponibles pour l'admin.
+Le thème suit le réglage du système tant que le visiteur n'a pas cliqué sur la servante ; son choix est ensuite mémorisé. Le script inline de `src/app.html` applique le thème avant le premier affichage.
+
+Les composants n'utilisent que les jetons sémantiques (`--paper`, `--ink`, `--ink-soft`, `--link`, `--mark`, `--spot`). La classe `.inverse` imprime une bande en négatif (noire en clair, papier en sombre). Les anciens noms (`--bg-primary`, `--text-primary`, `--color-primary-*`…) restent disponibles pour l'admin.
 
 ### 2. Typographie
 
@@ -73,7 +69,7 @@ L'échelle typographique est dans les variables `--step--1` à `--step-4`.
 - `SceneTitle.svelte` : titre de section + didascalie.
 - `Servante.svelte` : l'ampoule de la servante, utilisée pour le bouton de thème et la page 404.
 - `ProjectEntry.svelte` : une entrée du répertoire (accueil et page projets).
-- Les textes des annonces « Cherche compagnie » sont dans `opportunities.notices` des fichiers de traduction : ajoute, modifie ou retire une annonce directement là.
+- `NextSeasonSection.svelte` : « Prochaine saison », les directions vers lesquelles tu t'orientes. Les textes sont dans `next.items` des fichiers de traduction.
 
 ## ⚙️ Configuration système
 

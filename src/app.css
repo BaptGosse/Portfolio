@@ -1,58 +1,81 @@
 /*
  * Stage & backstage.
- * The stage is washed in Congo Blue (Lee 181), the follow spot is amber,
- * floor marks are pink spike tape. In the light theme, the house lights are up.
+ * Light theme: the printed programme, white paper, black ink, curtain red.
+ * Dark theme: its negative, a black stage lit by the same red.
+ * The inline script in app.html picks the theme from the stored choice or the OS setting.
  */
 
 :root,
-[data-theme='dark'] {
-	--congo: #1c1842;
-	--congo-deep: #141134;
-	--congo-lift: #27225a;
-	--ivory: #f3ead9;
-	--lilac-grey: #b8b0cc;
-	--amber: #ffb547;
-	--spike: #ff5a8f;
-	--gaffer: #3a3648;
+[data-theme='light'] {
+	--curtain: #c4261e;
 
-	--paper: var(--congo);
-	--paper-deep: var(--congo-deep);
-	--paper-lift: var(--congo-lift);
-	--ink: var(--ivory);
-	--ink-soft: var(--lilac-grey);
-	--ink-faint: #9088aa;
-	--link: var(--amber);
-	--mark: var(--spike);
-	--spot: var(--amber);
-	--spot-strength: 1;
-	--sig-ink: #17133b;
-	--rule: rgba(243, 234, 217, 0.16);
-	--notice: var(--ivory);
-	--notice-ink: #1d1946;
-	--photo-wash: #3a3380;
+	--paper: #fbf9f5;
+	--paper-deep: #f0ebe3;
+	--paper-lift: #ffffff;
+	--ink: #1b1715;
+	--ink-soft: #5b534d;
+	--ink-faint: #7c736c;
+	--link: #b0221b;
+	--mark: #b0221b;
+	--spot: var(--curtain);
+	--sig-ink: #fbf9f5;
+	--rule: rgba(27, 23, 21, 0.14);
+	--print: #ffffff;
+	--gaffer: #2e2a28;
+	--ticket: var(--curtain);
+	--ticket-ink: #ffffff;
+	--bulb: #f0a92e;
+	--grain: 0.045;
+
+	color-scheme: light;
+}
+
+[data-theme='dark'] {
+	--paper: #161616;
+	--paper-deep: #0e0e0e;
+	--paper-lift: #222222;
+	--ink: #f2f0ec;
+	--ink-soft: #b3afa9;
+	--ink-faint: #8a8680;
+	--link: #f0594b;
+	--mark: #e4412f;
+	--spot: var(--curtain);
+	--sig-ink: #f2f0ec;
+	--rule: rgba(242, 240, 236, 0.14);
+	--print: #f2f0ec;
+	--gaffer: #3a3a3a;
+	--ticket: var(--curtain);
+	--ticket-ink: #ffffff;
+	--bulb: #f3b44a;
+	--grain: 0.06;
 
 	color-scheme: dark;
 }
 
-[data-theme='light'] {
-	--paper: #f0edf6;
-	--paper-deep: #e4e0ef;
-	--paper-lift: #faf9fc;
-	--ink: #1d1946;
-	--ink-soft: #48426e;
-	--ink-faint: #666088;
-	--link: #5a34d6;
-	--mark: #e0246b;
-	--spot: #ffcf6e;
-	--spot-strength: 0;
-	--sig-ink: var(--ink);
-	--rule: rgba(29, 25, 70, 0.16);
-	--notice: #ffffff;
-	--notice-ink: #1d1946;
-	--photo-wash: #c9c2e3;
-	--gaffer: #4a4658;
+/* A band printed in negative: dark on the light theme, light on the dark theme */
+[data-theme='light'] .inverse {
+	--paper: #161616;
+	--ink: #f2f0ec;
+	--ink-soft: #b3afa9;
+	--ink-faint: #8a8680;
+	--link: #f0594b;
+	--mark: #e4412f;
+	--rule: rgba(242, 240, 236, 0.14);
+}
 
-	color-scheme: light;
+[data-theme='dark'] .inverse {
+	--paper: #fbf9f5;
+	--ink: #1b1715;
+	--ink-soft: #5b534d;
+	--ink-faint: #7c736c;
+	--link: #b0221b;
+	--mark: #b0221b;
+	--rule: rgba(27, 23, 21, 0.14);
+}
+
+.inverse {
+	background: var(--paper);
+	color: var(--ink);
 }
 
 :root {
@@ -70,7 +93,7 @@
 	--measure: 36rem;
 	--gutter: clamp(1rem, 4vw, 3rem);
 	--page-max: 74rem;
-	--scene-space: clamp(5rem, 12vw, 9rem);
+	--scene-space: clamp(4rem, 9vw, 6.5rem);
 
 	/*
 	 * Legacy tokens, kept for the admin interface.
@@ -93,11 +116,11 @@
 	--color-accent-light: var(--link);
 	--color-accent-glow: color-mix(in srgb, var(--link) 25%, transparent);
 	--color-secondary-accent: var(--mark);
-	--color-primary-300: #cfc3ff;
-	--color-primary-400: #b7a6ff;
-	--color-primary-500: #9a86f5;
-	--color-primary-600: #6d55e0;
-	--color-primary-700: #5842c4;
+	--color-primary-300: #f4a39b;
+	--color-primary-400: #ec6a5e;
+	--color-primary-500: #d8392d;
+	--color-primary-600: #c4261e;
+	--color-primary-700: #a31d17;
 	--font-display: var(--font-poster);
 	--font-body: var(--font-text);
 	--font-mono: var(--font-code);
@@ -163,12 +186,8 @@ body::before {
 	inset: 0;
 	z-index: 100;
 	pointer-events: none;
-	opacity: 0.07;
+	opacity: var(--grain);
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-[data-theme='light'] body::before {
-	opacity: 0.05;
 }
 
 h1,
@@ -227,6 +246,11 @@ img {
 }
 
 /* Layout */
+
+/* Anchored sections land below the sticky header */
+section[id] {
+	scroll-margin-top: 5.5rem;
+}
 
 .wrap,
 .container {
@@ -307,8 +331,8 @@ img {
 	--notch: 0.55rem;
 	display: inline-flex;
 	align-items: stretch;
-	color: var(--notice-ink);
-	background: var(--amber);
+	color: var(--ticket-ink);
+	background: var(--ticket);
 	text-decoration: none;
 	font-family: var(--font-poster);
 	font-weight: 800;
@@ -323,16 +347,12 @@ img {
 	transition: transform var(--transition-fast);
 }
 
-[data-theme='light'] .ticket {
-	background: #ffc24f;
-}
-
 .ticket span {
 	padding: 0.85rem 1.4rem;
 }
 
 .ticket span + span {
-	border-left: 2px dashed color-mix(in srgb, var(--notice-ink) 45%, transparent);
+	border-left: 2px dashed color-mix(in srgb, var(--ticket-ink) 45%, transparent);
 	font-family: var(--font-text);
 	font-weight: 600;
 	font-style: italic;
@@ -343,7 +363,7 @@ img {
 
 .ticket:hover {
 	transform: rotate(-1.5deg);
-	color: var(--notice-ink);
+	color: var(--ticket-ink);
 }
 
 /* Article content */

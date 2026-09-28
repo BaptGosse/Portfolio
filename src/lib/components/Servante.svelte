@@ -37,7 +37,7 @@
 
 	.halo {
 		stroke: none;
-		fill: var(--amber);
+		fill: var(--bulb);
 		opacity: 0;
 		transition: opacity 300ms ease;
 	}
@@ -52,7 +52,7 @@
 	}
 
 	.lit .bulb {
-		fill: var(--amber);
-		stroke: var(--amber);
+		fill: var(--bulb);
+		stroke: var(--bulb);
 	}
 </style>

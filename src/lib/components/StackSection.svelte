@@ -23,7 +23,7 @@
 
 <section class="scene" aria-labelledby="fiche-title">
 	<div class="wrap">
-		<SceneTitle id="fiche-title" title={$_('stack.title')} note={$_('stack.note')} />
+		<SceneTitle id="fiche-title" title={$_('stack.title')} label={$_('stack.label')} note={$_('stack.note')} />
 
 		<div class="rider">
 			{#each groups as group}

@@ -18,7 +18,7 @@
 
 <section class="scene page" aria-labelledby="blog-title">
 	<div class="wrap">
-		<SceneTitle as="h1" id="blog-title" title={$_('blog.title')} note={$_('blog.note')} />
+		<SceneTitle as="h1" id="blog-title" title={$_('blog.title')} label={$_('blog.label')} note={$_('blog.note')} />
 
 		<p class="feeds">
 			{$_('blog.subscribe')}

@@ -7,7 +7,7 @@
 
 <section class="scene" id="contact" aria-labelledby="contact-title">
 	<div class="wrap">
-		<SceneTitle id="contact-title" title={$_('contact.title')} />
+		<SceneTitle id="contact-title" title={$_('contact.title')} label={$_('contact.label')} />
 
 		<p class="invite">{$_('contact.text')}</p>
 

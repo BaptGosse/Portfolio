@@ -33,6 +33,9 @@
 				<li>
 					<a href="/documents/CV.pdf">{$_('nav.cv')}</a>
 				</li>
+				<li>
+					<a href="/#contact">{$_('nav.contact')}</a>
+				</li>
 			</ul>
 		</nav>
 
@@ -44,9 +47,13 @@
 </header>
 
 <style>
+	/* Stays in reach on desktop, with a thin rule to separate it from the page */
 	.site-header {
-		position: relative;
+		position: sticky;
+		top: 0;
 		z-index: 10;
+		background: var(--paper);
+		box-shadow: 0 1px 0 var(--rule);
 	}
 
 	.skip {
@@ -54,8 +61,8 @@
 		left: var(--gutter);
 		top: -4rem;
 		padding: 0.5rem 1rem;
-		background: var(--amber);
-		color: var(--notice-ink);
+		background: var(--ticket);
+		color: var(--ticket-ink);
 		font-weight: 600;
 	}
 
@@ -67,12 +74,12 @@
 		display: flex;
 		align-items: center;
 		gap: clamp(0.75rem, 3vw, 2.5rem);
-		padding-block: 1.25rem;
+		padding-block: 0.9rem;
 	}
 
 	.home {
 		display: block;
-		width: clamp(6rem, 12vw, 8.5rem);
+		width: clamp(5.5rem, 10vw, 7.5rem);
 		color: var(--ink);
 		transition: transform 200ms ease;
 	}
@@ -124,6 +131,12 @@
 		align-items: center;
 		gap: 0.25rem;
 		margin-right: -0.5rem;
+	}
+
+	@media (max-width: 48rem) {
+		.site-header {
+			position: relative;
+		}
 	}
 
 	@media (max-width: 30rem) {

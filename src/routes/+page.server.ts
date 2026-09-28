@@ -11,7 +11,7 @@ import {
 	POR_SOFT_SKILLS,
 	POR_PASSIONS_SOFT_SKILLS
 } from '$lib/server/db/schema';
-import { eq, asc, desc } from 'drizzle-orm';
+import { eq, asc, desc, count } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -142,8 +142,11 @@ export const load: PageServerLoad = async () => {
 		})
 	);
 
+	const [{ projectCount }] = await db.select({ projectCount: count() }).from(POR_PROJECTS);
+
 	return {
 		projects,
+		projectCount,
 		experiences,
 		skills,
 		passions

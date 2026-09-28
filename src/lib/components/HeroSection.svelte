@@ -43,7 +43,7 @@
 
 <style>
 	.affiche {
-		padding-top: clamp(2rem, 6vw, 4.5rem);
+		padding-top: clamp(1.5rem, 4vw, 3rem);
 		overflow: hidden;
 	}
 
@@ -63,9 +63,9 @@
 	/* The poster: the signature under the follow spot */
 	.title {
 		position: relative;
-		grid-column: 1 / span 9;
+		grid-column: 1 / span 8;
 		grid-row: 2;
-		margin-block: clamp(3rem, 7vw, 5.5rem) clamp(4rem, 8vw, 6rem);
+		margin-block: clamp(2.5rem, 5vw, 4rem) clamp(3.5rem, 6vw, 5rem);
 		color: var(--ink);
 		isolation: isolate;
 		/* Spotlight geometry, shared by the disc and the clipped signature */
@@ -90,12 +90,7 @@
 		position: absolute;
 		inset: -15% -3% -21% -5%;
 		border-radius: 50%;
-		background: radial-gradient(
-			ellipse closest-side,
-			color-mix(in srgb, var(--spot), #fff 28%) 0%,
-			var(--spot) 72%
-		);
-		opacity: var(--spot-strength);
+		background: var(--spot);
 		animation: top-lumiere 1.3s 0.6s both;
 	}
 
@@ -104,7 +99,6 @@
 		inset: 0;
 		color: var(--sig-ink);
 		clip-path: ellipse(var(--spot-rx) var(--spot-ry) at var(--spot-cx) var(--spot-cy));
-		opacity: var(--spot-strength);
 		animation: top-lumiere 1.3s 0.6s both;
 	}
 
@@ -114,29 +108,24 @@
 		}
 	}
 
-	/* House lights up: no follow spot, no cue */
-	:global([data-theme='light']) .title :global(.sig) {
-		animation: none;
-	}
-
 	@keyframes top-lumiere {
 		0% {
 			opacity: 0;
 		}
 		30% {
-			opacity: calc(var(--spot-strength) * 0.9);
+			opacity: 0.9;
 		}
 		42% {
-			opacity: calc(var(--spot-strength) * 0.35);
+			opacity: 0.35;
 		}
 		58% {
-			opacity: var(--spot-strength);
+			opacity: 1;
 		}
 		66% {
-			opacity: calc(var(--spot-strength) * 0.7);
+			opacity: 0.7;
 		}
 		100% {
-			opacity: var(--spot-strength);
+			opacity: 1;
 		}
 	}
 
@@ -153,7 +142,7 @@
 	.print {
 		position: relative;
 		padding: 0.55rem;
-		background: var(--notice);
+		background: var(--print);
 		box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.6);
 	}
 
@@ -163,17 +152,6 @@
 		aspect-ratio: 1;
 		object-fit: cover;
 		filter: grayscale(1) contrast(1.08);
-	}
-
-	/* The headshot takes the stage's tint */
-	.print::after {
-		content: '';
-		position: absolute;
-		inset: 0.55rem;
-		background: var(--photo-wash);
-		mix-blend-mode: color;
-		opacity: 0.7;
-		pointer-events: none;
 	}
 
 	.gaffer {

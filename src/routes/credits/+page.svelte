@@ -162,7 +162,7 @@
 
 <section class="scene page" aria-labelledby="credits-title">
 	<div class="wrap">
-		<SceneTitle as="h1" id="credits-title" title={$_('credits.title')} note={$_('credits.note')} />
+		<SceneTitle as="h1" id="credits-title" title={$_('credits.title')} label={$_('credits.label')} note={$_('credits.note')} />
 
 		<div class="rider">
 			{#each groups as group (group.key)}

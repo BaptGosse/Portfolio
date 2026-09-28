@@ -14,11 +14,15 @@
 		featured: boolean;
 	};
 
-	let { projects = [] }: { projects: ProjectData[] } = $props();
+	let { projects = [], total = 0 }: { projects: ProjectData[]; total?: number } = $props();
+
+	// The home page shows a short bill, the full repertoire lives on /projects
+	const HOME_LIMIT = 4;
 
 	const pieces = $derived(
 		projects
 			.filter((p) => p.featured)
+			.slice(0, HOME_LIMIT)
 			.map((p) => ({
 				id: p.id,
 				title: pick(p.title, $locale),
@@ -32,7 +36,7 @@
 
 <section class="scene" id="repertoire" aria-labelledby="repertoire-title">
 	<div class="wrap">
-		<SceneTitle id="repertoire-title" title={$_('projects.title')} note={$_('projects.note')} />
+		<SceneTitle id="repertoire-title" title={$_('projects.title')} label={$_('projects.label')} note={$_('projects.note')} />
 
 		{#if pieces.length}
 			<div class="bill">
@@ -45,7 +49,7 @@
 		{/if}
 
 		<p class="more">
-			<a href="/projects">{$_('projects.all')}</a>
+			<a href="/projects">{$_('projects.all', { values: { count: total } })}</a>
 		</p>
 	</div>
 </section>

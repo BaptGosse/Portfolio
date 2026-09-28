@@ -5,7 +5,7 @@
 	import StackSection from '$lib/components/StackSection.svelte';
 	import PassionsSection from '$lib/components/PassionsSection.svelte';
 	import ExperienceSection from '$lib/components/ExperienceSection.svelte';
-	import OpportunitiesSection from '$lib/components/OpportunitiesSection.svelte';
+	import NextSeasonSection from '$lib/components/NextSeasonSection.svelte';
 	import ContactSection from '$lib/components/ContactSection.svelte';
 	import type { PageData } from './$types';
 
@@ -18,9 +18,9 @@
 </svelte:head>
 
 <HeroSection />
-<ProjectsSection projects={data.projects} />
+<ProjectsSection projects={data.projects} total={data.projectCount} />
 <StackSection skills={data.skills} />
 <PassionsSection passions={data.passions} />
 <ExperienceSection experiences={data.experiences} />
-<OpportunitiesSection />
+<NextSeasonSection />
 <ContactSection />

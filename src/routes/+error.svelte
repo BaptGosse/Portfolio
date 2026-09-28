@@ -64,7 +64,7 @@
 		bottom: -1rem;
 		height: 2.5rem;
 		border-radius: 50%;
-		background: var(--amber);
+		background: var(--bulb);
 		opacity: 0.16;
 	}
 

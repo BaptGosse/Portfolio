@@ -28,7 +28,7 @@
 
 <section class="scene foyer" aria-labelledby="entracte-title">
 	<div class="wrap">
-		<SceneTitle id="entracte-title" title={$_('passions.title')} note={$_('passions.note')} />
+		<SceneTitle id="entracte-title" title={$_('passions.title')} label={$_('passions.label')} note={$_('passions.note')} />
 
 		<div class="pastimes">
 			{#each items as item}

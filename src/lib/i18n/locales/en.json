@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"title": "Baptiste Gosselin, infrastructure, code and theater",
-		"description": "Computer science student in Caen, France. I build infrastructure (Kubernetes, networking, Go) and I do theater. Looking for an apprenticeship for 2026-2027."
+		"description": "Computer science student in Caen, France, apprentice at Deepthought Solutions. I design highly available cloud platforms on Kubernetes, I write code, and I do theater."
 	},
 	"nav": {
 		"projects": "Projects",
@@ -9,7 +9,8 @@
 		"cv": "Résumé",
 		"homeLabel": "Baptiste Gosselin, back to home",
 		"mainLabel": "Main navigation",
-		"skip": "Skip to content"
+		"skip": "Skip to content",
+		"contact": "Contact"
 	},
 	"lang": {
 		"switchTo": "FR",
@@ -23,8 +24,8 @@
 		"stageDirection": "The curtain rises. A ghost light was left on, network cables trail across the stage.",
 		"character": "Baptiste",
 		"characterDirection": "stepping toward the audience",
-		"line": "Hello. I'm Baptiste. I study computer science in Caen, France, and I take care of what nobody sees: infrastructure. Kubernetes clusters, networking, an orchestrator written in Go. And when the servers run on their own, I go on stage.",
-		"status": "He is looking for an apprenticeship for the 2026-2027 season.",
+		"line": "Hello. I'm Baptiste. I study computer science in Caen, France, and I take care of what nobody sees: infrastructure. I design highly available cloud platforms on Kubernetes, I run networks down to BGP with UnxWares' own AS218888, and I write code. When the servers run on their own, I go on stage.",
+		"status": "He is an apprentice at Deepthought Solutions for the 2026-2027 season.",
 		"cta": "See my projects",
 		"cvMain": "My résumé",
 		"cvStub": "PDF, in French",
@@ -33,19 +34,22 @@
 	},
 	"stack": {
 		"title": "Tech rider",
+		"label": "my skills",
 		"note": "What the crew needs backstage for the show to run. In other words: the tools I actually use, and where I used them."
 	},
 	"projects": {
 		"title": "Repertoire",
+		"label": "my projects",
 		"note": "The shows I've put on. Some are still running.",
 		"cast": "Starring {list}.",
 		"code": "Read the code",
 		"live": "See it live",
-		"all": "The full repertoire",
+		"all": "See all {count} projects",
 		"empty": "Nothing on the bill yet."
 	},
 	"projectsPage": {
 		"title": "The full repertoire",
+		"label": "all my projects",
 		"note": "Infrastructure, cloud-native and systems programming: everything I've put on, from bare metal to apps on Kubernetes.",
 		"metaTitle": "Projects - Baptiste Gosselin",
 		"metaDescription": "My projects in infrastructure, Kubernetes, DevOps and systems programming.",
@@ -61,54 +65,42 @@
 			"action": "See the full repertoire"
 		}
 	},
-	"opportunities": {
-		"title": "Looking for a company",
-		"note": "A theater company or any other kind: somewhere to do my apprenticeship.",
-		"topicsLabel": "On the program:",
-		"notices": [
-			{
-				"kicker": "3rd year of my degree",
-				"title": "Apprenticeship",
-				"when": "One year, September 2026 to August 2027",
-				"text": "I've already built a Kubernetes cluster and its network for UnxWares. Now I'm looking for a team that does this at a larger scale, trusts me with real responsibilities, and keeps me for a year.",
-				"topics": [
-					"cloud-native infrastructure",
-					"Go and Rust",
-					"systems architecture",
-					"automation"
-				]
-			},
-			{
-				"kicker": "2nd year of my degree",
-				"title": "Internship",
-				"when": "8 to 10 weeks, April to June 2026",
-				"text": "An internship to get my hands on infrastructure running in production: cloud, containers, CI/CD or system administration.",
-				"topics": [
-					"infrastructure and cloud",
-					"Kubernetes and Docker",
-					"DevOps and CI/CD",
-					"system administration"
-				]
-			}
-		],
-		"cv": "Download my résumé",
-		"write": "Write to me"
-	},
 	"experience": {
 		"title": "Cue sheet",
-		"note": "Backstage, the cue sheet lists every change in order, cue after cue. Mine tells where I've worked and studied.",
-		"cueWord": "cue",
+		"label": "my path",
+		"note": "Backstage, the cue sheet lists every change in order, cue after cue. Here's mine.",
 		"present": "today",
 		"cast": "Starring {list}."
 	},
 	"passions": {
 		"title": "Intermission",
+		"label": "away from code",
 		"note": "A fifteen-minute break. What I do when I'm not in front of a terminal.",
 		"learned": "What it taught me: {list}."
 	},
+	"next": {
+		"title": "Next season",
+		"label": "where I'm headed",
+		"note": "What I want to play next.",
+		"items": [
+			{
+				"title": "Cloud platform architect",
+				"text": "Designing highly available platforms end to end, from the network to deployment, and keeping them standing over time. That's what I did at Traktion and what I do at Deepthought Solutions; I want to make it my job."
+			},
+			{
+				"title": "Carrier-grade networking",
+				"text": "With UnxWares, I obtained AS218888 and I announce our own IPv6 space over BGP. I want to go further on the network side, where infrastructure really starts."
+			},
+			{
+				"title": "Research and development",
+				"text": "Research, prototype, measure, then ship to production. R&D at Deepthought Solutions gave me a taste for it, and I want to keep going that way."
+			}
+		]
+	},
 	"contact": {
 		"title": "Stage door",
-		"text": "An apprenticeship to offer, a question about a project, or you just want to talk theater? Write to me, I answer.",
+		"label": "get in touch",
+		"text": "An infrastructure project, a question about my work, or you just want to talk theater? Write to me, I answer.",
 		"elsewhere": "You can also find me on",
 		"and": "and"
 	},
@@ -124,6 +116,7 @@
 		"metaTitle": "Backstage - Baptiste Gosselin",
 		"metaDescription": "The open-source tools that run this site.",
 		"title": "Backstage",
+		"label": "site credits",
 		"note": "This site's tech rider: the open-source tools that keep it running. Thanks to the people behind them.",
 		"categories": {
 			"framework": "Framework and build",
@@ -140,6 +133,7 @@
 	},
 	"blog": {
 		"title": "Rehearsal notes",
+		"label": "the blog",
 		"note": "Technical articles on Linux, DevOps, infrastructure and code, written between rehearsals.",
 		"metaTitle": "Blog - Baptiste Gosselin",
 		"metaDescription": "Technical articles on Linux, DevOps, infrastructure and development.",
