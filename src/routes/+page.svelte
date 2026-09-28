@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { _ } from 'svelte-i18n';
 	import HeroSection from '$lib/components/HeroSection.svelte';
-	import StackSection from '$lib/components/StackSection.svelte';
-	import SectionDivider from '$lib/components/SectionDivider.svelte';
 	import ProjectsSection from '$lib/components/ProjectsSection.svelte';
-	import OpportunitiesSection from '$lib/components/OpportunitiesSection.svelte';
-	import ExperienceSection from '$lib/components/ExperienceSection.svelte';
+	import StackSection from '$lib/components/StackSection.svelte';
 	import PassionsSection from '$lib/components/PassionsSection.svelte';
+	import ExperienceSection from '$lib/components/ExperienceSection.svelte';
+	import OpportunitiesSection from '$lib/components/OpportunitiesSection.svelte';
 	import ContactSection from '$lib/components/ContactSection.svelte';
 	import type { PageData } from './$types';
 
@@ -13,30 +13,14 @@
 </script>
 
 <svelte:head>
-	<title>Baptiste Gosselin - Étudiant Informatique, Infrastructure & Cloud-Native</title>
-	<meta name="description" content="Étudiant en informatique spécialisé en infrastructure cloud-native, Kubernetes, DevOps et développement système. Dirigeant d'UnxWares." />
+	<title>{$_('meta.title')}</title>
+	<meta name="description" content={$_('meta.description')} />
 </svelte:head>
 
 <HeroSection />
-
-<StackSection skills={data.skills} />
-
-<SectionDivider />
-
 <ProjectsSection projects={data.projects} />
-
-<SectionDivider />
-
-<OpportunitiesSection />
-
-<SectionDivider />
-
-<ExperienceSection experiences={data.experiences} />
-
-<SectionDivider />
-
+<StackSection skills={data.skills} />
 <PassionsSection passions={data.passions} />
-
-<SectionDivider />
-
+<ExperienceSection experiences={data.experiences} />
+<OpportunitiesSection />
 <ContactSection />

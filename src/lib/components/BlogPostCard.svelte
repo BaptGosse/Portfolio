@@ -1,142 +1,71 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types';
-	import { ChevronRight, Calendar, Tags } from 'lucide-svelte';
 	import { _, locale } from 'svelte-i18n';
 
 	let { post }: { post: BlogPost } = $props();
 
-	function formatDate(dateStr: string): string {
-		const date = new Date(dateStr);
-		return new Intl.DateTimeFormat($locale || 'fr', {
+	const date = $derived(
+		new Intl.DateTimeFormat($locale || 'fr', {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
-		}).format(date);
-	}
+		}).format(new Date(post.date))
+	);
 </script>
 
-<article class="card">
-	<div class="meta">
-		<div class="meta-item">
-			<Calendar size={14} />
-			<time datetime={post.date}>
-				{formatDate(post.date)}
-			</time>
-		</div>
-		<span class="meta-separator">•</span>
-		<div class="meta-item">
-			<Tags size={14} />
-			<span>{$_('blog.tags', { values: { count: post.tags.length } })}</span>
-		</div>
-	</div>
-
-	<h3 class="card-title">
-		<a href="/blog/{post.slug}">
-			{post.title}
-		</a>
-	</h3>
-
-	<p class="card-description">
-		{post.description}
-	</p>
-
-	<div class="tags">
-		{#each post.tags as tag}
-			<span class="tag">
-				#{tag}
-			</span>
-		{/each}
-	</div>
-
-	<a
-		href="/blog/{post.slug}"
-		class="read-more"
-	>
-		{$_('blog.readMore')}
-		<ChevronRight size={16} />
-	</a>
+<article class="note">
+	<time datetime={post.date}>{date}</time>
+	<h2><a href="/blog/{post.slug}">{post.title}</a></h2>
+	<p>{post.description}</p>
+	{#if post.tags.length}
+		<p class="tags">
+			{#each post.tags as tag}
+				<span>#{tag}</span>
+			{/each}
+		</p>
+	{/if}
+	<a class="read" href="/blog/{post.slug}" aria-hidden="true" tabindex="-1">{$_('blog.readMore')}</a>
 </article>
 
 <style>
-	.card {
-		background-color: var(--bg-secondary);
-		border-radius: var(--radius-lg);
-		padding: var(--spacing-lg);
-		border: 1px solid var(--border-color);
-		transition: background-color var(--transition-fast), border-color var(--transition-fast);
+	.note {
+		display: grid;
+		gap: 0.6rem;
+		max-width: 42rem;
 	}
 
-	.card:hover {
-		background-color: var(--bg-elevated);
-		border-color: var(--color-primary-500);
+	time {
+		font-style: italic;
+		color: var(--ink-soft);
 	}
 
-	.meta {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		font-size: 0.875rem;
-		color: var(--text-tertiary);
-		margin-bottom: 0.75rem;
+	h2 {
+		font-size: var(--step-3);
+		font-weight: 800;
 	}
 
-	.meta-item {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-xs);
+	h2 a {
+		color: var(--ink);
+		text-decoration: none;
 	}
 
-	.meta-separator {
-		color: var(--border-color);
-	}
-
-	.card-title {
-		font-size: 1.25rem;
-		font-weight: 700;
-		margin-bottom: 0.75rem;
-	}
-
-	.card-title a {
-		color: var(--text-primary);
-		transition: color var(--transition-fast);
-	}
-
-	.card-title a:hover {
-		color: var(--color-primary-400);
-	}
-
-	.card-description {
-		color: var(--text-secondary);
-		margin-bottom: var(--spacing-md);
+	h2 a:hover {
+		color: var(--link);
+		text-decoration: underline;
+		text-decoration-color: var(--mark);
+		text-decoration-thickness: 0.12em;
 	}
 
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--spacing-sm);
-		margin-bottom: var(--spacing-md);
+		gap: 0.25rem 1rem;
+		font-style: italic;
+		color: var(--ink-soft);
 	}
 
-	.tag {
-		padding: var(--spacing-xs) 0.75rem;
-		font-size: 0.75rem;
-		font-weight: 500;
-		background-color: var(--bg-elevated);
-		color: var(--text-secondary);
-		border-radius: 9999px;
-	}
-
-	.read-more {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-xs);
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--color-primary-400);
-		transition: color var(--transition-fast);
-	}
-
-	.read-more:hover {
-		color: var(--color-primary-300);
+	.read {
+		justify-self: start;
+		font-weight: 600;
 	}
 </style>

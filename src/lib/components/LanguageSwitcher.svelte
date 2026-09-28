@@ -1,33 +1,24 @@
 <script lang="ts">
-	import { locale } from 'svelte-i18n';
+	import { locale, _ } from 'svelte-i18n';
 	import { invalidateAll } from '$app/navigation';
-	import { Languages } from 'lucide-svelte';
 
-	const availableLocales = [
-		{ code: 'fr', label: 'FR', flag: '🇫🇷' },
-		{ code: 'en', label: 'EN', flag: '🇬🇧' }
-	];
+	const target = $derived($locale === 'en' ? 'fr' : 'en');
 
 	async function switchLocale(newLocale: string) {
-		// Update client-side locale immediately
 		locale.set(newLocale);
-
-		// Save to localStorage for client-side persistence
-		if (typeof window !== 'undefined') {
+		try {
 			localStorage.setItem('locale', newLocale);
+		} catch {
+			// Stockage indisponible : le cookie suffit
 		}
 
-		// Save to cookie via API for server-side rendering
+		// Le cookie permet au serveur de rendre la bonne langue
 		try {
 			await fetch('/api/locale', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ locale: newLocale })
 			});
-
-			// Invalidate all data to reload with new locale (keeps scroll position)
 			await invalidateAll();
 		} catch (error) {
 			console.error('Failed to save locale:', error);
@@ -35,124 +26,32 @@
 	}
 </script>
 
-<div class="language-switcher">
-	<button class="current-lang" aria-label="Change language">
-		<Languages size={18} />
-		<span class="lang-code">{$locale?.toUpperCase() || 'FR'}</span>
-	</button>
-	<div class="lang-menu">
-		{#each availableLocales as lang}
-			<button
-				class="lang-option"
-				class:active={$locale === lang.code}
-				onclick={() => switchLocale(lang.code)}
-				aria-label="Switch to {lang.label}"
-			>
-				<span class="flag">{lang.flag}</span>
-				<span class="label">{lang.label}</span>
-			</button>
-		{/each}
-	</div>
-</div>
+<button
+	class="lang"
+	lang={target}
+	aria-label={$_('lang.switchLabel')}
+	title={$_('lang.switchLabel')}
+	onclick={() => switchLocale(target)}
+>
+	{$_('lang.switchTo')}
+</button>
 
 <style>
-	.language-switcher {
-		position: relative;
-	}
-
-	.current-lang {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-xs);
-		padding: var(--spacing-sm) var(--spacing-md);
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-		color: var(--text-secondary);
+	.lang {
+		min-width: 2.5rem;
+		height: 2.75rem;
+		padding: 0 0.25rem;
+		background: none;
+		border: 0;
+		color: var(--ink);
+		font-family: var(--font-poster);
+		font-weight: 800;
+		font-size: 1.2rem;
+		letter-spacing: 0.04em;
 		cursor: pointer;
-		transition: all var(--transition-fast);
-		font-family: var(--font-display);
-		font-size: 0.875rem;
-		font-weight: 600;
 	}
 
-	.current-lang:hover {
-		background: var(--bg-hover);
-		border-color: var(--color-accent);
-		color: var(--color-accent);
-	}
-
-	.lang-code {
-		line-height: 1;
-	}
-
-	.lang-menu {
-		position: absolute;
-		top: calc(100% + var(--spacing-xs));
-		right: 0;
-		background: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-		padding: var(--spacing-xs);
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-xs);
-		opacity: 0;
-		visibility: hidden;
-		transform: translateY(-8px);
-		transition: all var(--transition-fast);
-		box-shadow: var(--shadow-lg);
-		min-width: 120px;
-		z-index: 100;
-	}
-
-	.language-switcher:hover .lang-menu {
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0);
-	}
-
-	.lang-option {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-sm);
-		padding: var(--spacing-sm) var(--spacing-md);
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-md);
-		color: var(--text-secondary);
-		cursor: pointer;
-		transition: all var(--transition-fast);
-		font-family: var(--font-body);
-		font-size: 0.875rem;
-		width: 100%;
-		text-align: left;
-	}
-
-	.lang-option:hover {
-		background: var(--bg-hover);
-		color: var(--color-accent);
-	}
-
-	.lang-option.active {
-		background: var(--bg-hover);
-		color: var(--color-accent);
-		font-weight: 600;
-	}
-
-	.flag {
-		font-size: 1.25rem;
-		line-height: 1;
-	}
-
-	.label {
-		font-weight: 600;
-	}
-
-	@media (max-width: 768px) {
-		.lang-menu {
-			left: 0;
-			right: auto;
-		}
+	.lang:hover {
+		color: var(--link);
 	}
 </style>
